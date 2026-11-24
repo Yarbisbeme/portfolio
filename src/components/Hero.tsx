@@ -2,7 +2,7 @@
 
 import { MODE_CHORD, playChord, playNote, soundEnabled, staffPitch } from "@/lib/sound";
 
-import { useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { MOTION_OK, SplitText, afterFonts, gsap, revealPage, useGSAP } from "@/lib/motion";
 import { projects, staves, type Dictionary, type Mode } from "@/content/site";
 import { ContactLinks } from "./ContactLinks";
@@ -170,10 +170,9 @@ export function Hero({ d }: { d: Dictionary }) {
 
   // Cursor de reproducción: una línea vino sigue al puntero sobre el pentagrama y enciende las
   // notas que cruza (y las toca, si el sonido está activado).
-  const onStaffEnter = (e: PointerEvent<HTMLDivElement>) => {
-    if (!window.matchMedia(MOTION_OK).matches || !boxRef.current) return;
-    const box = boxRef.current.getBoundingClientRect();
-    heads.current = (Array.from(boxRef.current.querySelectorAll("[data-note]")) as HTMLElement[])
+  const measureHeads = () => {
+    const box = boxRef.current!.getBoundingClientRect();
+    heads.current = (Array.from(boxRef.current!.querySelectorAll("[data-note]")) as HTMLElement[])
       .filter((b) => b.offsetParent)
       .map((b) => {
         const head = b.firstElementChild as HTMLElement;
@@ -181,6 +180,51 @@ export function Hero({ d }: { d: Dictionary }) {
         const staff = b.closest("[data-staff]")?.getAttribute("data-staff") === "verify" ? "verify" : "build";
         return { x: r.left + r.width / 2 - box.left, el: head, staff, y: Number(b.dataset.y ?? 4) };
       });
+    return box;
+  };
+  const strike = (h: { el: HTMLElement; staff: "build" | "verify"; y: number }) => {
+    gsap.fromTo(h.el, { scale: 1.9 }, { scale: 1, duration: 0.7, ease: "elastic.out(1, 0.4)", overwrite: "auto" });
+    if (soundEnabled()) playNote(staffPitch(h.staff, h.y), { dur: 1.1, vel: 0.55 });
+  };
+
+  // D.C. (da capo): al volver al inicio desde la Coda, el cursor recorre el pentagrama al revés.
+  useEffect(() => {
+    const rewind = () => {
+      if (!boxRef.current || !cursorRef.current) return;
+      const box = measureHeads();
+      const proxy = { x: box.width };
+      let prev = box.width;
+      gsap.set(cursorRef.current, { x: box.width, autoAlpha: 1 });
+      gsap.to(proxy, {
+        x: 0,
+        duration: 1.3,
+        ease: "power1.inOut",
+        onUpdate: () => {
+          gsap.set(cursorRef.current, { x: proxy.x });
+          for (const h of heads.current) if (prev > h.x && proxy.x <= h.x) strike(h);
+          prev = proxy.x;
+        },
+        onComplete: () => {
+          gsap.to(cursorRef.current, { autoAlpha: 0, duration: 0.3 });
+        },
+      });
+    };
+    const onDc = () => {
+      if (!window.matchMedia(MOTION_OK).matches) return;
+      const t0 = performance.now();
+      const wait = () => {
+        if (window.scrollY < 40) window.setTimeout(rewind, 150);
+        else if (performance.now() - t0 < 4000) window.requestAnimationFrame(wait);
+      };
+      window.requestAnimationFrame(wait);
+    };
+    window.addEventListener("score:dc", onDc);
+    return () => window.removeEventListener("score:dc", onDc);
+  }, []);
+
+  const onStaffEnter = (e: PointerEvent<HTMLDivElement>) => {
+    if (!window.matchMedia(MOTION_OK).matches || !boxRef.current) return;
+    const box = measureHeads();
     lastX.current = e.clientX - box.left;
     gsap.set(cursorRef.current, { x: lastX.current });
     gsap.to(cursorRef.current, { autoAlpha: 1, duration: 0.2 });
@@ -191,10 +235,7 @@ export function Hero({ d }: { d: Dictionary }) {
     gsap.to(cursorRef.current, { x, duration: 0.12, ease: "power2.out", overwrite: "auto" });
     const prev = lastX.current;
     for (const h of heads.current) {
-      if ((prev < h.x && x >= h.x) || (prev > h.x && x <= h.x)) {
-        gsap.fromTo(h.el, { scale: 1.9 }, { scale: 1, duration: 0.7, ease: "elastic.out(1, 0.4)", overwrite: "auto" });
-        if (soundEnabled()) playNote(staffPitch(h.staff, h.y), { dur: 1.1, vel: 0.55 });
-      }
+      if ((prev < h.x && x >= h.x) || (prev > h.x && x <= h.x)) strike(h);
     }
     lastX.current = x;
   };

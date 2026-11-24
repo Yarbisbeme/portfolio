@@ -231,8 +231,8 @@
     stroke: var(--color-wine);
     stroke-linecap: round;
     fill: none;
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
+    /* Sin trazar hasta que GSAP (DrawSVG) lo dibuja con el scroll. */
+    stroke-dasharray: 0 100000;
   }
 
   .pencil-stroke {
@@ -315,9 +315,21 @@
   top: 3px;
 }
 
-/* Mientras GSAP prepara la entrada del hero, el hero no se pinta (ver script en el layout). */
-html.motion-pending [data-hero] {
-  visibility: hidden;
+/* Mientras GSAP prepara la entrada del hero, el hero no se pinta. Solo con CSS (sin scripts en
+   <head>, que rompían la hidratación cuando una herramienta inyecta los suyos, como Cypress):
+   - GSAP pone html.motion-ready al empezar la entrada;
+   - si el JS no llega, el hero aparece igual a los 2.5 s;
+   - con "reducir movimiento" nunca se oculta. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.motion-ready) [data-hero] {
+    visibility: hidden;
+    animation: hero-fallback 0s linear 2.5s forwards;
+  }
+}
+@keyframes hero-fallback {
+  to {
+    visibility: visible;
+  }
 }
 .bar-final {
   display: block;
