@@ -1,5 +1,7 @@
 "use client";
 
+import { MODE_CHORD, playChord, playNote, soundEnabled, staffPitch } from "@/lib/sound";
+
 import { useState } from "react";
 import { projects, staves, type Dictionary, type Mode } from "@/content/site";
 import { ContactLinks } from "./ContactLinks";
@@ -44,6 +46,9 @@ function Staff({
                 onMouseLeave={() => onNote(null)}
                 onFocus={() => onNote(n.t)}
                 onBlur={() => onNote(null)}
+                onClick={() => {
+                  if (soundEnabled()) playNote(staffPitch(label.toLowerCase() === "verify" ? "verify" : "build", n.y));
+                }}
                 className={`flex h-[1.5em] cursor-default items-center gap-[0.4em] font-mono text-xs leading-none transition-colors duration-300 xs:text-[0.8125rem] sm:text-sm lg:text-base ${on ? "text-ink" : "text-muted"}`}
               >
                 <span
@@ -134,7 +139,10 @@ export function Hero({ d }: { d: Dictionary }) {
                     type="button"
                     aria-pressed={on}
                     data-mode={m}
-                    onClick={() => setMode(m)}
+                    onClick={() => {
+                      setMode(m);
+                      if (soundEnabled()) playChord(MODE_CHORD[m]);
+                    }}
                     className={`min-h-[52px] cursor-pointer px-3 text-lg transition-colors xs:text-xl sm:px-7 ${i < 2 ? "border-r border-ink" : ""} ${on ? "italic text-wine underline decoration-1 underline-offset-[6px]" : "text-ink hover:text-wine"}`}
                   >
                     {d.hero.modes[m]}

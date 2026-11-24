@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { diatonic, playChord, playNote } from "@/lib/sound";
 import type { Dictionary } from "@/content/site";
 
 export type TuningNote = { name: string; status: string };
@@ -12,7 +16,7 @@ const PITCH = [4, 3, 2, 3, 1, 2, 0, 1, 2, 4, 3, 5, 4, 2, 3, 1, 2, 3];
 const GAP = 7; // separación entre líneas
 const TOP = 14;
 
-function System({ notes, offset }: { notes: TuningNote[]; offset: number }) {
+function System({ notes, offset, playing }: { notes: TuningNote[]; offset: number; playing: number }) {
   const step = 34;
   const width = notes.length * step + 40;
   return (
@@ -28,13 +32,13 @@ function System({ notes, offset }: { notes: TuningNote[]; offset: number }) {
         const passed = n.status === "passed";
         const failed = n.status === "failed";
         return (
-          <g key={n.name + i} data-tuning-note={n.status}>
+          <g key={n.name + i} data-tuning-note={n.status} data-playing={playing === offset + i}>
             <title>{n.name}</title>
             <ellipse
               cx={x}
               cy={y}
-              rx="5.2"
-              ry="3.8"
+              rx={playing === offset + i ? 6.6 : 5.2}
+              ry={playing === offset + i ? 4.8 : 3.8}
               transform={`rotate(-20 ${x} ${y})`}
               className={passed ? "fill-wine" : "fill-paper"}
               stroke={passed ? "none" : "currentColor"}
@@ -55,8 +59,35 @@ function System({ notes, offset }: { notes: TuningNote[]; offset: number }) {
  * Lleno en vino = en verde; hueco con cruz = en rojo; hueco = no se ejecutó.
  * En móvil se parte en dos sistemas para que las notas no se aprieten.
  */
+/** Altura de cada nota del pentagrama de afinación: línea inferior = mi4. */
+const pitchOf = (k: number) => diatonic(64, PITCH[k % PITCH.length]);
+
 export function TuningStaff({ d, tuning }: { d: Dictionary; tuning: Tuning }) {
   const { notes, totals } = tuning;
+  const [playing, setPlaying] = useState(-1);
+  const timers = useRef<number[]>([]);
+  useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), []);
+
+  /**
+   * Escuchar la suite: cada escenario es una nota. Lo que pasó suena afinado;
+   * un fallo suena con su semitono de al lado (desafina) y la frase no resuelve.
+   * Pulsar el botón es pedir el sonido, así que suena aunque el interruptor general esté apagado.
+   */
+  const listen = () => {
+    timers.current.forEach((t) => window.clearTimeout(t));
+    timers.current = [];
+    const beat = 0.2;
+    notes.forEach((n, k) => {
+      const midi = pitchOf(k);
+      playNote(midi, { delay: k * beat, dur: 0.9, vel: 0.7 });
+      if (n.status === "failed") playNote(midi + 1, { delay: k * beat, dur: 0.9, vel: 0.6 });
+      timers.current.push(window.setTimeout(() => setPlaying(k), k * beat * 1000));
+    });
+    const end = notes.length * beat;
+    if (totals.failed === 0) playChord([48, 60, 64, 67, 72], { delay: end, dur: 2.4, vel: 0.6 });
+    else playChord([47, 59, 62, 65], { delay: end, dur: 2, vel: 0.55 });
+    timers.current.push(window.setTimeout(() => setPlaying(-1), (end + 0.6) * 1000));
+  };
   const half = Math.ceil(notes.length / 2);
   const date = new Intl.DateTimeFormat(d.how.tuningLocale, { day: "numeric", month: "short", year: "numeric" }).format(new Date(tuning.runAt));
   return (
@@ -69,11 +100,11 @@ export function TuningStaff({ d, tuning }: { d: Dictionary; tuning: Tuning }) {
       </figcaption>
       <div className="text-ink">
         <div className="hidden sm:block">
-          <System notes={notes} offset={0} />
+          <System notes={notes} offset={0} playing={playing} />
         </div>
         <div className="flex flex-col gap-4 sm:hidden">
-          <System notes={notes.slice(0, half)} offset={0} />
-          <System notes={notes.slice(half)} offset={half} />
+          <System notes={notes.slice(0, half)} offset={0} playing={playing} />
+          <System notes={notes.slice(half)} offset={half} playing={playing} />
         </div>
       </div>
       <p className="flex flex-wrap items-baseline gap-x-6 gap-y-1 font-mono text-sm">
@@ -85,6 +116,16 @@ export function TuningStaff({ d, tuning }: { d: Dictionary; tuning: Tuning }) {
             {totals.failed} {d.how.tuningFailed}
           </span>
         ) : null}
+        <button
+          type="button"
+          data-listen
+          onClick={listen}
+          disabled={playing >= 0}
+          className="inline-flex min-h-11 cursor-pointer items-center gap-2 underline decoration-1 underline-offset-4 hover:text-wine disabled:cursor-default disabled:no-underline disabled:text-muted"
+        >
+          <span aria-hidden="true">♪</span>
+          {playing >= 0 ? d.how.listening : d.how.listen}
+        </button>
         <span aria-hidden="true" className="flex items-center gap-4 text-xs text-muted">
           <span className="flex items-center gap-1.5">
             <span className="inline-block h-2 w-2.5 -rotate-[20deg] rounded-[50%] bg-wine" /> {d.how.tuningLegendPass}

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { siteConfig, type Dictionary, type Locale } from "@/content/site";
-import { VoiceSwitch, VoicesGlyph } from "./VoiceSwitch";
+import { SoundToggle, VoiceSwitch, VoicesGlyph } from "./VoiceSwitch";
 
 export function Header({ d, lang }: { d: Dictionary; lang: Locale }) {
   const [open, setOpen] = useState(false);
@@ -34,8 +34,9 @@ export function Header({ d, lang }: { d: Dictionary; lang: Locale }) {
           </ul>
         </nav>
         <div className="flex items-center gap-1">
-          <div className="mr-2 hidden lg:block">
+          <div className="mr-2 hidden items-center gap-3 lg:flex">
             <VoiceSwitch d={d} variant="compact" />
+            <SoundToggle d={d} />
           </div>
           <a
             href={`/${other}/`}
@@ -71,6 +72,9 @@ export function Header({ d, lang }: { d: Dictionary; lang: Locale }) {
         <nav id="menu-movil" aria-label="Principal" className="rule-top xl:hidden">
           <div className="mx-auto max-w-[90rem] px-5 pt-4 sm:px-8 lg:hidden">
             <VoiceSwitch d={d} variant="full" />
+          </div>
+          <div className="mx-auto max-w-[90rem] px-5 pt-2 sm:px-8 lg:hidden">
+            <SoundToggle d={d} className="-ml-1.5" />
           </div>
           <ul className="mx-auto max-w-[90rem] px-5 sm:px-8">
             {links.map(([href, label]) => (
