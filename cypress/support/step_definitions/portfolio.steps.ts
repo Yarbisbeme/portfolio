@@ -120,3 +120,46 @@ Then("the preview shows only a still image", () => {
   cy.wait(800);
   home.preview().find("video").should("not.exist");
 });
+
+// ── 06 · Gramática de partitura ─────────────────────────────────────────────
+Then("the rehearsal marks read {string}", (csv: string) => {
+  cy.get("main [data-rehearsal]").then(($m) => {
+    expect([...$m].map((el) => el.getAttribute("data-rehearsal")).join(",")).to.eq(csv);
+  });
+});
+
+Then("every rehearsal mark is announced as a section", () => {
+  cy.get("main [data-rehearsal]").each(($m) => {
+    cy.wrap($m).find(".sr-only").invoke("text").should("match", /^(Sección|Section) [A-Z]$/);
+  });
+});
+
+Then("the contact closes with a final barline", () => {
+  cy.get('#contacto [data-bar="final"]').should("exist");
+});
+
+When("I follow the da capo", () => {
+  cy.get("#contacto [data-dc]").click();
+});
+
+Then("I am back at the top of the score", () => {
+  cy.location("hash").should("eq", "#top");
+  cy.window().its("scrollY").should("be.lt", 50);
+});
+
+When("I read the score as {string} from the header", (label: string) => {
+  cy.viewport(1440, 900);
+  cy.get("[data-header-mode]").contains(label).click();
+});
+
+Then("the work {string} is silent", (slug: string) => {
+  cy.get(`[data-work="${slug}"]`).should("have.attr", "data-silent", "true");
+});
+
+Then("the work {string} is sounding", (slug: string) => {
+  cy.get(`[data-work="${slug}"]`).should("have.attr", "data-silent", "false");
+});
+
+Then("silent work is announced to screen readers", () => {
+  cy.get('[data-work][data-silent="true"] h3 .sr-only').should("have.length.at.least", 1);
+});

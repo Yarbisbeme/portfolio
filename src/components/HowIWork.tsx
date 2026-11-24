@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import type { Dictionary, Locale } from "@/content/site";
+import { Rehearsal } from "./Score";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 const ROMAN = ["I", "II", "III", "IV", "V"];
@@ -352,9 +353,9 @@ export function HowIWork({ d, lang }: { d: Dictionary; lang: Locale }) {
 
   if (reducedMotion) {
     return (
-      <section id="como-trabajo" aria-labelledby="how-title" className="rule-top py-20 lg:py-32">
+      <section id="como-trabajo" aria-labelledby="how-title" className="bar-double py-20 lg:py-32">
         <div className="mx-auto flex max-w-[90rem] flex-col items-center px-5 text-center sm:px-8 lg:px-16">
-          <p className="kicker">{d.how.kicker}</p>
+          <Rehearsal mark={d.how.kicker} label={d.nav.section} />
           <h2 id="how-title" className="mt-4 text-5xl font-normal leading-none lg:text-6xl">
             {d.how.title}
           </h2>
@@ -384,11 +385,11 @@ export function HowIWork({ d, lang }: { d: Dictionary; lang: Locale }) {
   const focusVal = activeStep < 0 ? -0.5 : activeStep;
 
   return (
-    <section id="como-trabajo" aria-labelledby="how-title" className="rule-top">
+    <section id="como-trabajo" aria-labelledby="how-title" className="bar-double">
       <div ref={trackRef} className="h-[300svh]">
         <div className="sticky top-0 mx-auto flex h-[100svh] max-w-[90rem] flex-col items-center justify-between px-5 py-6 text-center sm:px-8 sm:py-10 lg:px-16 lg:py-14">
           <header className="flex flex-col items-center">
-            <p className="kicker">{d.how.kicker}</p>
+            <Rehearsal mark={d.how.kicker} label={d.nav.section} />
             <h2 id="how-title" className="mt-2 text-4xl font-normal leading-none xs:text-[2.625rem] sm:mt-3 sm:text-5xl lg:mt-4 lg:text-6xl">
               {d.how.title}
             </h2>
