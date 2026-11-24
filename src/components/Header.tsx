@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Dictionary, Locale } from "@/content/site";
+import { siteConfig, type Dictionary, type Locale } from "@/content/site";
 
 export function Header({ d, lang }: { d: Dictionary; lang: Locale }) {
   const [open, setOpen] = useState(false);
@@ -19,7 +19,7 @@ export function Header({ d, lang }: { d: Dictionary; lang: Locale }) {
     <header className="rule-bottom font-mono text-sm tracking-[0.03em]">
       <div className="mx-auto flex max-w-[90rem] items-center justify-between gap-4 px-5 py-1.5 sm:px-8 lg:px-16 lg:py-3">
         <a href={`/${lang}/`} className="py-3 font-medium no-underline">
-          Yarbis Beltré Mercedes
+          {siteConfig.authorName}
         </a>
         <nav aria-label="Principal" className="hidden lg:block">
           <ul className="flex gap-6 xl:gap-9">

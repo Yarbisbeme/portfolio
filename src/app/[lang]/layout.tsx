@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { dictionaries, locales, type Locale } from "@/content/site";
+import { dictionaries, locales, siteConfig, type Locale } from "@/content/site";
 import "../globals.css";
 
 export const dynamicParams = false;
@@ -11,7 +11,7 @@ export function generateStaticParams() {
 
 const isLocale = (v: string): v is Locale => (locales as readonly string[]).includes(v);
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yarbis.work";
+const siteUrl = siteConfig.siteUrl;
 
 export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Promise<Metadata> {
   const { lang } = await params;

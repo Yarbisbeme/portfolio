@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Genera el visor de código de /dev: resalta cada archivo del repo con la paleta Partitura
- * y lo escribe como HTML estático en public/dev-src/ (se carga a pedido, la página no pesa).
+ * y lo escribe como HTML estático (.txt para evitar reescrituras de trailingSlash en Vercel)
+ * en public/dev-src/ (se carga a pedido, la página no pesa).
  * Corre antes de cada build (npm run prebuild).
  */
 import { mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
@@ -53,7 +54,7 @@ const index = files.map((path, i) => {
   const code = readFileSync(join(ROOT, path), "utf8");
   const html = highlighter.codeToHtml(code, { lang: LANG[extname(path)], theme: "partitura" });
   const id = `f${String(i).padStart(3, "0")}`;
-  writeFileSync(join(OUT, `${id}.html`), html);
+  writeFileSync(join(OUT, `${id}.txt`), html);
   return { id, path: relative(ROOT, join(ROOT, path)).replaceAll("\\", "/"), lines: code.split("\n").length };
 });
 

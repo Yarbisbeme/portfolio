@@ -44,11 +44,11 @@ function Staff({
                 onMouseLeave={() => onNote(null)}
                 onFocus={() => onNote(n.t)}
                 onBlur={() => onNote(null)}
-                className={`flex h-[1.5em] cursor-default items-center gap-[0.4em] font-mono text-[0.6875rem] leading-none transition-colors duration-300 sm:text-sm lg:text-base ${on ? "text-ink" : "text-muted"}`}
+                className={`flex h-[1.5em] cursor-default items-center gap-[0.4em] font-mono text-xs leading-none transition-colors duration-300 xs:text-[0.8125rem] sm:text-sm lg:text-base ${on ? "text-ink" : "text-muted"}`}
               >
                 <span
                   aria-hidden="true"
-                  className={`h-[0.62em] w-[0.85em] shrink-0 -rotate-[20deg] rounded-[50%] transition-colors duration-300 ${on ? "bg-wine" : "bg-rest"}`}
+                  className={`h-[0.68em] w-[0.92em] shrink-0 -rotate-[20deg] rounded-[50%] transition-colors duration-300 ${on ? "bg-wine" : "bg-rest"}`}
                 />
                 <span className="bg-paper px-[0.2em]">
                   {n.short ? (
@@ -92,34 +92,39 @@ export function Hero({ d }: { d: Dictionary }) {
   const current = projects[active];
 
   return (
-    <section aria-labelledby="hero-title" className="mx-auto max-w-[90rem] px-5 pt-8 sm:px-8 lg:px-16 lg:pt-12">
-      <div className="grid gap-12 pb-10 lg:grid-cols-[minmax(0,8fr)_minmax(0,4fr)] lg:gap-16 lg:pb-12">
-        <div className="flex flex-col gap-8 lg:gap-10">
-          <p className="kicker">{d.hero.eyebrow}</p>
-          <h1 id="hero-title" className="text-[2.75rem] font-normal leading-[1.02] tracking-[-0.015em] sm:text-6xl lg:text-[4.75rem]">
-            {d.hero.line1}
-            <br />
-            <em className="text-wine">{d.hero.line2}</em>
-          </h1>
+    <section aria-labelledby="hero-title" className="mx-auto flex min-h-[calc(100svh-3.75rem)] max-w-[90rem] flex-col justify-between px-5 pt-5 sm:px-8 sm:pt-8 lg:block lg:min-h-0 lg:px-16 lg:pt-12">
+      <div className="grid flex-1 gap-8 pb-4 lg:grid-cols-[minmax(0,8fr)_minmax(0,4fr)] lg:gap-16 lg:pb-12">
+        <div className="flex flex-1 flex-col justify-between gap-6 py-1 sm:gap-8 lg:justify-start lg:gap-10 lg:py-0">
+          <div className="flex flex-col gap-3 sm:gap-6">
+            <p className="kicker">
+              <span className="sm:hidden">{d.hero.eyebrowShort}</span>
+              <span className="hidden sm:inline">{d.hero.eyebrow}</span>
+            </p>
+            <h1 id="hero-title" className="text-[2.875rem] font-normal leading-[1.01] tracking-[-0.02em] xs:text-[3.375rem] sm:text-6xl lg:text-[4.75rem]">
+              {d.hero.line1}
+              <br />
+              <em className="text-wine">{d.hero.line2}</em>
+            </h1>
+          </div>
 
-          <figure className="m-0 flex gap-3 [--gap:11px] sm:gap-4 sm:[--gap:13px] lg:[--gap:15px]" aria-label={d.hero.staffLabel}>
-            <div className="flex w-14 shrink-0 flex-col justify-between py-1 sm:w-24 lg:w-28">
-              <span className={`text-xl italic transition-colors duration-300 sm:text-2xl lg:text-3xl ${lit ? "text-ink" : buildOn ? "text-ink" : "text-muted"}`}>Build</span>
-              <span className={`text-xl italic transition-colors duration-300 sm:text-2xl lg:text-3xl ${lit ? "text-ink" : verifyOn ? "text-ink" : "text-muted"}`}>Verify</span>
+          <figure className="m-0 flex gap-3 [--gap:13px] xs:[--gap:14px] sm:gap-4 lg:[--gap:15px]" aria-label={d.hero.staffLabel}>
+            <div className="flex w-16 shrink-0 flex-col justify-between py-1 xs:w-20 sm:w-24 lg:w-28">
+              <span className={`text-xl italic transition-colors duration-300 xs:text-2xl lg:text-3xl ${lit ? "text-ink" : buildOn ? "text-ink" : "text-muted"}`}>Build</span>
+              <span className={`text-xl italic transition-colors duration-300 xs:text-2xl lg:text-3xl ${lit ? "text-ink" : verifyOn ? "text-ink" : "text-muted"}`}>Verify</span>
             </div>
-            <div aria-hidden="true" className="relative w-4 shrink-0 self-stretch sm:w-5">
+            <div aria-hidden="true" className="relative w-5 shrink-0 self-stretch">
               <svg viewBox="0 0 22 150" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M20 2C8 4 12 30 11 60C10 70 6 74 2 75C6 76 10 80 11 90C12 120 8 146 20 148" vectorEffect="non-scaling-stroke" />
               </svg>
             </div>
-            <div className="flex min-w-0 flex-1 flex-col gap-[calc(var(--gap)*3.5)] pb-2">
+            <div className="flex min-w-0 flex-1 flex-col gap-[calc(var(--gap)*3.1)] pb-1.5 sm:gap-[calc(var(--gap)*3.5)] sm:pb-2">
               <Staff label="Build" notes={staves.build} isOn={isOn} onNote={setFocusNote} usedInLabel={usedInLabel} />
               <Staff label="Verify" notes={staves.verify} isOn={isOn} onNote={setFocusNote} usedInLabel={usedInLabel} />
             </div>
           </figure>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6 lg:mt-auto">
-            <span id="listen-label" className="kicker">{d.hero.listen}</span>
+            <span id="listen-label" className="sr-only sm:not-sr-only sm:kicker">{d.hero.listen}</span>
             <div role="group" aria-labelledby="listen-label" className="grid grid-cols-3 rule-top rule-bottom sm:flex">
               {modes.map((m: Mode, i) => {
                 const on = mode === m;
@@ -130,7 +135,7 @@ export function Hero({ d }: { d: Dictionary }) {
                     aria-pressed={on}
                     data-mode={m}
                     onClick={() => setMode(m)}
-                    className={`min-h-[52px] cursor-pointer px-3 text-lg transition-colors sm:px-7 sm:text-xl ${i < 2 ? "border-r border-ink" : ""} ${on ? "italic text-wine underline decoration-1 underline-offset-[6px]" : "text-ink hover:text-wine"}`}
+                    className={`min-h-[52px] cursor-pointer px-3 text-lg transition-colors xs:text-xl sm:px-7 ${i < 2 ? "border-r border-ink" : ""} ${on ? "italic text-wine underline decoration-1 underline-offset-[6px]" : "text-ink hover:text-wine"}`}
                   >
                     {d.hero.modes[m]}
                   </button>
@@ -140,7 +145,7 @@ export function Hero({ d }: { d: Dictionary }) {
           </div>
         </div>
 
-        <aside aria-label={d.hero.preview} className="flex flex-col gap-5">
+        <aside aria-label={d.hero.preview} className="hidden flex-col gap-5 lg:flex">
           <figure className="m-0 flex flex-col gap-2">
             <div data-preview className="relative aspect-[4/3] overflow-hidden border-l-[6px] border-wine bg-panel">
               {projects.map((p, i) => {
@@ -210,7 +215,7 @@ export function Hero({ d }: { d: Dictionary }) {
           </nav>
         </aside>
       </div>
-      <ContactLinks d={d} className="rule-top py-2" />
+      <ContactLinks d={d} className="rule-top py-3 sm:py-2" />
     </section>
   );
 }

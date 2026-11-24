@@ -1,16 +1,12 @@
+import { siteConfig } from "@/lib/env";
+
+export { siteConfig };
+
 export const locales = ["es", "en"] as const;
 export type Locale = (typeof locales)[number];
 export type Mode = "general" | "backend" | "qa";
 
-export const contact = {
-  email: "yarbisbeme@gmail.com",
-  github: "https://github.com/yarbisbeme",
-  linkedin: "https://www.linkedin.com/in/yarbisbeltremercedes",
-  cv: {
-    backend: "/cv/yarbis-beltre-backend.pdf",
-    qa: "/cv/yarbis-beltre-qa-automation.pdf",
-  },
-};
+export const contact = siteConfig.contact;
 
 /** Notas del gran pentagrama: `y` = posición en semitonos (0 = línea superior). */
 export const staves = {
@@ -94,16 +90,19 @@ export const stackGroups = [
 
 const es = {
   meta: {
-    title: "Yarbis Beltré Mercedes — Back-End & QA Automation",
-    description: "Back-End Engineer (.NET / Python) y QA Automation (SDET) en Santo Domingo. Construyo el sistema y demuestro que aguanta.",
+    title: `${siteConfig.authorName} — ${siteConfig.roleTitle}`,
+    description:
+      siteConfig.copy.es.metaDescription ||
+      `Back-End Engineer (.NET / Python) y QA Automation (SDET) en ${siteConfig.location}. Construyo el sistema y demuestro que aguanta.`,
   },
   skip: "Saltar al contenido",
   nav: { work: "Trabajo", how: "Cómo trabajo", about: "Sobre mí", contact: "Contacto", automation: "Automation", code: "Código", menu: "Menú", close: "Cerrar" },
   langSwitch: { label: "English", short: "EN", aria: "Ver el sitio en inglés" },
   hero: {
-    eyebrow: "Back-End (.NET / Python) · QA Automation · Santo Domingo",
-    line1: "Construyo el sistema.",
-    line2: "Y demuestro que aguanta.",
+    eyebrow: `${siteConfig.roleTagline} · ${siteConfig.location}`,
+    eyebrowShort: `${siteConfig.roleShort} · ${siteConfig.location}`,
+    line1: siteConfig.copy.es.heroLine1 || "Construyo el sistema.",
+    line2: siteConfig.copy.es.heroLine2 || "Y demuestro que aguanta.",
     staffLabel: "Mi stack en dos pentagramas: lo que construyo y cómo lo verifico",
     listen: "Leer como",
     seeCase: "Ver en Trabajo",
@@ -116,6 +115,8 @@ const es = {
     title: "Trabajo",
     intro: "Un proyecto propio y tres equipos. En los de empresa cuento mi rol, el stack y las prácticas; el producto es de ellos.",
     relevant: "Relevante para este enfoque",
+    more: "Ver más",
+    less: "Ver menos",
     items: {
       ybank: {
         kind: "Proyecto personal",
@@ -165,6 +166,7 @@ const es = {
   stack: {
     kicker: "Compás 03",
     title: "Stack por función",
+    other: "Ver el resto del stack",
     groups: { build: "Build", data: "Data & APIs", verify: "Verify", observe: "Automate & Observe" } as Record<string, string>,
   },
   about: {
@@ -218,6 +220,7 @@ const es = {
     noShot: "Sin captura para este paso",
     expand: "Pantalla completa",
     close: "Cerrar",
+    pickScenario: "Elegir escenario",
     status: { passed: "pasó", failed: "falló", skipped: "omitido", pending: "pendiente", undefined: "sin definir", ambiguous: "ambiguo" } as Record<string, string>,
     readCode: "Leer el código de la suite",
     back: "Volver al portfolio",
@@ -227,6 +230,7 @@ const es = {
     kicker: "Solo lectura",
     intro: "El código de este portfolio, incluida la suite de pruebas. Elige un archivo.",
     files: "Archivos",
+    pickFile: "Elegir archivo",
     loading: "Cargando…",
     error: "No se pudo cargar el archivo.",
     github: "Repositorio en GitHub",
@@ -235,11 +239,12 @@ const es = {
   contact: {
     kicker: "Coda",
     title: "Hablemos",
-    body: "Si tu equipo necesita a alguien que construya el back-end y además lo pruebe, escríbeme.",
+    body: siteConfig.copy.es.contactBody || "Si tu equipo necesita a alguien que construya el back-end y además lo pruebe, escríbeme.",
+    emailShort: "Email",
     cv: "Descargar CV",
     cvBackend: "CV Back-End",
     cvQa: "CV QA Automation",
-    footer: "Hecho en Santo Domingo con Next.js. Imágenes editoriales generadas con IA.",
+    footer: siteConfig.copy.es.footer || `Hecho en ${siteConfig.location} con Next.js. Imágenes editoriales generadas con IA.`,
   },
 };
 
@@ -247,16 +252,19 @@ type Dict = typeof es;
 
 const en: Dict = {
   meta: {
-    title: "Yarbis Beltré Mercedes — Back-End & QA Automation",
-    description: "Back-End Engineer (.NET / Python) and QA Automation (SDET) based in Santo Domingo. I build the system and prove it holds.",
+    title: `${siteConfig.authorName} — ${siteConfig.roleTitle}`,
+    description:
+      siteConfig.copy.en.metaDescription ||
+      `Back-End Engineer (.NET / Python) and QA Automation (SDET) based in ${siteConfig.location}. I build the system and prove it holds.`,
   },
   skip: "Skip to content",
   nav: { work: "Work", how: "How I work", about: "About", contact: "Contact", automation: "Automation", code: "Code", menu: "Menu", close: "Close" },
   langSwitch: { label: "Español", short: "ES", aria: "View the site in Spanish" },
   hero: {
-    eyebrow: "Back-End (.NET / Python) · QA Automation · Santo Domingo",
-    line1: "I build the system.",
-    line2: "And prove it holds.",
+    eyebrow: `${siteConfig.roleTagline} · ${siteConfig.location}`,
+    eyebrowShort: `${siteConfig.roleShort} · ${siteConfig.location}`,
+    line1: siteConfig.copy.en.heroLine1 || "I build the system.",
+    line2: siteConfig.copy.en.heroLine2 || "And prove it holds.",
     staffLabel: "My stack on two staves: what I build and how I verify it",
     listen: "Read as",
     seeCase: "See in Work",
@@ -269,6 +277,8 @@ const en: Dict = {
     title: "Work",
     intro: "One project of my own and three teams. For company work I describe my role, stack and practices; the product is theirs.",
     relevant: "Relevant to this focus",
+    more: "Read more",
+    less: "Show less",
     items: {
       ybank: {
         kind: "Personal project",
@@ -318,6 +328,7 @@ const en: Dict = {
   stack: {
     kicker: "Bar 03",
     title: "Stack by function",
+    other: "See rest of stack",
     groups: { build: "Build", data: "Data & APIs", verify: "Verify", observe: "Automate & Observe" },
   },
   about: {
@@ -371,6 +382,7 @@ const en: Dict = {
     noShot: "No screenshot for this step",
     expand: "Fullscreen",
     close: "Close",
+    pickScenario: "Choose scenario",
     status: { passed: "passed", failed: "failed", skipped: "skipped", pending: "pending", undefined: "undefined", ambiguous: "ambiguous" },
     readCode: "Read the suite's code",
     back: "Back to the portfolio",
@@ -380,6 +392,7 @@ const en: Dict = {
     kicker: "Read-only",
     intro: "The source of this portfolio, test suite included. Pick a file.",
     files: "Files",
+    pickFile: "Choose file",
     loading: "Loading…",
     error: "The file could not be loaded.",
     github: "Repository on GitHub",
@@ -388,11 +401,12 @@ const en: Dict = {
   contact: {
     kicker: "Coda",
     title: "Let's talk",
-    body: "If your team needs someone who builds the back end and also tests it, write to me.",
+    body: siteConfig.copy.en.contactBody || "If your team needs someone who builds the back end and also tests it, write to me.",
+    emailShort: "Email",
     cv: "Download CV",
     cvBackend: "Back-End CV",
     cvQa: "QA Automation CV",
-    footer: "Made in Santo Domingo with Next.js. Editorial still-life imagery generated with AI.",
+    footer: siteConfig.copy.en.footer || `Made in ${siteConfig.location} with Next.js. Editorial still-life imagery generated with AI.`,
   },
 };
 

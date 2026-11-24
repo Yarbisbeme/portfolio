@@ -42,5 +42,9 @@
     "tailwindcss": "4.3.3",
     "typescript": "^5",
     "wait-on": "^9.5.1"
+  },
+  "allowScripts": {
+    "cypress@15.21.2": true,
+    "esbuild@0.28.2": true
   }
 }
