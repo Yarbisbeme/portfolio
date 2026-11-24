@@ -86,6 +86,8 @@ Then("the headline reads {string}", (text: string) => {
 
 // ── Accesibilidad ─────────────────────────────────────────────
 Then("the page has no serious accessibility violations", () => {
+  // Se evalúa la página en reposo: la entrada animada del hero ya terminó.
+  cy.get("html", { timeout: 8000 }).should("not.have.attr", "data-intro", "running");
   cy.injectAxe();
   cy.checkA11y(undefined, { includedImpacts: ["serious", "critical"] });
 });
@@ -399,4 +401,46 @@ Then("the progress of every measure only shrank", () => {
   cy.get<number[][]>("@seen").then((seen) => {
     for (let k = 1; k < seen.length; k += 1) seen[k].forEach((v, i) => expect(v, `compás ${i + 1}`).to.be.at.most(seen[k - 1][i] + 0.001));
   });
+});
+
+// ── 05 · Movimiento con GSAP ──────────────────────────────────────────────
+Then("the entrance of the score finishes", () => {
+  cy.get("html", { timeout: 8000 }).should("have.attr", "data-intro", "done");
+});
+
+Then("the whole grand staff is visible", () => {
+  cy.get("[data-grand-staff] [data-note]")
+    .filter(":visible")
+    .each(($n) => expect(Number(getComputedStyle($n[0]).opacity)).to.eq(1));
+  cy.get("[data-grand-staff] [data-staff-line]").each(($l) => expect(getComputedStyle($l[0]).transform).to.match(/none|matrix\(1, 0, 0, 1/));
+});
+
+When("I sweep the pointer across the grand staff", () => {
+  cy.get("[data-staff-cursor]").parent().then(($box) => {
+    const r = $box[0].getBoundingClientRect();
+    const y = r.top + r.height * 0.75;
+    cy.wrap($box).trigger("pointerover", { clientX: r.left + 2, clientY: y, pointerType: "mouse" });
+    for (let k = 1; k <= 20; k += 1) cy.wrap($box).trigger("pointermove", { clientX: r.left + (r.width * k) / 20, clientY: y, pointerType: "mouse" });
+  });
+});
+
+Then("the playback cursor is shown", () => {
+  cy.get("[data-staff-cursor]").should(($c) => expect(Number(getComputedStyle($c[0]).opacity)).to.be.greaterThan(0.5));
+});
+
+Then("the notes it crossed were struck", () => {
+  // Una nota golpeada recibe una escala animada (GSAP deja el estilo en línea).
+  cy.get("[data-grand-staff] [data-note] > span:first-child").should(($heads) => {
+    const struck = [...$heads].filter((h) => (h as HTMLElement).style.transform !== "");
+    expect(struck.length).to.be.greaterThan(3);
+  });
+});
+
+Then("the score was never hidden", () => {
+  cy.get("html").should("not.have.class", "motion-pending").and("not.have.attr", "data-intro");
+  cy.get("h1").should("have.css", "opacity", "1");
+});
+
+Then("every section closes with a full double barline", () => {
+  cy.get(".bar-double").each(($s) => expect(getComputedStyle($s[0]).getPropertyValue("--bar").trim()).to.eq("100%"));
 });
