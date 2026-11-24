@@ -226,6 +226,15 @@
     transition: transform 940ms cubic-bezier(0.22, 1, 0.36, 1) 260ms, color 940ms ease-out 260ms;
   }
 
+  /* Trazo guiado por el scroll: el progreso lo escribe JS en stroke-dashoffset, sin transición. */
+  .pencil-scrub {
+    stroke: var(--color-wine);
+    stroke-linecap: round;
+    fill: none;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
   .pencil-stroke {
     stroke: var(--color-wine);
     stroke-linecap: round;
