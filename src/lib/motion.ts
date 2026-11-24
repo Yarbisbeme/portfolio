@@ -17,9 +17,9 @@ if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger, SplitText,
 /** Condición común: solo hay movimiento si el visitante no pidió reducirlo. */
 export const MOTION_OK = "(prefers-reduced-motion: no-preference)";
 
-/** Quita el ocultamiento previo del hero (ver script del layout). */
+/** Marca la página lista: el CSS deja de ocultar el hero (ver globals.css). */
 export function revealPage() {
-  document.documentElement.classList.remove("motion-pending");
+  document.documentElement.classList.add("motion-ready");
 }
 
 /** Espera a las fuentes antes de partir texto en palabras, para que no se descuadre. */

@@ -439,7 +439,8 @@ Then("the notes it crossed were struck", () => {
 });
 
 Then("the score was never hidden", () => {
-  cy.get("html").should("not.have.class", "motion-pending").and("not.have.attr", "data-intro");
+  cy.get("[data-hero]").should("have.css", "visibility", "visible");
+  cy.get("html").should("not.have.attr", "data-intro");
   cy.get("h1").should("have.css", "opacity", "1");
 });
 

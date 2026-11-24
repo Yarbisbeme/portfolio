@@ -18,7 +18,8 @@ Feature: Motion is optional
     And the whole grand staff is visible
 
   Scenario: A playback cursor follows the pointer over the grand staff
-    Given I am on a desktop screen
+    Given I open the portfolio in "es"
+    And I am on a desktop screen
     And the entrance of the score finishes
     When I sweep the pointer across the grand staff
     Then the playback cursor is shown
@@ -38,13 +39,15 @@ Feature: Motion is optional
     And the projects end at rest in the order "ybank,tmm,los-hidalgos,eikon"
 
   Scenario: A playback cursor sweeps the four functions of the stack
-    Given I am on a desktop screen
+    Given I open the portfolio in "es"
+    And I am on a desktop screen
     When I scroll to the stack
     Then the stack playback cursor passes
     And every function of the stack ends visible
 
   Scenario: The career timeline is written by the scroll
-    Given I am on a desktop screen
+    Given I open the portfolio in "es"
+    And I am on a desktop screen
     When I bring the career timeline into view
     Then the career timeline is partly written
     When I scroll past the career timeline
@@ -56,7 +59,8 @@ Feature: Motion is optional
     Then every note of the tuning staff ends visible
 
   Scenario: The coda draws its final barline and the da capo rewinds the score
-    Given I am on a desktop screen
+    Given I open the portfolio in "es"
+    And I am on a desktop screen
     When I scroll to the coda
     Then the final barline is fully drawn
     When I follow the da capo
