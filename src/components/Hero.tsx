@@ -107,7 +107,7 @@ export function Hero({ d }: { d: Dictionary }) {
             </h1>
           </div>
 
-          <figure className="m-0 flex gap-3 [--gap:13px] xs:[--gap:14px] sm:gap-4 lg:[--gap:15px]" aria-label={d.hero.staffLabel}>
+          <figure data-grand-staff className="m-0 flex gap-3 [--gap:13px] xs:[--gap:14px] sm:gap-4 lg:[--gap:15px]" aria-label={d.hero.staffLabel}>
             <div className="flex w-16 shrink-0 flex-col justify-between py-1 xs:w-20 sm:w-24 lg:w-28">
               <span className={`text-xl italic transition-colors duration-300 xs:text-2xl lg:text-3xl ${lit ? "text-ink" : buildOn ? "text-ink" : "text-muted"}`}>Build</span>
               <span className={`text-xl italic transition-colors duration-300 xs:text-2xl lg:text-3xl ${lit ? "text-ink" : verifyOn ? "text-ink" : "text-muted"}`}>Verify</span>
