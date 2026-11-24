@@ -1,15 +1,15 @@
 {
-  "runAt": "2026-11-24T16:03:24.316Z",
-  "durationMs": 98272,
-  "commit": "7649a63b06343c0a82449be390bb17a3371cfa7f",
-  "runUrl": "https://github.com/Yarbisbeme/portfolio/actions/runs/45432163553",
+  "runAt": "2026-11-24T16:44:59.226Z",
+  "durationMs": 100220,
+  "commit": "ac33a7d2da229fbd98fee0a054c7d2698c681097",
+  "runUrl": "https://github.com/Yarbisbeme/portfolio/actions/runs/45440247847",
   "browser": "chrome",
   "totals": {
-    "scenarios": 44,
-    "passed": 44,
-    "failed": 0,
+    "scenarios": 54,
+    "passed": 0,
+    "failed": 54,
     "other": 0,
-    "steps": 155
+    "steps": 193
   },
   "features": [
     {
@@ -19,204 +19,204 @@
       "scenarios": [
         {
           "name": "Back-End focus silences the Verify staff",
-          "status": "passed",
-          "durationMs": 554,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 439,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 341,
-              "error": null,
-              "shot": "/automation/shots/001.webp"
+              "status": "failed",
+              "durationMs": 439,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I read the portfolio as \"Back-End\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 117,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/002.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the \"build\" staff is sounding",
               "table": null,
-              "status": "passed",
-              "durationMs": 31,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/003.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the \"verify\" staff is silent",
               "table": null,
-              "status": "passed",
-              "durationMs": 25,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/004.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the address keeps the focus \"backend\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 27,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/005.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the CV link offers the \"backend\" version",
               "table": null,
-              "status": "passed",
-              "durationMs": 13,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/006.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "QA focus silences the Build staff",
-          "status": "passed",
-          "durationMs": 430,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 484,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 221,
-              "error": null,
-              "shot": "/automation/shots/007.webp"
+              "status": "failed",
+              "durationMs": 484,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I read the portfolio as \"QA\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 106,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/008.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the \"verify\" staff is sounding",
               "table": null,
-              "status": "passed",
-              "durationMs": 21,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/009.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the \"build\" staff is silent",
               "table": null,
-              "status": "passed",
-              "durationMs": 28,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/010.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the address keeps the focus \"qa\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 41,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/011.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the CV link offers the \"qa-automation\" version",
               "table": null,
-              "status": "passed",
-              "durationMs": 13,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/012.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "General focus offers both CVs",
-          "status": "passed",
-          "durationMs": 377,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 524,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 218,
-              "error": null,
-              "shot": "/automation/shots/013.webp"
+              "status": "failed",
+              "durationMs": 524,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I read the portfolio as \"General\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 100,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/014.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "both staves are sounding",
               "table": null,
-              "status": "passed",
-              "durationMs": 42,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/015.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the CV links offer 2 versions",
               "table": null,
-              "status": "passed",
-              "durationMs": 17,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/016.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "A shared link opens with its focus applied",
-          "status": "passed",
-          "durationMs": 403,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 563,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 222,
-              "error": null,
-              "shot": "/automation/shots/017.webp"
+              "status": "failed",
+              "durationMs": 563,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\" with the focus \"qa\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 170,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/018.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the selected focus is \"qa\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 11,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/019.webp"
+              "shot": null
             }
           ]
         }
@@ -229,316 +229,456 @@
       "scenarios": [
         {
           "name": "Focusing a project lights only its notes",
-          "status": "passed",
-          "durationMs": 308,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 507,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 269,
-              "error": null,
-              "shot": "/automation/shots/020.webp"
+              "status": "failed",
+              "durationMs": 507,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I focus the project \"YBank\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 22,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/021.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "only these notes are sounding: \"PostgreSQL, WebdriverIO, Appium\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 17,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/022.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Focusing a project lights only its notes",
-          "status": "passed",
-          "durationMs": 216,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 486,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 170,
-              "error": null,
-              "shot": "/automation/shots/023.webp"
+              "status": "failed",
+              "durationMs": 486,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I focus the project \"Eikôn\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 16,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/024.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "only these notes are sounding: \"C#, .NET Core, FastAPI, SQL Server, xUnit, Playwright\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 30,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/025.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Focusing a project lights only its notes",
-          "status": "passed",
-          "durationMs": 262,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 478,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 217,
-              "error": null,
-              "shot": "/automation/shots/026.webp"
+              "status": "failed",
+              "durationMs": 478,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I focus the project \"TMM\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 17,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/027.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "only these notes are sounding: \"WebdriverIO, Appium, Cucumber, SigNoz\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 28,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/028.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Focusing a project lights only its notes",
-          "status": "passed",
-          "durationMs": 240,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 450,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 207,
-              "error": null,
-              "shot": "/automation/shots/029.webp"
+              "status": "failed",
+              "durationMs": 450,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I focus the project \"Los Hidalgos\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 19,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/030.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "only these notes are sounding: \"C#, ASP.NET, SQL Server\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 14,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/031.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "A note marks the projects that use it",
-          "status": "passed",
-          "durationMs": 299,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 457,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 260,
-              "error": null,
-              "shot": "/automation/shots/032.webp"
+              "status": "failed",
+              "durationMs": 457,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I point at the note \"SQL Server\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 12,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/033.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "these projects are marked: \"eikon, los-hidalgos\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 27,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/034.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "A note used by one project marks only that project",
-          "status": "passed",
-          "durationMs": 274,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 410,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 246,
-              "error": null,
-              "shot": "/automation/shots/035.webp"
+              "status": "failed",
+              "durationMs": 410,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I point at the note \"Cucumber\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 13,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/036.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "these projects are marked: \"tmm\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 15,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/037.webp"
+              "shot": null
             }
           ]
         },
         {
-          "name": "The grand staff fits on narrow phones",
-          "status": "passed",
-          "durationMs": 273,
-          "attempt": 0,
+          "name": "The grand staff fits at every width",
+          "status": "failed",
+          "durationMs": 428,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 233,
-              "error": null,
-              "shot": "/automation/shots/038.webp"
+              "status": "failed",
+              "durationMs": 428,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Given",
               "text": "I am on a 320 pixels wide screen",
               "table": null,
-              "status": "passed",
-              "durationMs": 9,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/039.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the grand staff fits inside the page",
               "table": null,
-              "status": "passed",
-              "durationMs": 31,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/040.webp"
+              "shot": null
             }
           ]
         },
         {
-          "name": "The grand staff fits on narrow phones",
-          "status": "passed",
-          "durationMs": 261,
-          "attempt": 0,
+          "name": "The grand staff fits at every width",
+          "status": "failed",
+          "durationMs": 493,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 223,
-              "error": null,
-              "shot": "/automation/shots/041.webp"
+              "status": "failed",
+              "durationMs": 493,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Given",
               "text": "I am on a 375 pixels wide screen",
               "table": null,
-              "status": "passed",
-              "durationMs": 9,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/042.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the grand staff fits inside the page",
               "table": null,
-              "status": "passed",
-              "durationMs": 29,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/043.webp"
+              "shot": null
             }
           ]
         },
         {
-          "name": "The grand staff fits on narrow phones",
-          "status": "passed",
-          "durationMs": 250,
-          "attempt": 0,
+          "name": "The grand staff fits at every width",
+          "status": "failed",
+          "durationMs": 427,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 208,
-              "error": null,
-              "shot": "/automation/shots/044.webp"
+              "status": "failed",
+              "durationMs": 427,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Given",
               "text": "I am on a 430 pixels wide screen",
               "table": null,
-              "status": "passed",
-              "durationMs": 8,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/045.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the grand staff fits inside the page",
               "table": null,
-              "status": "passed",
-              "durationMs": 34,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/046.webp"
+              "shot": null
+            }
+          ]
+        },
+        {
+          "name": "The grand staff fits at every width",
+          "status": "failed",
+          "durationMs": 415,
+          "attempt": 1,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "failed",
+              "durationMs": 415,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
+            },
+            {
+              "keyword": "Given",
+              "text": "I am on a 768 pixels wide screen",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "Then",
+              "text": "the grand staff fits inside the page",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            }
+          ]
+        },
+        {
+          "name": "The grand staff fits at every width",
+          "status": "failed",
+          "durationMs": 459,
+          "attempt": 1,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "failed",
+              "durationMs": 459,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
+            },
+            {
+              "keyword": "Given",
+              "text": "I am on a 1024 pixels wide screen",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "Then",
+              "text": "the grand staff fits inside the page",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            }
+          ]
+        },
+        {
+          "name": "The grand staff fits at every width",
+          "status": "failed",
+          "durationMs": 435,
+          "attempt": 1,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "failed",
+              "durationMs": 435,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
+            },
+            {
+              "keyword": "Given",
+              "text": "I am on a 1280 pixels wide screen",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "Then",
+              "text": "the grand staff fits inside the page",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            }
+          ]
+        },
+        {
+          "name": "The grand staff fits at every width",
+          "status": "failed",
+          "durationMs": 436,
+          "attempt": 1,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "failed",
+              "durationMs": 436,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
+            },
+            {
+              "keyword": "Given",
+              "text": "I am on a 1440 pixels wide screen",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "Then",
+              "text": "the grand staff fits inside the page",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
             }
           ]
         }
@@ -551,71 +691,71 @@
       "scenarios": [
         {
           "name": "Switching language keeps the reading focus",
-          "status": "passed",
-          "durationMs": 594,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 472,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\" with the focus \"qa\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 232,
-              "error": null,
-              "shot": "/automation/shots/047.webp"
+              "status": "failed",
+              "durationMs": 472,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I switch the language",
               "table": null,
-              "status": "passed",
-              "durationMs": 287,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/048.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "I am on the \"en\" version with the focus \"qa\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 53,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/049.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the headline reads \"I build the system.\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 22,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/050.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Spanish headline",
-          "status": "passed",
-          "durationMs": 194,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 488,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 183,
-              "error": null,
-              "shot": "/automation/shots/051.webp"
+              "status": "failed",
+              "durationMs": 488,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the headline reads \"Construyo el sistema.\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 11,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/052.webp"
+              "shot": null
             }
           ]
         }
@@ -628,114 +768,114 @@
       "scenarios": [
         {
           "name": "No serious or critical accessibility violations",
-          "status": "passed",
-          "durationMs": 739,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 385,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 293,
-              "error": null,
-              "shot": "/automation/shots/053.webp"
+              "status": "failed",
+              "durationMs": 385,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the page has no serious accessibility violations",
               "table": null,
-              "status": "passed",
-              "durationMs": 446,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/054.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "No serious or critical accessibility violations",
-          "status": "passed",
-          "durationMs": 534,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 387,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"en\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 220,
-              "error": null,
-              "shot": "/automation/shots/055.webp"
+              "status": "failed",
+              "durationMs": 387,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the page has no serious accessibility violations",
               "table": null,
-              "status": "passed",
-              "durationMs": 314,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/056.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Keyboard users can skip straight to the content",
-          "status": "passed",
-          "durationMs": 292,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 467,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 261,
-              "error": null,
-              "shot": "/automation/shots/057.webp"
+              "status": "failed",
+              "durationMs": 467,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I press Tab",
               "table": null,
-              "status": "passed",
-              "durationMs": 18,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/058.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the skip link is focused and visible",
               "table": null,
-              "status": "passed",
-              "durationMs": 13,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/059.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Every image describes itself",
-          "status": "passed",
-          "durationMs": 227,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 398,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"en\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 196,
-              "error": null,
-              "shot": "/automation/shots/060.webp"
+              "status": "failed",
+              "durationMs": 398,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "every visible image has a text alternative",
               "table": null,
-              "status": "passed",
-              "durationMs": 31,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/061.webp"
+              "shot": null
             }
           ]
         }
@@ -748,80 +888,362 @@
       "scenarios": [
         {
           "name": "A project with a loop plays it in the preview",
-          "status": "passed",
-          "durationMs": 314,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 432,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 256,
-              "error": null,
-              "shot": "/automation/shots/062.webp"
+              "status": "failed",
+              "durationMs": 432,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I focus the project \"TMM\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 24,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/063.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the preview plays a loop",
               "table": null,
-              "status": "passed",
-              "durationMs": 34,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/064.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Reduced motion keeps the still image",
-          "status": "passed",
-          "durationMs": 1103,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 696,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "the visitor prefers reduced motion",
               "table": null,
               "status": "passed",
-              "durationMs": 10,
+              "durationMs": 18,
               "error": null,
-              "shot": "/automation/shots/065.webp"
+              "shot": "/automation/shots/001.webp"
             },
             {
               "keyword": "And",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 257,
-              "error": null,
-              "shot": "/automation/shots/066.webp"
+              "status": "failed",
+              "durationMs": 678,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I focus the project \"TMM\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 16,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/067.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the preview shows only a still image",
               "table": null,
-              "status": "passed",
-              "durationMs": 820,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/068.webp"
+              "shot": null
+            }
+          ]
+        },
+        {
+          "name": "The score plays its entrance and then rests",
+          "status": "failed",
+          "durationMs": 631,
+          "attempt": 1,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "failed",
+              "durationMs": 631,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
+            },
+            {
+              "keyword": "Then",
+              "text": "the entrance of the score finishes",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "And",
+              "text": "the whole grand staff is visible",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            }
+          ]
+        },
+        {
+          "name": "A playback cursor follows the pointer over the grand staff",
+          "status": "failed",
+          "durationMs": 4139,
+          "attempt": 1,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I am on a desktop screen",
+              "table": null,
+              "status": "failed",
+              "durationMs": 4139,
+              "error": "Timed out retrying after 4000ms: Expected to find element: `#como-trabajo[data-how-layout=\"pinned\"]`, but never found it.",
+              "shot": null
+            },
+            {
+              "keyword": "And",
+              "text": "the entrance of the score finishes",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "When",
+              "text": "I sweep the pointer across the grand staff",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "Then",
+              "text": "the playback cursor is shown",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "And",
+              "text": "the notes it crossed were struck",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            }
+          ]
+        },
+        {
+          "name": "Reduced motion shows the score at rest from the start",
+          "status": "failed",
+          "durationMs": 939,
+          "attempt": 1,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "the visitor prefers reduced motion",
+              "table": null,
+              "status": "passed",
+              "durationMs": 8,
+              "error": null,
+              "shot": "/automation/shots/002.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "failed",
+              "durationMs": 931,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": "/automation/shots/003.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the score was never hidden",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "And",
+              "text": "every section closes with a full double barline",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            }
+          ]
+        },
+        {
+          "name": "Projects slide to their new place when the focus changes",
+          "status": "failed",
+          "durationMs": 605,
+          "attempt": 1,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "failed",
+              "durationMs": 605,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
+            },
+            {
+              "keyword": "And",
+              "text": "the entrance of the score finishes",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "When",
+              "text": "I read the portfolio as \"QA\"",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "Then",
+              "text": "the projects are sliding to their new order",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "And",
+              "text": "the projects end at rest in the order \"ybank,tmm,los-hidalgos,eikon\"",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            }
+          ]
+        },
+        {
+          "name": "A playback cursor sweeps the four functions of the stack",
+          "status": "failed",
+          "durationMs": 4154,
+          "attempt": 1,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I am on a desktop screen",
+              "table": null,
+              "status": "failed",
+              "durationMs": 4154,
+              "error": "Timed out retrying after 4000ms: Expected to find element: `#como-trabajo[data-how-layout=\"pinned\"]`, but never found it.",
+              "shot": null
+            },
+            {
+              "keyword": "When",
+              "text": "I scroll to the stack",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "Then",
+              "text": "the stack playback cursor passes",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "And",
+              "text": "every function of the stack ends visible",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            }
+          ]
+        },
+        {
+          "name": "The career timeline is written by the scroll",
+          "status": "failed",
+          "durationMs": 4140,
+          "attempt": 1,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I am on a desktop screen",
+              "table": null,
+              "status": "failed",
+              "durationMs": 4140,
+              "error": "Timed out retrying after 4000ms: Expected to find element: `#como-trabajo[data-how-layout=\"pinned\"]`, but never found it.",
+              "shot": null
+            },
+            {
+              "keyword": "When",
+              "text": "I bring the career timeline into view",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "Then",
+              "text": "the career timeline is partly written",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "When",
+              "text": "I scroll past the career timeline",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
+            },
+            {
+              "keyword": "Then",
+              "text": "the career timeline is fully written",
+              "table": null,
+              "status": "skipped",
+              "durationMs": 0,
+              "error": null,
+              "shot": null
             }
           ]
         }
@@ -834,440 +1256,440 @@
       "scenarios": [
         {
           "name": "Sections are marked with rehearsal letters in order",
-          "status": "passed",
-          "durationMs": 294,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 437,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 252,
-              "error": null,
-              "shot": "/automation/shots/069.webp"
+              "status": "failed",
+              "durationMs": 437,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the rehearsal marks read \"A,B,C,D\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 12,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/070.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "every rehearsal mark is announced as a section",
               "table": null,
-              "status": "passed",
-              "durationMs": 30,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/071.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "The piece ends with a final barline and a da capo",
-          "status": "passed",
-          "durationMs": 366,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 383,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 205,
-              "error": null,
-              "shot": "/automation/shots/072.webp"
+              "status": "failed",
+              "durationMs": 383,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the contact closes with a final barline",
               "table": null,
-              "status": "passed",
-              "durationMs": 11,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/073.webp"
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I follow the da capo",
               "table": null,
-              "status": "passed",
-              "durationMs": 121,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/074.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "I am back at the top of the score",
               "table": null,
-              "status": "passed",
-              "durationMs": 29,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/075.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "The focus travels with me in the header",
-          "status": "passed",
-          "durationMs": 384,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 409,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 193,
-              "error": null,
-              "shot": "/automation/shots/076.webp"
+              "status": "failed",
+              "durationMs": 409,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I read the score as \"Back-End\" from the header",
               "table": null,
-              "status": "passed",
-              "durationMs": 125,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/077.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the \"verify\" staff is silent",
               "table": null,
-              "status": "passed",
-              "durationMs": 23,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/078.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the selected focus is \"backend\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 17,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/079.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the address keeps the focus \"backend\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 26,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/080.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Silent work stays readable and is announced",
-          "status": "passed",
-          "durationMs": 786,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 432,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 211,
-              "error": null,
-              "shot": "/automation/shots/081.webp"
+              "status": "failed",
+              "durationMs": 432,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I read the portfolio as \"QA\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 104,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/082.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the work \"eikon\" is silent",
               "table": null,
-              "status": "passed",
-              "durationMs": 9,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/083.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the work \"tmm\" is sounding",
               "table": null,
-              "status": "passed",
-              "durationMs": 9,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/084.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "silent work is announced to screen readers",
               "table": null,
-              "status": "passed",
-              "durationMs": 22,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/085.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the page has no serious accessibility violations",
               "table": null,
-              "status": "passed",
-              "durationMs": 431,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/086.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Each project signs the voices it plays",
-          "status": "passed",
-          "durationMs": 227,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 409,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 216,
-              "error": null,
-              "shot": "/automation/shots/087.webp"
+              "status": "failed",
+              "durationMs": 409,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the work \"ybank\" is signed as \"Ensamble · Build + Verify\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 11,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/088.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Each project signs the voices it plays",
-          "status": "passed",
-          "durationMs": 220,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 389,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 209,
-              "error": null,
-              "shot": "/automation/shots/089.webp"
+              "status": "failed",
+              "durationMs": 389,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the work \"eikon\" is signed as \"Solo · Build\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 11,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/090.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Each project signs the voices it plays",
-          "status": "passed",
-          "durationMs": 286,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 428,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 276,
-              "error": null,
-              "shot": "/automation/shots/091.webp"
+              "status": "failed",
+              "durationMs": 428,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the work \"tmm\" is signed as \"Solo · Verify\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 10,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/092.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Each project signs the voices it plays",
-          "status": "passed",
-          "durationMs": 226,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 403,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 216,
-              "error": null,
-              "shot": "/automation/shots/093.webp"
+              "status": "failed",
+              "durationMs": 403,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the work \"los-hidalgos\" is signed as \"Ensamble · Build + Verify\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 10,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/094.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "The career reads as two voices in time",
-          "status": "passed",
-          "durationMs": 421,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 420,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 261,
-              "error": null,
-              "shot": "/automation/shots/095.webp"
+              "status": "failed",
+              "durationMs": 420,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I read the portfolio as \"QA\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 111,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/096.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the career voice \"verify\" is sounding",
               "table": null,
-              "status": "passed",
-              "durationMs": 18,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/097.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the career voice \"build\" is silent",
               "table": null,
-              "status": "passed",
-              "durationMs": 13,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/098.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the career voice \"both\" is sounding",
               "table": null,
-              "status": "passed",
-              "durationMs": 18,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/099.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "The stack repeats its four functions and silences the other voice",
-          "status": "passed",
-          "durationMs": 309,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 424,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 165,
-              "error": null,
-              "shot": "/automation/shots/100.webp"
+              "status": "failed",
+              "durationMs": 424,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I read the portfolio as \"QA\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 103,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/101.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the stack function \"verify\" is sounding",
               "table": null,
-              "status": "passed",
-              "durationMs": 20,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/102.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the stack function \"build\" is silent",
               "table": null,
-              "status": "passed",
-              "durationMs": 12,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/103.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the stack function \"data\" is silent",
               "table": null,
-              "status": "passed",
-              "durationMs": 9,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/104.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "The tuning staff plays one note per scenario of the last run",
-          "status": "passed",
-          "durationMs": 296,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 434,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 209,
-              "error": null,
-              "shot": "/automation/shots/105.webp"
+              "status": "failed",
+              "durationMs": 434,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the tuning staff has one note per scenario in its count",
               "table": null,
-              "status": "passed",
-              "durationMs": 32,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/106.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "no note is out of tune unless it is marked with a cross",
               "table": null,
-              "status": "passed",
-              "durationMs": 55,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/107.webp"
+              "shot": null
             }
           ]
         }
@@ -1280,213 +1702,213 @@
       "scenarios": [
         {
           "name": "On desktop the section follows my scroll and leaves me where I stop",
-          "status": "passed",
-          "durationMs": 1548,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 459,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 261,
-              "error": null,
-              "shot": "/automation/shots/108.webp"
+              "status": "failed",
+              "durationMs": 459,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Given",
               "text": "I am on a desktop screen",
               "table": null,
-              "status": "passed",
-              "durationMs": 12,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/109.webp"
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I stop scrolling halfway through \"How I work\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 29,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/110.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the page stays where I left it",
               "table": null,
-              "status": "passed",
-              "durationMs": 1216,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/111.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the measure in focus is 2",
               "table": null,
-              "status": "passed",
-              "durationMs": 30,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/112.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "I can skip the section",
-          "status": "passed",
-          "durationMs": 347,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 442,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 212,
-              "error": null,
-              "shot": "/automation/shots/113.webp"
+              "status": "failed",
+              "durationMs": 442,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Given",
               "text": "I am on a desktop screen",
               "table": null,
-              "status": "passed",
-              "durationMs": 9,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/114.webp"
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I skip \"How I work\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 106,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/115.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the stack section is in view",
               "table": null,
-              "status": "passed",
-              "durationMs": 20,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/116.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "On a phone each cliché is struck through as it comes into view",
-          "status": "passed",
-          "durationMs": 687,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 415,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 209,
-              "error": null,
-              "shot": "/automation/shots/117.webp"
+              "status": "failed",
+              "durationMs": 415,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Given",
               "text": "I am on a phone screen",
               "table": null,
-              "status": "passed",
-              "durationMs": 51,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/118.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "no cliché is struck yet",
               "table": null,
-              "status": "passed",
-              "durationMs": 14,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/119.webp"
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I scroll to the last measure of \"How I work\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 13,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/120.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "every cliché I passed is struck through",
               "table": null,
-              "status": "passed",
-              "durationMs": 400,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/121.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "The choreography follows the scroll in both directions",
-          "status": "passed",
-          "durationMs": 7389,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 428,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 209,
-              "error": null,
-              "shot": "/automation/shots/122.webp"
+              "status": "failed",
+              "durationMs": 428,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Given",
               "text": "I am on a desktop screen",
               "table": null,
-              "status": "passed",
-              "durationMs": 10,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/123.webp"
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I scroll down through \"How I work\" in small steps",
               "table": null,
-              "status": "passed",
-              "durationMs": 3558,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/124.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the progress of every measure only grew",
               "table": null,
-              "status": "passed",
-              "durationMs": 32,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/125.webp"
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I scroll back up through \"How I work\" in small steps",
               "table": null,
-              "status": "passed",
-              "durationMs": 3557,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/126.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the progress of every measure only shrank",
               "table": null,
-              "status": "passed",
-              "durationMs": 23,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/127.webp"
+              "shot": null
             }
           ]
         }
@@ -1499,158 +1921,158 @@
       "scenarios": [
         {
           "name": "The playhead follows the step I choose",
-          "status": "passed",
-          "durationMs": 334,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 359,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the suite page in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 180,
-              "error": null,
-              "shot": "/automation/shots/128.webp"
+              "status": "failed",
+              "durationMs": 359,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the playhead is on step 1",
               "table": null,
-              "status": "passed",
-              "durationMs": 13,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/129.webp"
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I go to the next step",
               "table": null,
-              "status": "passed",
-              "durationMs": 106,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/130.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the playhead is on step 2",
               "table": null,
-              "status": "passed",
-              "durationMs": 18,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/131.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "the first 2 notes have sounded",
               "table": null,
-              "status": "passed",
-              "durationMs": 17,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/132.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "The suite and code pages are accessible",
-          "status": "passed",
-          "durationMs": 501,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 356,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the suite page in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 173,
-              "error": null,
-              "shot": "/automation/shots/133.webp"
+              "status": "failed",
+              "durationMs": 356,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the page has no serious accessibility violations",
               "table": null,
-              "status": "passed",
-              "durationMs": 328,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/134.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "The suite and code pages are accessible",
-          "status": "passed",
-          "durationMs": 435,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 723,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the suite page in \"en\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 193,
-              "error": null,
-              "shot": "/automation/shots/135.webp"
+              "status": "failed",
+              "durationMs": 723,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": "/automation/shots/004.webp"
             },
             {
               "keyword": "Then",
               "text": "the page has no serious accessibility violations",
               "table": null,
-              "status": "passed",
-              "durationMs": 242,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/136.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "The suite and code pages are accessible",
-          "status": "passed",
-          "durationMs": 346,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 566,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the code page in \"es\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 151,
-              "error": null,
-              "shot": "/automation/shots/137.webp"
+              "status": "failed",
+              "durationMs": 566,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the page has no serious accessibility violations",
               "table": null,
-              "status": "passed",
-              "durationMs": 195,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/138.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "The suite and code pages are accessible",
-          "status": "passed",
-          "durationMs": 304,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 292,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the code page in \"en\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 114,
-              "error": null,
-              "shot": "/automation/shots/139.webp"
+              "status": "failed",
+              "durationMs": 292,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "the page has no serious accessibility violations",
               "table": null,
-              "status": "passed",
-              "durationMs": 190,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/140.webp"
+              "shot": null
             }
           ]
         }
@@ -1663,160 +2085,160 @@
       "scenarios": [
         {
           "name": "The portfolio is silent by default",
-          "status": "passed",
-          "durationMs": 463,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 414,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\" listening for audio",
               "table": null,
-              "status": "passed",
-              "durationMs": 228,
-              "error": null,
-              "shot": "/automation/shots/141.webp"
+              "status": "failed",
+              "durationMs": 414,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I touch the note \"Playwright\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 114,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/142.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "I read the portfolio as \"QA\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 98,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/143.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "no audio has been started",
               "table": null,
-              "status": "passed",
-              "durationMs": 11,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/144.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "sound is off",
               "table": null,
-              "status": "passed",
-              "durationMs": 12,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/145.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Turning sound on makes the score playable and is remembered",
-          "status": "passed",
-          "durationMs": 674,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 401,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\" listening for audio",
               "table": null,
-              "status": "passed",
-              "durationMs": 164,
-              "error": null,
-              "shot": "/automation/shots/146.webp"
+              "status": "failed",
+              "durationMs": 401,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "Given",
               "text": "I am on a desktop screen",
               "table": null,
-              "status": "passed",
-              "durationMs": 25,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/147.webp"
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I turn sound on",
               "table": null,
-              "status": "passed",
-              "durationMs": 135,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/148.webp"
+              "shot": null
             },
             {
               "keyword": "And",
               "text": "I touch the note \"Playwright\"",
               "table": null,
-              "status": "passed",
-              "durationMs": 98,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/149.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "audio has been started",
               "table": null,
-              "status": "passed",
-              "durationMs": 10,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/150.webp"
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I reload the page",
               "table": null,
-              "status": "passed",
-              "durationMs": 226,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/151.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "sound is on",
               "table": null,
-              "status": "passed",
-              "durationMs": 16,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/152.webp"
+              "shot": null
             }
           ]
         },
         {
           "name": "Listening to the suite is a request for sound in itself",
-          "status": "passed",
-          "durationMs": 305,
-          "attempt": 0,
+          "status": "failed",
+          "durationMs": 445,
+          "attempt": 1,
           "steps": [
             {
               "keyword": "Given",
               "text": "I open the portfolio in \"es\" listening for audio",
               "table": null,
-              "status": "passed",
-              "durationMs": 172,
-              "error": null,
-              "shot": "/automation/shots/153.webp"
+              "status": "failed",
+              "durationMs": 445,
+              "error": "The following error originated from your application code, not from Cypress.\n\n  > Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n\nWhen Cypress detects uncaught errors originating from your application it will automatically fail the current test.\n",
+              "shot": null
             },
             {
               "keyword": "When",
               "text": "I listen to the latest run",
               "table": null,
-              "status": "passed",
-              "durationMs": 121,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/154.webp"
+              "shot": null
             },
             {
               "keyword": "Then",
               "text": "audio has been started",
               "table": null,
-              "status": "passed",
-              "durationMs": 12,
+              "status": "skipped",
+              "durationMs": 0,
               "error": null,
-              "shot": "/automation/shots/155.webp"
+              "shot": null
             }
           ]
         }
