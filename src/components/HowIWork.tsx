@@ -69,6 +69,7 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
   const [correctedUpTo, setCorrectedUpTo] = useState(-1);
   const [struck, setStruck] = useState<boolean[]>(() => rows.map(() => false));
   const [stepY, setStepY] = useState(184);
+  const [drumH, setDrumH] = useState(600);
   const [pencilLines, setPencilLines] = useState<PencilLine[][]>(() => rows.map(() => [DEFAULT_LINE]));
 
   useEffect(() => {
@@ -150,6 +151,7 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
     if (drum) {
       const nextStepY = Math.max(maxVisualH * 1.08, drum.clientHeight * 0.36);
       setStepY((prev) => (Math.abs(prev - nextStepY) > 0.5 ? nextStepY : prev));
+      setDrumH(drum.clientHeight);
     }
 
     const sig = JSON.stringify(nextLines);
@@ -399,7 +401,15 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
         <div className="sticky top-0 mx-auto flex h-[100svh] max-w-[90rem] flex-col items-center justify-between px-5 py-6 text-center sm:px-8 sm:py-10 lg:px-16 lg:py-14">
           {header(true)}
 
-          <div ref={drumRef} className="relative my-4 w-full max-w-5xl flex-1 overflow-x-clip overflow-y-hidden">
+          {/* Los bordes se desvanecen: un compás vecino nunca aparece cortado en seco. */}
+          <div
+            ref={drumRef}
+            className="relative my-4 w-full max-w-5xl flex-1 overflow-x-clip overflow-y-hidden"
+            style={{
+              maskImage: "linear-gradient(to bottom, transparent 0, #000 18%, #000 82%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, transparent 0, #000 18%, #000 82%, transparent 100%)",
+            }}
+          >
             <div aria-hidden="true" className="pointer-events-none absolute left-0 top-1/2 hidden -translate-y-1/2 items-center gap-2 md:flex">
               <span className="h-6 w-px bg-ink/35" />
               <span className="h-2 w-2.5 -rotate-[20deg] rounded-[50%] bg-wine" />
@@ -415,12 +425,14 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
                 const scale = 0.72 + 0.28 / (1 + Math.pow(abs * 1.15, 2));
                 const isFocused = activeStep === i;
                 const isCorrected = correctedUpTo >= 0 && i <= correctedUpTo;
+                // Vecinos: solo una insinuación, y nada en pantallas bajas donde no caben enteros.
+                const opacity = abs < 0.6 ? 1 : abs < 1.6 && drumH >= 560 ? 0.4 : 0;
                 return (
                   <li
                     key={r.fix}
                     data-focus={isFocused ? "true" : "false"}
-                    style={{ transform: `translate3d(0, calc(-50% + ${y.toFixed(1)}px), 0) scale(${scale.toFixed(3)})` }}
-                    className="group absolute inset-x-0 top-1/2 flex origin-center flex-col items-center transition-transform duration-[760ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform"
+                    style={{ transform: `translate3d(0, calc(-50% + ${y.toFixed(1)}px), 0) scale(${scale.toFixed(3)})`, opacity }}
+                    className="group absolute inset-x-0 top-1/2 flex origin-center flex-col items-center transition-[transform,opacity] duration-[760ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform"
                   >
                     {voices(i, isCorrected, isFocused, TEXT)}
                   </li>
