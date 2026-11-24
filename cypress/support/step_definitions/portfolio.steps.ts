@@ -337,3 +337,20 @@ Then("sound is off", () => {
 Then("sound is on", () => {
   cy.get("[data-sound-toggle]").first().should("have.attr", "aria-pressed", "true");
 });
+
+// ── Hotfix: el gran pentagrama no desborda en móvil ───────────────────────
+Given("I am on a {int} pixels wide screen", (width: number) => {
+  cy.viewport(width, 800);
+});
+
+Then("the grand staff fits inside the page", () => {
+  cy.document().its("documentElement.scrollWidth").then((sw) => {
+    cy.window().its("innerWidth").should("be.gte", sw);
+  });
+  cy.get("[data-grand-staff]").then(($fig) => {
+    const right = $fig[0].getBoundingClientRect().right;
+    cy.get("[data-grand-staff] [data-note]").filter(":visible").each(($n) => {
+      expect($n[0].getBoundingClientRect().right).to.be.at.most(right + 1);
+    });
+  });
+});

@@ -23,3 +23,13 @@ Feature: The grand staff responds to the projects
   Scenario: A note used by one project marks only that project
     When I point at the note "Cucumber"
     Then these projects are marked: "tmm"
+
+  Scenario Outline: The grand staff fits on narrow phones
+    Given I am on a <width> pixels wide screen
+    Then the grand staff fits inside the page
+
+    Examples:
+      | width |
+      | 320   |
+      | 375   |
+      | 430   |

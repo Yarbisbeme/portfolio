@@ -33,10 +33,16 @@ function Staff({
         <div key={i} aria-hidden="true" className="absolute inset-x-0 h-px bg-ink" style={{ top: `calc(var(--gap) * ${i})` }} />
       ))}
       <ul aria-label={label} data-staff={label.toLowerCase()} className="absolute inset-x-0 top-0 flex justify-between px-1 sm:px-4">
-        {notes.map((n) => {
+        {notes.map((n, i) => {
           const on = isOn(n.t);
+          // min-w-0: las notas pueden acercarse si falta ancho (están a distinta altura, no chocan).
+          // La última se alinea al final para que su etiqueta nunca salga del pentagrama.
+          const last = notes.slice(i + 1).every((m) => m.desktopOnly);
+          const lastAll = i === notes.length - 1;
+          const show = n.desktopOnly ? "hidden md:flex" : "flex";
+          const align = lastAll ? "justify-end" : last ? "justify-end md:justify-start" : "";
           return (
-            <li key={n.t} className={n.desktopOnly ? "hidden md:block" : "block"} style={{ marginTop: `calc(var(--gap) * ${n.y / 2} - 0.75em)` }}>
+            <li key={n.t} className={`min-w-0 ${show} ${align}`} style={{ marginTop: `calc(var(--gap) * ${n.y / 2} - 0.75em)` }}>
               <button
                 type="button"
                 data-note={n.t}
@@ -112,10 +118,21 @@ export function Hero({ d }: { d: Dictionary }) {
             </h1>
           </div>
 
-          <figure data-grand-staff className="m-0 flex gap-3 [--gap:13px] xs:[--gap:14px] sm:gap-4 lg:[--gap:15px]" aria-label={d.hero.staffLabel}>
-            <div className="flex w-16 shrink-0 flex-col justify-between py-1 xs:w-20 sm:w-24 lg:w-28">
-              <span className={`text-xl italic transition-colors duration-300 xs:text-2xl lg:text-3xl ${lit ? "text-ink" : buildOn ? "text-ink" : "text-muted"}`}>Build</span>
-              <span className={`text-xl italic transition-colors duration-300 xs:text-2xl lg:text-3xl ${lit ? "text-ink" : verifyOn ? "text-ink" : "text-muted"}`}>Verify</span>
+          {/* En pantallas estrechas el nombre de cada voz se abrevia (B. / V.), como en los sistemas
+              siguientes de una partitura: así las notas caben sin desbordar. */}
+          <figure data-grand-staff className="m-0 flex gap-2 [--gap:13px] xs:gap-3 xs:[--gap:14px] sm:gap-4 lg:[--gap:15px]" aria-label={d.hero.staffLabel}>
+            <div className="flex w-7 shrink-0 flex-col justify-between py-1 xs:w-20 sm:w-24 lg:w-28">
+              {[
+                { name: "Build", on: buildOn },
+                { name: "Verify", on: verifyOn },
+              ].map((v) => (
+                <span key={v.name} className={`text-xl italic transition-colors duration-300 xs:text-2xl lg:text-3xl ${lit ? "text-ink" : v.on ? "text-ink" : "text-muted"}`}>
+                  <span aria-hidden="true" className="xs:hidden">
+                    {v.name[0]}.
+                  </span>
+                  <span className="sr-only xs:not-sr-only">{v.name}</span>
+                </span>
+              ))}
             </div>
             <div aria-hidden="true" className="relative w-5 shrink-0 self-stretch">
               <svg viewBox="0 0 22 150" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" fill="none" stroke="currentColor" strokeWidth="2.5">
