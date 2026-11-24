@@ -260,3 +260,26 @@ When("I scroll to the last measure of {string}", () => {
 Then("every cliché I passed is struck through", () => {
   cy.get("#como-trabajo [data-row]").each(($r) => cy.wrap($r, { timeout: 4000 }).should("have.attr", "data-struck", "true"));
 });
+
+// ── 08 · /automation y /dev ───────────────────────────────────────────────
+const pagePath: Record<string, string> = { suite: "automation", code: "dev" };
+
+Given("I open the {word} page in {string}", (page: string, lang: string) => {
+  cy.visit(`/${lang}/${pagePath[page]}/`);
+  cy.get("h1").should("be.visible");
+});
+
+Then("the playhead is on step {int}", (n: number) => {
+  cy.get("[data-playhead]").should("have.attr", "data-playhead", String(n - 1));
+});
+
+When("I go to the next step", () => {
+  cy.get('[data-control="next"]').click();
+});
+
+Then("the first {int} notes have sounded", (n: number) => {
+  cy.get("[data-step-staff] [data-step-note]").each(($note, i) => {
+    if (i < n) expect($note.attr("data-step-note")).to.not.eq("waiting");
+    else expect($note.attr("data-step-note")).to.eq("waiting");
+  });
+});

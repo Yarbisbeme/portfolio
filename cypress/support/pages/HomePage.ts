@@ -6,6 +6,9 @@ export type Lang = "es" | "en";
 export type Focus = "general" | "backend" | "qa";
 export type StaffName = "build" | "verify";
 
+/** Todo lo del gran pentagrama vive dentro del hero; nada fuera de él debe confundirse con sus notas. */
+const GRAND = "[data-grand-staff]";
+
 const focusLabel: Record<string, Focus> = { General: "general", "Back-End": "backend", QA: "qa" };
 
 export class HomePage {
@@ -27,15 +30,15 @@ export class HomePage {
   }
 
   notes(staff: StaffName) {
-    return cy.get(`[data-staff="${staff}"] [data-note]`).filter(":visible");
+    return cy.get(`${GRAND} [data-staff="${staff}"] [data-note]`).filter(":visible");
   }
 
   note(name: string) {
-    return cy.get(`[data-note="${name}"]`);
+    return cy.get(`${GRAND} [data-note="${name}"]`);
   }
 
   soundingNotes() {
-    return cy.get('[data-note][data-sounding="true"]').filter(":visible");
+    return cy.get(`${GRAND} [data-note][data-sounding="true"]`).filter(":visible");
   }
 
   focusProject(name: string) {
