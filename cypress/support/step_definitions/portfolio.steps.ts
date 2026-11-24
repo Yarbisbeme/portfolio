@@ -446,3 +446,65 @@ Then("the score was never hidden", () => {
 Then("every section closes with a full double barline", () => {
   cy.get(".bar-double").each(($s) => expect(getComputedStyle($s[0]).getPropertyValue("--bar").trim()).to.eq("100%"));
 });
+
+// ── 05 · Movimiento fase 2 ────────────────────────────────────────────────
+Then("the projects are sliding to their new order", () => {
+  cy.get("[data-work]").should(($items) => {
+    expect([...$items].some((el) => /translate/.test((el as HTMLElement).style.transform))).to.eq(true);
+  });
+});
+
+Then("the projects end at rest in the order {string}", (csv: string) => {
+  cy.get("[data-work]", { timeout: 6000 }).should(($items) => {
+    expect([...$items].map((el) => el.getAttribute("data-work")).join(",")).to.eq(csv);
+    expect([...$items].every((el) => !(el as HTMLElement).style.transform || /0px, 0px/.test((el as HTMLElement).style.transform))).to.eq(true);
+  });
+});
+
+When("I scroll to the stack", () => {
+  cy.get("[data-stack-grid]").scrollIntoView({ offset: { top: -200, left: 0 } });
+});
+
+Then("the stack playback cursor passes", () => {
+  cy.get("[data-stack-head]", { timeout: 4000 }).should(($h) => expect(Number(getComputedStyle($h[0]).opacity)).to.be.greaterThan(0.5));
+});
+
+Then("every function of the stack ends visible", () => {
+  cy.get("[data-stack-grid] li", { timeout: 6000 }).should(($li) => {
+    expect([...$li].every((l) => getComputedStyle(l).opacity === "1")).to.eq(true);
+  });
+  cy.get("[data-stack-head]", { timeout: 6000 }).should(($h) => expect(Number(getComputedStyle($h[0]).opacity)).to.eq(0));
+});
+
+const scaleXOf = (el: Element) => {
+  const t = getComputedStyle(el).transform;
+  return t === "none" ? 1 : Number(t.match(/matrix\(([^,]+)/)?.[1] ?? 1);
+};
+
+When("I bring the career timeline into view", () => {
+  cy.get("[data-polyphony]").then(($f) => {
+    const top = $f[0].getBoundingClientRect().top + window.scrollY;
+    cy.scrollTo(0, top - Cypress.config("viewportHeight") * 0.7, { duration: 0 });
+  });
+  cy.wait(900);
+});
+
+When("I scroll past the career timeline", () => {
+  cy.get("[data-polyphony]").then(($f) => {
+    const top = $f[0].getBoundingClientRect().top + window.scrollY;
+    cy.scrollTo(0, top - Cypress.config("viewportHeight") * 0.2, { duration: 0 });
+  });
+  cy.wait(1200);
+});
+
+Then("the career timeline is partly written", () => {
+  cy.get("[data-pbar]").then(($b) => {
+    const s = [...$b].map(scaleXOf);
+    expect(s.some((v) => v < 0.99), "alguna barra a medias o sin escribir").to.eq(true);
+    expect(s.some((v) => v > 0.01), "alguna barra ya escrita").to.eq(true);
+  });
+});
+
+Then("the career timeline is fully written", () => {
+  cy.get("[data-pbar]").should(($b) => expect([...$b].every((b) => scaleXOf(b) > 0.99)).to.eq(true));
+});

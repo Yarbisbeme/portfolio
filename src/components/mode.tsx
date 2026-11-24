@@ -16,6 +16,9 @@ export function ModeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setMode = useCallback((m: Mode) => {
+    // Aviso síncrono antes de cambiar: quien anima la transición (p. ej. Trabajo con Flip)
+    // puede fotografiar el orden actual antes de que React lo cambie.
+    window.dispatchEvent(new CustomEvent("mode:before", { detail: m }));
     setModeState(m);
     const url = new URL(window.location.href);
     if (m === "general") url.searchParams.delete("enfoque");

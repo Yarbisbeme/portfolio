@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Flip, MOTION_OK, ScrollTrigger, gsap, useGSAP } from "@/lib/motion";
 import { contact, projects, stackGroups, type Dictionary } from "@/content/site";
 import { Media } from "./Media";
 import { NoteHead, Rehearsal, VoiceSign } from "./Score";
@@ -39,6 +40,51 @@ const grid = "grid gap-6 sm:gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg
 export function Work({ d }: { d: Dictionary }) {
   const { mode } = useMode();
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const sectionRef = useRef<HTMLElement>(null);
+  const listRef = useRef<HTMLOListElement>(null);
+  const flipState = useRef<Flip.FlipState | null>(null);
+
+  // Al cambiar de enfoque los proyectos se reordenan por relevancia: Flip los desliza a su sitio
+  // en lugar de que salten. La foto del orden se toma justo antes del cambio (evento mode:before).
+  useEffect(() => {
+    const before = () => {
+      if (!listRef.current || !window.matchMedia(MOTION_OK).matches) return;
+      flipState.current = Flip.getState(listRef.current.children);
+    };
+    window.addEventListener("mode:before", before);
+    return () => window.removeEventListener("mode:before", before);
+  }, []);
+  useLayoutEffect(() => {
+    const state = flipState.current;
+    flipState.current = null;
+    if (!state) return;
+    Flip.from(state, { duration: 0.75, ease: "power3.inOut", stagger: 0.04, onComplete: () => ScrollTrigger.refresh() });
+  }, [mode]);
+
+  // Las imágenes se revelan con una cortina guiada por el scroll, como al pasar la página.
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        gsap.utils.toArray<HTMLElement>("[data-work] [data-curtain]").forEach((el) => {
+          gsap.fromTo(
+            el,
+            { clipPath: "inset(0% 100% 0% 0%)" },
+            { clipPath: "inset(0% 0% 0% 0%)", ease: "none", scrollTrigger: { trigger: el, start: "top 92%", end: "top 55%", scrub: 0.5 } },
+          );
+          const img = el.querySelector("img, video");
+          if (img) gsap.fromTo(img, { scale: 1.12 }, { scale: 1, ease: "none", scrollTrigger: { trigger: el, start: "top 92%", end: "top 40%", scrub: 0.5 } });
+        });
+      });
+    },
+    { scope: sectionRef },
+  );
+
+  // "Ver más" en móvil cambia el alto de la lista: las animaciones de más abajo recalculan.
+  useEffect(() => {
+    const id = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => window.cancelAnimationFrame(id);
+  }, [expanded]);
   const ordered = [...projects].sort((a, b) => {
     const ra = mode === "general" || a.modes.includes(mode) ? 0 : 1;
     const rb = mode === "general" || b.modes.includes(mode) ? 0 : 1;
@@ -46,10 +92,10 @@ export function Work({ d }: { d: Dictionary }) {
   });
 
   return (
-    <section id="trabajo" aria-labelledby="work-title" className="bar-double surface-panel section-y">
+    <section ref={sectionRef} id="trabajo" aria-labelledby="work-title" className="bar-double surface-panel section-y">
       <div className={`${wrap} ${grid}`}>
         <SectionHead id="work-title" kicker={d.work.kicker} label={d.nav.section} title={d.work.title} intro={d.work.intro} hideIntroMobile />
-        <ol className="rule-top">
+        <ol ref={listRef} className="rule-top">
           {ordered.map((p) => {
             const it = d.work.items[p.slug];
             const relevant = mode !== "general" && p.modes.includes(mode);
@@ -57,7 +103,9 @@ export function Work({ d }: { d: Dictionary }) {
             const isOpen = Boolean(expanded[p.slug]);
             return (
               <li key={p.slug} id={`trabajo-${p.slug}`} data-work={p.slug} data-silent={silent} className="scroll-mt-24 rule-bottom grid gap-4 py-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10 md:py-8">
-                <Media name={p.image} loop={p.loop} alt={it.alt} sizes="(min-width: 768px) 30vw, 100vw" className={`aspect-[16/9] transition-[filter] duration-500 md:aspect-[4/3] ${silent ? "grayscale-[0.85]" : ""}`} />
+                <div data-curtain className="overflow-hidden">
+                  <Media name={p.image} loop={p.loop} alt={it.alt} sizes="(min-width: 768px) 30vw, 100vw" className={`aspect-[16/9] transition-[filter] duration-500 md:aspect-[4/3] ${silent ? "grayscale-[0.85]" : ""}`} />
+                </div>
                 <div className={`flex flex-col gap-2 sm:gap-3 ${relevant ? `border-l-[3px] ${mode === "qa" ? "border-verify" : "border-wine"} pl-3 sm:border-l-0 sm:pl-0` : ""}`}>
                   <p className="flex flex-wrap items-baseline gap-x-3 font-mono text-sm text-muted">
                     <span>{p.num}.</span>
@@ -144,9 +192,47 @@ export function Stack({ d }: { d: Dictionary }) {
   });
   const primary = mode === "general" ? ordered : ordered.filter((g) => (g.modes as readonly string[]).includes(mode));
   const rest = mode === "general" ? [] : ordered.filter((g) => !(g.modes as readonly string[]).includes(mode));
+  const stackRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      // Escritorio: un cursor de reproducción recorre las cuatro columnas entre los signos de
+      // repetición; cada columna "suena" al pasar. Al llegar al final vuelve al inicio una vez.
+      mm.add(`${MOTION_OK} and (min-width: 1024px)`, () => {
+        const grid = stackRef.current?.querySelector<HTMLElement>("[data-stack-grid]");
+        const head = grid?.querySelector<HTMLElement>("[data-stack-head]");
+        if (!grid || !head) return;
+        const cols = gsap.utils.toArray<HTMLElement>("[data-stack]", grid);
+        const step = 0.42;
+        const tl = gsap.timeline({ scrollTrigger: { trigger: grid, start: "top 72%", once: true } });
+        tl.set(head, { autoAlpha: 1, x: 0 }).to(head, { x: () => grid.clientWidth, duration: cols.length * step, ease: "none" }, 0);
+        cols.forEach((c, i) => {
+          const at = i * step + 0.08;
+          tl.from(c.querySelectorAll("li"), { opacity: 0, y: 8, duration: 0.35, stagger: 0.03, ease: "power2.out" }, at);
+          tl.fromTo(c.querySelector("dt > span"), { scale: 1.9 }, { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.4)" }, at);
+        });
+        // La repetición: una segunda pasada, más ligera.
+        const again = cols.length * step + 0.15;
+        tl.set(head, { x: 0 }, again).to(head, { x: () => grid.clientWidth, duration: cols.length * 0.22, ease: "none" }, again);
+        cols.forEach((c, i) => {
+          tl.fromTo(c.querySelector("dt > span"), { scale: 1.45 }, { scale: 1, duration: 0.4, ease: "power2.out" }, again + i * 0.22 + 0.05);
+        });
+        tl.to(head, { autoAlpha: 0, duration: 0.3 });
+      });
+      // Tablet y móvil (sin columnas en fila): los grupos entran en secuencia.
+      mm.add(`${MOTION_OK} and (max-width: 1023px)`, () => {
+        gsap.utils.toArray<HTMLElement>("[data-stack], [data-stack-mobile]", stackRef.current).forEach((el) => {
+          if (!el.offsetParent) return;
+          gsap.from(el, { opacity: 0, y: 16, duration: 0.5, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
+        });
+      });
+    },
+    { scope: stackRef },
+  );
 
   return (
-    <section id="stack" aria-labelledby="stack-title" className="bar-double section-y scroll-mt-4">
+    <section ref={stackRef} id="stack" aria-labelledby="stack-title" className="bar-double section-y scroll-mt-4">
       <div className={wrap}>
         <div className="flex flex-col gap-3 sm:gap-4">
           <Rehearsal mark={d.stack.kicker} label={d.nav.section} />
@@ -172,7 +258,7 @@ export function Stack({ d }: { d: Dictionary }) {
 
         <div className="rule-top mt-6 sm:hidden">
           {primary.map((g) => (
-            <div key={g.id} className="rule-bottom py-4">
+            <div key={g.id} data-stack-mobile className="rule-bottom py-4">
               <p className="flex items-baseline gap-2 text-xl italic">
                 <NoteHead on tone={g.id === "verify" ? "verify" : "wine"} className="self-center text-base" />
                 {d.stack.groups[g.id]}
@@ -216,7 +302,8 @@ export function Stack({ d }: { d: Dictionary }) {
           ) : null}
         </div>
 
-        <div className="relative mt-10 hidden sm:block lg:border-y lg:border-ink lg:px-7">
+        <div data-stack-grid className="relative mt-10 hidden sm:block lg:border-y lg:border-ink lg:px-7">
+          <span aria-hidden="true" data-stack-head className="pointer-events-none invisible absolute -bottom-3 -top-3 left-0 z-10 w-[2px] bg-wine opacity-0" />
           <RepeatSign side="start" />
           <RepeatSign side="end" />
         <dl className="rule-top gap-x-10 sm:grid sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-0 lg:border-t-0">

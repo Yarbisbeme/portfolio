@@ -2,6 +2,7 @@
 
 import { gsap } from "gsap";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+import { Flip } from "gsap/Flip";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
@@ -11,7 +12,7 @@ import { useGSAP } from "@gsap/react";
  * (se traza una línea, se toca una nota, pasa un cursor, se marca una sección). Nada genérico.
  * Nunca se reemplaza el scroll nativo: todo se engancha a él.
  */
-if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin, useGSAP);
+if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin, Flip, useGSAP);
 
 /** Condición común: solo hay movimiento si el visitante no pidió reducirlo. */
 export const MOTION_OK = "(prefers-reduced-motion: no-preference)";
@@ -28,4 +29,4 @@ export function afterFonts(fn: () => void) {
   else void document.fonts?.ready.then(fn);
 }
 
-export { gsap, ScrollTrigger, SplitText, useGSAP };
+export { Flip, gsap, ScrollTrigger, SplitText, useGSAP };
