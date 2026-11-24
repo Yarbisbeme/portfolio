@@ -294,15 +294,30 @@
    .bar-final:  barra final (fina + gruesa) = fin de la obra. */
 .bar-double {
   position: relative;
-  border-top: 1px solid var(--color-ink);
+  /* --bar: cuánto de la doble barra está trazado (GSAP la dibuja al llegar a la sección). */
+  --bar: 100%;
 }
-.bar-double::before {
+.bar-double::before,
+.bar-double::after {
   content: "";
   position: absolute;
-  inset-inline: 0;
-  top: 3px;
+  left: 0;
+  width: var(--bar);
   height: 1px;
   background: var(--color-ink);
+  z-index: 1;
+  pointer-events: none;
+}
+.bar-double::before {
+  top: 0;
+}
+.bar-double::after {
+  top: 3px;
+}
+
+/* Mientras GSAP prepara la entrada del hero, el hero no se pinta (ver script en el layout). */
+html.motion-pending [data-hero] {
+  visibility: hidden;
 }
 .bar-final {
   display: block;

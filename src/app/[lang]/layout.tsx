@@ -40,6 +40,16 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   if (!isLocale(lang)) notFound();
   return (
     <html lang={lang}>
+      <head>
+        {/* Oculta el hero solo hasta que GSAP prepara su entrada (sin parpadeo). Si el JS falla,
+            a los 2.5 s se muestra igual. Con "reducir movimiento" no se oculta nada. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('motion-pending');setTimeout(function(){d.classList.remove('motion-pending')},2500)}catch(e){}})()",
+          }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

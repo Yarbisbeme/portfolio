@@ -86,6 +86,8 @@ Then("the headline reads {string}", (text: string) => {
 
 // ── Accesibilidad ─────────────────────────────────────────────
 Then("the page has no serious accessibility violations", () => {
+  // Se evalúa la página en reposo: la entrada animada del hero ya terminó.
+  cy.get("html", { timeout: 8000 }).should("not.have.attr", "data-intro", "running");
   cy.injectAxe();
   cy.checkA11y(undefined, { includedImpacts: ["serious", "critical"] });
 });
@@ -357,6 +359,8 @@ Then("the grand staff fits inside the page", () => {
     const right = $fig[0].getBoundingClientRect().right;
     cy.get("[data-grand-staff] [data-note]").filter(":visible").each(($n) => {
       expect($n[0].getBoundingClientRect().right).to.be.at.most(right + 1);
+      // Cada etiqueta en una sola línea: ".NET Core" no se parte en dos.
+      expect($n[0].getBoundingClientRect().height, $n.attr("data-note")).to.be.lessThan(40);
     });
   });
 });
@@ -399,4 +403,108 @@ Then("the progress of every measure only shrank", () => {
   cy.get<number[][]>("@seen").then((seen) => {
     for (let k = 1; k < seen.length; k += 1) seen[k].forEach((v, i) => expect(v, `compás ${i + 1}`).to.be.at.most(seen[k - 1][i] + 0.001));
   });
+});
+
+// ── 05 · Movimiento con GSAP ──────────────────────────────────────────────
+Then("the entrance of the score finishes", () => {
+  cy.get("html", { timeout: 8000 }).should("have.attr", "data-intro", "done");
+});
+
+Then("the whole grand staff is visible", () => {
+  cy.get("[data-grand-staff] [data-note]")
+    .filter(":visible")
+    .each(($n) => expect(Number(getComputedStyle($n[0]).opacity)).to.eq(1));
+  cy.get("[data-grand-staff] [data-staff-line]").each(($l) => expect(getComputedStyle($l[0]).transform).to.match(/none|matrix\(1, 0, 0, 1/));
+});
+
+When("I sweep the pointer across the grand staff", () => {
+  cy.get("[data-staff-cursor]").parent().then(($box) => {
+    const r = $box[0].getBoundingClientRect();
+    const y = r.top + r.height * 0.75;
+    cy.wrap($box).trigger("pointerover", { clientX: r.left + 2, clientY: y, pointerType: "mouse" });
+    for (let k = 1; k <= 20; k += 1) cy.wrap($box).trigger("pointermove", { clientX: r.left + (r.width * k) / 20, clientY: y, pointerType: "mouse" });
+  });
+});
+
+Then("the playback cursor is shown", () => {
+  cy.get("[data-staff-cursor]").should(($c) => expect(Number(getComputedStyle($c[0]).opacity)).to.be.greaterThan(0.5));
+});
+
+Then("the notes it crossed were struck", () => {
+  // Una nota golpeada recibe una escala animada (GSAP deja el estilo en línea).
+  cy.get("[data-grand-staff] [data-note] > span:first-child").should(($heads) => {
+    const struck = [...$heads].filter((h) => (h as HTMLElement).style.transform !== "");
+    expect(struck.length).to.be.greaterThan(3);
+  });
+});
+
+Then("the score was never hidden", () => {
+  cy.get("html").should("not.have.class", "motion-pending").and("not.have.attr", "data-intro");
+  cy.get("h1").should("have.css", "opacity", "1");
+});
+
+Then("every section closes with a full double barline", () => {
+  cy.get(".bar-double").each(($s) => expect(getComputedStyle($s[0]).getPropertyValue("--bar").trim()).to.eq("100%"));
+});
+
+// ── 05 · Movimiento fase 2 ────────────────────────────────────────────────
+Then("the projects are sliding to their new order", () => {
+  cy.get("[data-work]").should(($items) => {
+    expect([...$items].some((el) => /translate/.test((el as HTMLElement).style.transform))).to.eq(true);
+  });
+});
+
+Then("the projects end at rest in the order {string}", (csv: string) => {
+  cy.get("[data-work]", { timeout: 6000 }).should(($items) => {
+    expect([...$items].map((el) => el.getAttribute("data-work")).join(",")).to.eq(csv);
+    expect([...$items].every((el) => !(el as HTMLElement).style.transform || /0px, 0px/.test((el as HTMLElement).style.transform))).to.eq(true);
+  });
+});
+
+When("I scroll to the stack", () => {
+  cy.get("[data-stack-grid]").scrollIntoView({ offset: { top: -200, left: 0 } });
+});
+
+Then("the stack playback cursor passes", () => {
+  cy.get("[data-stack-head]", { timeout: 4000 }).should(($h) => expect(Number(getComputedStyle($h[0]).opacity)).to.be.greaterThan(0.3));
+});
+
+Then("every function of the stack ends visible", () => {
+  cy.get("[data-stack-grid] li", { timeout: 6000 }).should(($li) => {
+    expect([...$li].every((l) => getComputedStyle(l).opacity === "1")).to.eq(true);
+  });
+  cy.get("[data-stack-head]", { timeout: 6000 }).should(($h) => expect(Number(getComputedStyle($h[0]).opacity)).to.eq(0));
+});
+
+const scaleXOf = (el: Element) => {
+  const t = getComputedStyle(el).transform;
+  return t === "none" ? 1 : Number(t.match(/matrix\(([^,]+)/)?.[1] ?? 1);
+};
+
+When("I bring the career timeline into view", () => {
+  cy.get("[data-polyphony]").then(($f) => {
+    const top = $f[0].getBoundingClientRect().top + window.scrollY;
+    cy.scrollTo(0, top - Cypress.config("viewportHeight") * 0.7, { duration: 0 });
+  });
+  cy.wait(900);
+});
+
+When("I scroll past the career timeline", () => {
+  cy.get("[data-polyphony]").then(($f) => {
+    const top = $f[0].getBoundingClientRect().top + window.scrollY;
+    cy.scrollTo(0, top - Cypress.config("viewportHeight") * 0.2, { duration: 0 });
+  });
+  cy.wait(1200);
+});
+
+Then("the career timeline is partly written", () => {
+  cy.get("[data-pbar]").then(($b) => {
+    const s = [...$b].map(scaleXOf);
+    expect(s.some((v) => v < 0.99), "alguna barra a medias o sin escribir").to.eq(true);
+    expect(s.some((v) => v > 0.01), "alguna barra ya escrita").to.eq(true);
+  });
+});
+
+Then("the career timeline is fully written", () => {
+  cy.get("[data-pbar]").should(($b) => expect([...$b].every((b) => scaleXOf(b) > 0.99)).to.eq(true));
 });
