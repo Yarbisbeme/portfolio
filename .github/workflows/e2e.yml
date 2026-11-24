@@ -1,0 +1,75 @@
+# Compila el portfolio, lo prueba a sí mismo con Cypress + Cucumber y publica
+# los resultados reales en /automation (commit a public/automation/).
+name: E2E · el portfolio se prueba a sí mismo
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "public/automation/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      E2E_BROWSER: chrome
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias (incluye el binario de Cypress)
+        run: npm ci
+
+      - name: Compilar el sitio estático
+        run: npm run build
+
+      - name: Servir ./out en :4173
+        run: |
+          npm run serve:out > /tmp/serve.log 2>&1 &
+          npx wait-on http://localhost:4173/es/ --timeout 30000
+
+      - name: Correr la suite (Cypress + Cucumber)
+        id: e2e
+        continue-on-error: true
+        run: npm run test:e2e
+
+      - name: Generar el reporte para /automation
+        if: always()
+        run: npm run report:automation
+
+      - name: Guardar capturas de fallos como artefacto
+        if: steps.e2e.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: Publicar resultados (commit a public/automation)
+        if: always()
+        run: |
+          git config user.name "portfolio-e2e"
+          git config user.email "actions@users.noreply.github.com"
+          git add public/automation
+          if git diff --cached --quiet; then
+            echo "Sin cambios en los resultados."
+          else
+            git commit -m "chore(automation): resultados e2e de ${GITHUB_SHA::7}"
+            git push
+          fi
+
+      - name: Marcar el job en rojo si la suite falló
+        if: steps.e2e.outcome == 'failure'
+        run: exit 1

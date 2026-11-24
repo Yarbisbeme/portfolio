@@ -1,0 +1,726 @@
+{
+  "runAt": "2026-11-24T02:54:46.717Z",
+  "durationMs": 54160,
+  "commit": null,
+  "runUrl": null,
+  "browser": "chrome",
+  "totals": {
+    "scenarios": 18,
+    "passed": 18,
+    "failed": 0,
+    "other": 0,
+    "steps": 59
+  },
+  "features": [
+    {
+      "uri": "cypress/e2e/01-focus.feature",
+      "name": "Read the portfolio through a focus",
+      "description": "As a recruiter\n  I want to read the portfolio as Back-End or QA\n  So that I only see what matters for the role I am hiring for",
+      "scenarios": [
+        {
+          "name": "Back-End focus silences the Verify staff",
+          "status": "passed",
+          "durationMs": 1039,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 674,
+              "error": null,
+              "shot": "/automation/shots/001.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I read the portfolio as \"Back-End\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 155,
+              "error": null,
+              "shot": "/automation/shots/002.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the \"build\" staff is sounding",
+              "table": null,
+              "status": "passed",
+              "durationMs": 52,
+              "error": null,
+              "shot": "/automation/shots/003.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "the \"verify\" staff is silent",
+              "table": null,
+              "status": "passed",
+              "durationMs": 56,
+              "error": null,
+              "shot": "/automation/shots/004.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "the address keeps the focus \"backend\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 38,
+              "error": null,
+              "shot": "/automation/shots/005.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "the CV link offers the \"backend\" version",
+              "table": null,
+              "status": "passed",
+              "durationMs": 64,
+              "error": null,
+              "shot": "/automation/shots/006.webp"
+            }
+          ]
+        },
+        {
+          "name": "QA focus silences the Build staff",
+          "status": "passed",
+          "durationMs": 705,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 373,
+              "error": null,
+              "shot": "/automation/shots/007.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I read the portfolio as \"QA\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 149,
+              "error": null,
+              "shot": "/automation/shots/008.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the \"verify\" staff is sounding",
+              "table": null,
+              "status": "passed",
+              "durationMs": 54,
+              "error": null,
+              "shot": "/automation/shots/009.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "the \"build\" staff is silent",
+              "table": null,
+              "status": "passed",
+              "durationMs": 50,
+              "error": null,
+              "shot": "/automation/shots/010.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "the address keeps the focus \"qa\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 39,
+              "error": null,
+              "shot": "/automation/shots/011.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "the CV link offers the \"qa-automation\" version",
+              "table": null,
+              "status": "passed",
+              "durationMs": 40,
+              "error": null,
+              "shot": "/automation/shots/012.webp"
+            }
+          ]
+        },
+        {
+          "name": "General focus offers both CVs",
+          "status": "passed",
+          "durationMs": 614,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 368,
+              "error": null,
+              "shot": "/automation/shots/013.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I read the portfolio as \"General\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 131,
+              "error": null,
+              "shot": "/automation/shots/014.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "both staves are sounding",
+              "table": null,
+              "status": "passed",
+              "durationMs": 96,
+              "error": null,
+              "shot": "/automation/shots/015.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "the CV links offer 2 versions",
+              "table": null,
+              "status": "passed",
+              "durationMs": 19,
+              "error": null,
+              "shot": "/automation/shots/016.webp"
+            }
+          ]
+        },
+        {
+          "name": "A shared link opens with its focus applied",
+          "status": "passed",
+          "durationMs": 699,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 334,
+              "error": null,
+              "shot": "/automation/shots/017.webp"
+            },
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\" with the focus \"qa\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 343,
+              "error": null,
+              "shot": "/automation/shots/018.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the selected focus is \"qa\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 22,
+              "error": null,
+              "shot": "/automation/shots/019.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "uri": "cypress/e2e/02-grand-staff.feature",
+      "name": "The grand staff responds to the projects",
+      "description": "The stack is drawn as notes on two staves.\n  Each project lights the notes it really uses, and each note points back to its projects.",
+      "scenarios": [
+        {
+          "name": "Focusing a project lights only its notes",
+          "status": "passed",
+          "durationMs": 545,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 483,
+              "error": null,
+              "shot": "/automation/shots/020.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I focus the project \"YBank\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 34,
+              "error": null,
+              "shot": "/automation/shots/021.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "only these notes are sounding: \"PostgreSQL, WebdriverIO, Appium\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 28,
+              "error": null,
+              "shot": "/automation/shots/022.webp"
+            }
+          ]
+        },
+        {
+          "name": "Focusing a project lights only its notes",
+          "status": "passed",
+          "durationMs": 364,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 294,
+              "error": null,
+              "shot": "/automation/shots/023.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I focus the project \"Eikôn\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 31,
+              "error": null,
+              "shot": "/automation/shots/024.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "only these notes are sounding: \"C#, .NET Core, FastAPI, SQL Server, xUnit, Playwright\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 39,
+              "error": null,
+              "shot": "/automation/shots/025.webp"
+            }
+          ]
+        },
+        {
+          "name": "Focusing a project lights only its notes",
+          "status": "passed",
+          "durationMs": 428,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 329,
+              "error": null,
+              "shot": "/automation/shots/026.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I focus the project \"TMM\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 40,
+              "error": null,
+              "shot": "/automation/shots/027.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "only these notes are sounding: \"WebdriverIO, Appium, Cucumber, SigNoz\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 59,
+              "error": null,
+              "shot": "/automation/shots/028.webp"
+            }
+          ]
+        },
+        {
+          "name": "Focusing a project lights only its notes",
+          "status": "passed",
+          "durationMs": 379,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 307,
+              "error": null,
+              "shot": "/automation/shots/029.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I focus the project \"Los Hidalgos\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 48,
+              "error": null,
+              "shot": "/automation/shots/030.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "only these notes are sounding: \"C#, ASP.NET, SQL Server\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 24,
+              "error": null,
+              "shot": "/automation/shots/031.webp"
+            }
+          ]
+        },
+        {
+          "name": "A note marks the projects that use it",
+          "status": "passed",
+          "durationMs": 414,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 342,
+              "error": null,
+              "shot": "/automation/shots/032.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I point at the note \"SQL Server\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 33,
+              "error": null,
+              "shot": "/automation/shots/033.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "these projects are marked: \"eikon, los-hidalgos\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 39,
+              "error": null,
+              "shot": "/automation/shots/034.webp"
+            }
+          ]
+        },
+        {
+          "name": "A note used by one project marks only that project",
+          "status": "passed",
+          "durationMs": 345,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 313,
+              "error": null,
+              "shot": "/automation/shots/035.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I point at the note \"Cucumber\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 17,
+              "error": null,
+              "shot": "/automation/shots/036.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "these projects are marked: \"tmm\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 15,
+              "error": null,
+              "shot": "/automation/shots/037.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "uri": "cypress/e2e/03-language.feature",
+      "name": "Bilingual portfolio",
+      "description": "",
+      "scenarios": [
+        {
+          "name": "Switching language keeps the reading focus",
+          "status": "passed",
+          "durationMs": 1128,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\" with the focus \"qa\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 560,
+              "error": null,
+              "shot": "/automation/shots/038.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I switch the language",
+              "table": null,
+              "status": "passed",
+              "durationMs": 424,
+              "error": null,
+              "shot": "/automation/shots/039.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "I am on the \"en\" version with the focus \"qa\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 115,
+              "error": null,
+              "shot": "/automation/shots/040.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "the headline reads \"I build the system.\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 29,
+              "error": null,
+              "shot": "/automation/shots/041.webp"
+            }
+          ]
+        },
+        {
+          "name": "Spanish headline",
+          "status": "passed",
+          "durationMs": 405,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 382,
+              "error": null,
+              "shot": "/automation/shots/042.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the headline reads \"Construyo el sistema.\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 23,
+              "error": null,
+              "shot": "/automation/shots/043.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "uri": "cypress/e2e/04-accessibility.feature",
+      "name": "Accessibility",
+      "description": "",
+      "scenarios": [
+        {
+          "name": "No serious or critical accessibility violations",
+          "status": "passed",
+          "durationMs": 3087,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 679,
+              "error": null,
+              "shot": "/automation/shots/044.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the page has no serious accessibility violations",
+              "table": null,
+              "status": "passed",
+              "durationMs": 2408,
+              "error": null,
+              "shot": "/automation/shots/045.webp"
+            }
+          ]
+        },
+        {
+          "name": "No serious or critical accessibility violations",
+          "status": "passed",
+          "durationMs": 921,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"en\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 390,
+              "error": null,
+              "shot": "/automation/shots/046.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the page has no serious accessibility violations",
+              "table": null,
+              "status": "passed",
+              "durationMs": 531,
+              "error": null,
+              "shot": "/automation/shots/047.webp"
+            }
+          ]
+        },
+        {
+          "name": "Keyboard users can skip straight to the content",
+          "status": "passed",
+          "durationMs": 472,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 383,
+              "error": null,
+              "shot": "/automation/shots/048.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I press Tab",
+              "table": null,
+              "status": "passed",
+              "durationMs": 59,
+              "error": null,
+              "shot": "/automation/shots/049.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the skip link is focused and visible",
+              "table": null,
+              "status": "passed",
+              "durationMs": 30,
+              "error": null,
+              "shot": "/automation/shots/050.webp"
+            }
+          ]
+        },
+        {
+          "name": "Every image describes itself",
+          "status": "passed",
+          "durationMs": 433,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"en\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 371,
+              "error": null,
+              "shot": "/automation/shots/051.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "every visible image has a text alternative",
+              "table": null,
+              "status": "passed",
+              "durationMs": 62,
+              "error": null,
+              "shot": "/automation/shots/052.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "uri": "cypress/e2e/05-motion.feature",
+      "name": "Motion is optional",
+      "description": "The editorial loops only play when the visitor has not asked for reduced motion.",
+      "scenarios": [
+        {
+          "name": "A project with a loop plays it in the preview",
+          "status": "passed",
+          "durationMs": 733,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 607,
+              "error": null,
+              "shot": "/automation/shots/053.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I focus the project \"TMM\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 70,
+              "error": null,
+              "shot": "/automation/shots/054.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the preview plays a loop",
+              "table": null,
+              "status": "passed",
+              "durationMs": 56,
+              "error": null,
+              "shot": "/automation/shots/055.webp"
+            }
+          ]
+        },
+        {
+          "name": "Reduced motion keeps the still image",
+          "status": "passed",
+          "durationMs": 1290,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "the visitor prefers reduced motion",
+              "table": null,
+              "status": "passed",
+              "durationMs": 24,
+              "error": null,
+              "shot": "/automation/shots/056.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 350,
+              "error": null,
+              "shot": "/automation/shots/057.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I focus the project \"TMM\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 70,
+              "error": null,
+              "shot": "/automation/shots/058.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the preview shows only a still image",
+              "table": null,
+              "status": "passed",
+              "durationMs": 846,
+              "error": null,
+              "shot": "/automation/shots/059.webp"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

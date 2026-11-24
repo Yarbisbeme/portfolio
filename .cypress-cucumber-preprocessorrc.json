@@ -1,0 +1,4 @@
+{
+  "stepDefinitions": "cypress/support/step_definitions/**/*.ts",
+  "messages": { "enabled": true, "output": "cypress/reports/messages.ndjson" }
+}
