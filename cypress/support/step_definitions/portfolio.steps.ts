@@ -197,8 +197,14 @@ Then("the tuning staff has one note per scenario in its count", () => {
 });
 
 Then("no note is out of tune unless it is marked with a cross", () => {
-  cy.get('[data-tuning] [data-tuning-note="failed"]').each(($n) => {
-    cy.wrap($n).find("path").should("exist");
+  // Si todo pasó no hay notas falladas: eso también cumple. Las que haya deben llevar su cruz.
+  cy.get("[data-tuning]").first().then(($staff) => {
+    $staff.find('[data-tuning-note="failed"]').each((_, note) => {
+      expect(note.querySelector("path"), "cruz en la nota fallada").to.not.equal(null);
+    });
+    $staff.find('[data-tuning-note]:not([data-tuning-note="failed"])').each((_, note) => {
+      expect(note.querySelector("path"), "sin cruz en una nota afinada").to.equal(null);
+    });
   });
 });
 
