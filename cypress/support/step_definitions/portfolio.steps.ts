@@ -177,3 +177,27 @@ Then("the career voice {string} is sounding", (voice: string) => {
 Then("the career voice {string} is silent", (voice: string) => {
   cy.get(`[data-polyphony] [data-voice="${voice}"]`).each(($v) => cy.wrap($v).should("have.attr", "data-sounding", "false"));
 });
+
+Then("the stack function {string} is sounding", (id: string) => {
+  cy.viewport(1440, 900);
+  cy.get(`[data-stack="${id}"]`).should("have.attr", "data-silent", "false");
+});
+
+Then("the stack function {string} is silent", (id: string) => {
+  cy.viewport(1440, 900);
+  cy.get(`[data-stack="${id}"]`).should("have.attr", "data-silent", "true");
+});
+
+Then("the tuning staff has one note per scenario in its count", () => {
+  cy.viewport(1440, 900);
+  cy.get("[data-tuning-count]").first().invoke("text").then((t) => {
+    const total = Number(t.match(/\/(\d+)/)?.[1]);
+    cy.get("[data-tuning] [data-tuning-note]").filter(":visible").should("have.length", total);
+  });
+});
+
+Then("no note is out of tune unless it is marked with a cross", () => {
+  cy.get('[data-tuning] [data-tuning-note="failed"]').each(($n) => {
+    cy.wrap($n).find("path").should("exist");
+  });
+});

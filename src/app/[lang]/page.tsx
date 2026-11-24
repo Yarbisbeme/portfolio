@@ -4,6 +4,18 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { ModeProvider } from "@/components/mode";
 import { About, Contact, HowIWork, Stack, Work } from "@/components/Sections";
+import type { Tuning } from "@/components/Tuning";
+import { loadResults } from "@/lib/automation";
+
+function loadTuning(): Tuning | null {
+  const r = loadResults();
+  if (!r) return null;
+  return {
+    runAt: r.runAt,
+    totals: { scenarios: r.totals.scenarios, passed: r.totals.passed, failed: r.totals.failed },
+    notes: r.features.flatMap((f) => f.scenarios.map((s) => ({ name: s.name, status: s.status }))),
+  };
+}
 
 export default async function Page({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -19,7 +31,7 @@ export default async function Page({ params }: PageProps<"/[lang]">) {
       <main id="contenido">
         <Hero d={d} />
         <Work d={d} />
-        <HowIWork d={d} lang={lang as Locale} />
+        <HowIWork d={d} lang={lang as Locale} tuning={loadTuning()} />
         <Stack d={d} />
         <About d={d} now={new Date().toISOString().slice(0, 7)} />
       </main>
