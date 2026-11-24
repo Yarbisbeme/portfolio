@@ -1,22 +1,28 @@
 @import "tailwindcss";
 @import "@fontsource-variable/newsreader/opsz.css";
 @import "@fontsource-variable/newsreader/opsz-italic.css";
-@import "@fontsource/ibm-plex-mono/400.css";
-@import "@fontsource/ibm-plex-mono/500.css";
+@import "@fontsource/gloock/400.css";
+@import "@fontsource-variable/martian-mono/wdth.css";
 
-/* Sistema "Partitura" — contraste verificado (WCAG AA):
-   ink/paper 15.0:1 · muted/paper 6.1:1 · wine/paper 6.5:1 · paper/wine 6.5:1 */
+/* Sistema "Partitura · Programa de concierto" — contraste verificado (WCAG AA):
+   ink/paper 15.0:1 · muted/paper 6.1:1 · wine/paper 6.5:1 · verify/paper 6.1:1 · verify/panel 5.2:1
+   Dos voces con color propio: Build = vino, Verify = esmeralda. */
 @theme {
   --color-paper: #f3eee4;
   --color-panel: #e6decf;
   --color-ink: #1c1a17;
   --color-muted: #5e5850;
   --color-wine: #9e2a22;
+  --color-verify: #086645;
+  /* tintes muy suaves de cada voz, solo para fondos */
+  --color-wine-soft: #f1e2dc;
+  --color-verify-soft: #dfe8df;
   --color-rest: #b9afa2;
   /* solo decorativo: cabezas de nota en silencio */
 
   --font-serif: "Newsreader Variable", Georgia, "Times New Roman", serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Gloock", "Newsreader Variable", Georgia, serif;
+  --font-mono: "Martian Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --breakpoint-xs: 26rem;
 }
@@ -42,6 +48,30 @@
       font-size: 1.125rem;
       line-height: 1.55;
     }
+  }
+
+  /* Titulares en Gloock (sin cursiva: las cursivas siguen en Newsreader). */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  h1 em,
+  h2 em,
+  h3 em {
+    font-family: var(--font-serif);
+  }
+
+  /* Martian Mono en su anchura condensada, igualada en altura de x a la serif. */
+  .font-mono,
+  .kicker,
+  code,
+  pre,
+  kbd {
+    font-stretch: 75%;
+    font-size-adjust: ex-height 0.5;
   }
 
   ::selection {
@@ -73,6 +103,54 @@
 }
 
 @layer components {
+  /* Superficies: el ritmo de la página. Cada una redefine la paleta para su fondo. */
+  /* Una sola escala de aire vertical para todas las secciones. */
+  .section-y {
+    padding-block: 4rem;
+  }
+  @media (min-width: 640px) {
+    .section-y {
+      padding-block: 5.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .section-y {
+      padding-block: 7rem;
+    }
+  }
+
+  .surface-panel {
+    background: #e6decf;
+    --color-panel: #d9cebb;
+  }
+  /* Vuelve a la paleta clara dentro de una superficie oscura (bloque propio). */
+  .surface-paper {
+    --color-paper: #f3eee4;
+    --color-ink: #1c1a17;
+    --color-muted: #5e5850;
+    --color-panel: #e6decf;
+    --color-rest: #b9afa2;
+    --color-wine: #9e2a22;
+    --color-verify: #086645;
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  /* Bloque claro destacado (la prueba): papel con fondo panel. */
+  .surface-block {
+    background: #e6decf;
+  }
+  .surface-ink {
+    --color-paper: #1b1a18;
+    --color-ink: #eee8dc;
+    --color-muted: #aaa296;
+    --color-panel: #2a2825;
+    --color-rest: #5c564e;
+    --color-wine: #ff8a78;
+    --color-verify: #5fd3a2;
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
   .kicker {
     font-family: var(--font-mono);
     font-size: 0.8125rem;
@@ -146,6 +224,15 @@
   .voice-truth[data-corrected="true"] {
     transform: scale(1);
     transition: transform 940ms cubic-bezier(0.22, 1, 0.36, 1) 260ms, color 940ms ease-out 260ms;
+  }
+
+  /* Trazo guiado por el scroll: el progreso lo escribe JS en stroke-dashoffset, sin transición. */
+  .pencil-scrub {
+    stroke: var(--color-wine);
+    stroke-linecap: round;
+    fill: none;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
   }
 
   .pencil-stroke {

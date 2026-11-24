@@ -22,3 +22,10 @@ Feature: "How I work" never takes the scroll away
     Then no cliché is struck yet
     When I scroll to the last measure of "How I work"
     Then every cliché I passed is struck through
+
+  Scenario: The choreography follows the scroll in both directions
+    Given I am on a desktop screen
+    When I scroll down through "How I work" in small steps
+    Then the progress of every measure only grew
+    When I scroll back up through "How I work" in small steps
+    Then the progress of every measure only shrank
