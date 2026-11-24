@@ -24,6 +24,67 @@ function StepText({ text }: { text: string }) {
   );
 }
 
+const PITCH = [2, 4, 3, 5, 4, 6, 3, 5, 2, 4];
+
+/**
+ * Los pasos del escenario como notas en un pentagrama, con un cursor de reproducción.
+ * Sonó y pasó = nota llena en vino; falló = hueca con cruz (no solo color); aún no suena = gris.
+ * Es una vista: la lista de pasos de abajo sigue siendo el control accesible, así que esto va aria-hidden.
+ */
+function StepStaff({ steps, step, live, onPick }: { steps: Step[]; step: number; live: boolean; onPick: (i: number) => void }) {
+  const n = Math.max(1, steps.length);
+  const x = (i: number) => `${((i + 0.5) / n) * 100}%`;
+  return (
+    <div aria-hidden="true" data-step-staff className="relative h-24 select-none sm:h-28">
+      {[0, 1, 2, 3, 4].map((l) => (
+        <span key={l} className="absolute inset-x-0 h-px bg-ink" style={{ top: `${22 + l * 12}%` }} />
+      ))}
+      <span className="absolute left-0 top-[22%] h-[48%] w-px bg-ink" />
+      <span className="absolute right-0 top-[22%] h-[48%] w-[3px] bg-ink" />
+      <span className="absolute right-[5px] top-[22%] h-[48%] w-px bg-ink" />
+      {live ? (
+        <span
+          data-playhead={step}
+          className="absolute top-[8%] h-[76%] w-[2px] -translate-x-1/2 bg-wine transition-[left] duration-500 ease-out motion-reduce:transition-none"
+          style={{ left: x(step) }}
+        />
+      ) : null}
+      {steps.map((s, i) => {
+        const sounded = live && i <= step;
+        const failed = sounded && s.status === "failed";
+        const passed = sounded && s.status === "passed";
+        const top = 70 - PITCH[i % PITCH.length] * 6; // % desde arriba: línea inferior en 70 %
+        return (
+          <button
+            key={i}
+            type="button"
+            tabIndex={-1}
+            disabled={!live}
+            data-step-note={sounded ? s.status : "waiting"}
+            onClick={() => onPick(i)}
+            className="absolute flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center disabled:cursor-default"
+            style={{ left: x(i), top: `${top}%` }}
+          >
+            <span
+              className={`block h-[0.7rem] w-[0.95rem] -rotate-[20deg] rounded-[50%] border-[1.5px] transition-colors duration-300 ${
+                passed ? "border-wine bg-wine" : failed ? "border-ink bg-paper" : sounded ? "border-ink bg-paper" : "border-rest bg-rest"
+              } ${i === step && live ? "scale-125" : ""}`}
+            />
+            {failed ? <span className="absolute font-mono text-sm leading-none text-ink">×</span> : null}
+          </button>
+        );
+      })}
+      <span className="absolute inset-x-0 bottom-0 flex">
+        {steps.map((s, i) => (
+          <span key={i} className={`flex-1 text-center font-mono text-[0.625rem] italic sm:text-xs ${live && i === step ? "text-wine" : "text-muted"}`}>
+            {s.keyword}
+          </span>
+        ))}
+      </span>
+    </div>
+  );
+}
+
 function scenarioLabel(feature: Feature, i: number) {
   const s = feature.scenarios[i];
   const twins = feature.scenarios.filter((x) => x.name === s.name);
@@ -195,7 +256,7 @@ export function SuitePlayer({ d, features, live }: { d: Dictionary; features: Fe
                 >
                   {playing ? t.pause : t.play}
                 </button>
-                <button type="button" disabled={step >= steps.length - 1} onClick={() => { setStep((s) => Math.min(steps.length - 1, s + 1)); setPlaying(false); }} className="min-h-11 min-w-11 cursor-pointer border border-ink px-3 font-mono text-sm hover:bg-ink hover:text-paper disabled:cursor-default disabled:opacity-40">
+                <button type="button" data-control="next" disabled={step >= steps.length - 1} onClick={() => { setStep((s) => Math.min(steps.length - 1, s + 1)); setPlaying(false); }} className="min-h-11 min-w-11 cursor-pointer border border-ink px-3 font-mono text-sm hover:bg-ink hover:text-paper disabled:cursor-default disabled:opacity-40">
                   <span aria-hidden="true">→</span>
                   <span className="sr-only">{t.next}</span>
                 </button>
@@ -218,6 +279,16 @@ export function SuitePlayer({ d, features, live }: { d: Dictionary; features: Fe
             <p className="mt-2 max-w-[60ch] text-base text-ink">{t.pendingBody}</p>
           </div>
         )}
+
+        <StepStaff
+          steps={steps}
+          step={step}
+          live={live}
+          onPick={(i) => {
+            setStep(i);
+            setPlaying(false);
+          }}
+        />
 
         <div className="min-w-0">
           <h3 className="text-3xl leading-tight">{scenario ? scenarioLabel(features[fi], si) : ""}</h3>

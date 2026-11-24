@@ -1,5 +1,7 @@
 "use client";
 
+import { MODE_CHORD, playChord, playNote, soundEnabled, staffPitch } from "@/lib/sound";
+
 import { useState } from "react";
 import { projects, staves, type Dictionary, type Mode } from "@/content/site";
 import { ContactLinks } from "./ContactLinks";
@@ -44,6 +46,9 @@ function Staff({
                 onMouseLeave={() => onNote(null)}
                 onFocus={() => onNote(n.t)}
                 onBlur={() => onNote(null)}
+                onClick={() => {
+                  if (soundEnabled()) playNote(staffPitch(label.toLowerCase() === "verify" ? "verify" : "build", n.y));
+                }}
                 className={`flex h-[1.5em] cursor-default items-center gap-[0.4em] font-mono text-xs leading-none transition-colors duration-300 xs:text-[0.8125rem] sm:text-sm lg:text-base ${on ? "text-ink" : "text-muted"}`}
               >
                 <span
@@ -107,7 +112,7 @@ export function Hero({ d }: { d: Dictionary }) {
             </h1>
           </div>
 
-          <figure className="m-0 flex gap-3 [--gap:13px] xs:[--gap:14px] sm:gap-4 lg:[--gap:15px]" aria-label={d.hero.staffLabel}>
+          <figure data-grand-staff className="m-0 flex gap-3 [--gap:13px] xs:[--gap:14px] sm:gap-4 lg:[--gap:15px]" aria-label={d.hero.staffLabel}>
             <div className="flex w-16 shrink-0 flex-col justify-between py-1 xs:w-20 sm:w-24 lg:w-28">
               <span className={`text-xl italic transition-colors duration-300 xs:text-2xl lg:text-3xl ${lit ? "text-ink" : buildOn ? "text-ink" : "text-muted"}`}>Build</span>
               <span className={`text-xl italic transition-colors duration-300 xs:text-2xl lg:text-3xl ${lit ? "text-ink" : verifyOn ? "text-ink" : "text-muted"}`}>Verify</span>
@@ -134,7 +139,10 @@ export function Hero({ d }: { d: Dictionary }) {
                     type="button"
                     aria-pressed={on}
                     data-mode={m}
-                    onClick={() => setMode(m)}
+                    onClick={() => {
+                      setMode(m);
+                      if (soundEnabled()) playChord(MODE_CHORD[m]);
+                    }}
                     className={`min-h-[52px] cursor-pointer px-3 text-lg transition-colors xs:text-xl sm:px-7 ${i < 2 ? "border-r border-ink" : ""} ${on ? "italic text-wine underline decoration-1 underline-offset-[6px]" : "text-ink hover:text-wine"}`}
                   >
                     {d.hero.modes[m]}

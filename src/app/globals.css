@@ -202,3 +202,32 @@
   color: var(--color-muted);
   user-select: none;
 }
+/* ── Gramática de partitura (fuera del hero) ───────────────────────────────
+   .bar-double: doble barra fina = cambio de sección.
+   .bar-final:  barra final (fina + gruesa) = fin de la obra. */
+.bar-double {
+  position: relative;
+  border-top: 1px solid var(--color-ink);
+}
+.bar-double::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 3px;
+  height: 1px;
+  background: var(--color-ink);
+}
+.bar-final {
+  display: block;
+  height: 10px;
+  border-top: 1px solid currentColor;
+  position: relative;
+}
+.bar-final::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 4px;
+  height: 5px;
+  background: currentColor;
+}
