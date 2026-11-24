@@ -16,7 +16,7 @@ export function VoicesGlyph({ className = "" }: { className?: string }) {
     <svg aria-hidden="true" viewBox="0 0 24 16" width="24" height="16" className={className} data-voices-glyph={mode}>
       <path d="M1 4.5h22M1 11.5h22" stroke="currentColor" strokeWidth="1" />
       <ellipse cx="12" cy="4.5" rx="3.4" ry="2.4" transform="rotate(-20 12 4.5)" className={`transition-colors duration-300 ${build ? "fill-wine" : "fill-rest"}`} />
-      <ellipse cx="12" cy="11.5" rx="3.4" ry="2.4" transform="rotate(-20 12 11.5)" className={`transition-colors duration-300 ${verify ? "fill-wine" : "fill-rest"}`} />
+      <ellipse cx="12" cy="11.5" rx="3.4" ry="2.4" transform="rotate(-20 12 11.5)" className={`transition-colors duration-300 ${verify ? "fill-verify" : "fill-rest"}`} />
     </svg>
   );
 }
@@ -50,8 +50,8 @@ export function VoiceSwitch({ d, variant }: { d: Dictionary; variant: "compact" 
               }}
               className={
                 compact
-                  ? `min-h-11 min-w-11 cursor-pointer px-1.5 font-mono text-xs tracking-[0.04em] ${on ? "text-wine underline decoration-1 underline-offset-4" : "text-ink hover:text-wine"}`
-                  : `min-h-12 flex-1 cursor-pointer font-serif text-lg ${i < 2 ? "border-r border-ink" : ""} ${on ? "italic text-wine underline decoration-1 underline-offset-[5px]" : "text-ink"}`
+                  ? `min-h-11 min-w-11 cursor-pointer px-1.5 font-mono text-xs tracking-[0.04em] ${on ? `${m === "qa" ? "text-verify" : "text-wine"} underline decoration-1 underline-offset-4` : "text-ink hover:text-wine"}`
+                  : `min-h-12 flex-1 cursor-pointer font-serif text-lg ${i < 2 ? "border-r border-ink" : ""} ${on ? `italic ${m === "qa" ? "text-verify" : "text-wine"} underline decoration-1 underline-offset-[5px]` : "text-ink"}`
               }
             >
               {d.hero.modes[m]}

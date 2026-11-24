@@ -339,7 +339,7 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
 
   if (layout === "static") {
     return (
-      <section id="como-trabajo" aria-labelledby="how-title" data-how-layout="static" className="bar-double py-20 lg:py-32">
+      <section id="como-trabajo" aria-labelledby="how-title" data-how-layout="static" className="bar-double surface-ink section-y">
         <div className="mx-auto flex max-w-[90rem] flex-col items-center px-5 text-center sm:px-8 lg:px-16">
           {header(false)}
           <ol className="mt-14 flex w-full max-w-5xl flex-col gap-14 lg:mt-20 lg:gap-20">
@@ -368,7 +368,7 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
 
   if (layout === "flow") {
     return (
-      <section id="como-trabajo" aria-labelledby="how-title" data-how-layout="flow" className="bar-double">
+      <section id="como-trabajo" aria-labelledby="how-title" data-how-layout="flow" className="bar-double surface-ink">
         <div className="mx-auto flex max-w-[90rem] flex-col items-center px-5 pt-16 text-center sm:px-8 sm:pt-20">
           {header(false)}
           <ol className="mt-12 flex w-full max-w-5xl flex-col gap-16 sm:mt-16 sm:gap-20">
@@ -395,7 +395,7 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
   const focusVal = activeStep < 0 ? -0.5 : activeStep;
 
   return (
-    <section id="como-trabajo" aria-labelledby="how-title" data-how-layout="pinned" className="bar-double">
+    <section id="como-trabajo" aria-labelledby="how-title" data-how-layout="pinned" className="bar-double surface-ink">
       {/* Un tramo corto por compás: ágil, no un túnel. */}
       <div ref={trackRef} style={{ height: `${100 + rowCount * 65}svh` }}>
         <div className="sticky top-0 mx-auto flex h-[100svh] max-w-[90rem] flex-col items-center justify-between px-5 py-6 text-center sm:px-8 sm:py-10 lg:px-16 lg:py-14">

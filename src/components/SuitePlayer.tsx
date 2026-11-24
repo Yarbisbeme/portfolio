@@ -67,7 +67,7 @@ function StepStaff({ steps, step, live, onPick }: { steps: Step[]; step: number;
           >
             <span
               className={`block h-[0.7rem] w-[0.95rem] -rotate-[20deg] rounded-[50%] border-[1.5px] transition-colors duration-300 ${
-                passed ? "border-wine bg-wine" : failed ? "border-ink bg-paper" : sounded ? "border-ink bg-paper" : "border-rest bg-rest"
+                passed ? "border-verify bg-verify" : failed ? "border-ink bg-paper" : sounded ? "border-ink bg-paper" : "border-rest bg-rest"
               } ${i === step && live ? "scale-125" : ""}`}
             />
             {failed ? <span className="absolute font-mono text-sm leading-none text-ink">×</span> : null}

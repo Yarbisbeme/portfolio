@@ -47,7 +47,7 @@ function Staff({
                 type="button"
                 data-note={n.t}
                 data-sounding={on}
-                aria-label={usedInLabel(n.t)}
+                aria-label={n.short ? `${n.short} · ${usedInLabel(n.t)}` : usedInLabel(n.t)}
                 onMouseEnter={() => onNote(n.t)}
                 onMouseLeave={() => onNote(null)}
                 onFocus={() => onNote(n.t)}
@@ -59,7 +59,7 @@ function Staff({
               >
                 <span
                   aria-hidden="true"
-                  className={`h-[0.68em] w-[0.92em] shrink-0 -rotate-[20deg] rounded-[50%] transition-colors duration-300 ${on ? "bg-wine" : "bg-rest"}`}
+                  className={`h-[0.68em] w-[0.92em] shrink-0 -rotate-[20deg] rounded-[50%] transition-colors duration-300 ${on ? (label.toLowerCase() === "verify" ? "bg-verify" : "bg-wine") : "bg-rest"}`}
                 />
                 <span className="bg-paper px-[0.2em]">
                   {n.short ? (
@@ -160,7 +160,7 @@ export function Hero({ d }: { d: Dictionary }) {
                       setMode(m);
                       if (soundEnabled()) playChord(MODE_CHORD[m]);
                     }}
-                    className={`min-h-[52px] cursor-pointer px-3 text-lg transition-colors xs:text-xl sm:px-7 ${i < 2 ? "border-r border-ink" : ""} ${on ? "italic text-wine underline decoration-1 underline-offset-[6px]" : "text-ink hover:text-wine"}`}
+                    className={`min-h-[52px] cursor-pointer px-3 text-lg transition-colors xs:text-xl sm:px-7 ${i < 2 ? "border-r border-ink" : ""} ${on ? `italic ${m === "qa" ? "text-verify" : "text-wine"} underline decoration-1 underline-offset-[6px]` : "text-ink hover:text-wine"}`}
                   >
                     {d.hero.modes[m]}
                   </button>

@@ -40,7 +40,7 @@ function System({ notes, offset, playing }: { notes: TuningNote[]; offset: numbe
               rx={playing === offset + i ? 6.6 : 5.2}
               ry={playing === offset + i ? 4.8 : 3.8}
               transform={`rotate(-20 ${x} ${y})`}
-              className={passed ? "fill-wine" : "fill-paper"}
+              className={passed ? "fill-verify" : "fill-paper"}
               stroke={passed ? "none" : "currentColor"}
               strokeWidth="1.2"
             />
@@ -128,7 +128,7 @@ export function TuningStaff({ d, tuning }: { d: Dictionary; tuning: Tuning }) {
         </button>
         <span aria-hidden="true" className="flex items-center gap-4 text-xs text-muted">
           <span className="flex items-center gap-1.5">
-            <span className="inline-block h-2 w-2.5 -rotate-[20deg] rounded-[50%] bg-wine" /> {d.how.tuningLegendPass}
+            <span className="inline-block h-2 w-2.5 -rotate-[20deg] rounded-[50%] bg-verify" /> {d.how.tuningLegendPass}
           </span>
           <span className="flex items-center gap-1.5">
             <span className="relative inline-block h-2 w-2.5 -rotate-[20deg] rounded-[50%] border border-ink" /> × {d.how.tuningLegendFail}
