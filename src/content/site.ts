@@ -96,7 +96,7 @@ const es = {
       `Back-End Engineer (.NET / Python) y QA Automation (SDET) en ${siteConfig.location}. Construyo el sistema y demuestro que aguanta.`,
   },
   skip: "Saltar al contenido",
-  nav: { work: "Trabajo", how: "Cómo trabajo", about: "Sobre mí", contact: "Contacto", automation: "Automation", code: "Código", menu: "Menú", close: "Cerrar", section: "Sección", voices: "Leer como", silent: "en silencio para este enfoque" },
+  nav: { work: "Trabajo", how: "Cómo trabajo", about: "Sobre mí", contact: "Contacto", automation: "Automation", code: "Código", menu: "Menú", close: "Cerrar", section: "Sección", voices: "Leer como", silent: "en silencio para este enfoque", sound: "Sonido", soundOn: "sí", soundOff: "no" },
   langSwitch: { label: "English", short: "EN", aria: "Ver el sitio en inglés" },
   hero: {
     eyebrow: `${siteConfig.roleTagline} · ${siteConfig.location}`,
@@ -172,6 +172,8 @@ const es = {
     tuningFailed: "en rojo",
     tuningLegendPass: "en verde",
     tuningLegendFail: "en rojo",
+    listen: "Escuchar la última ejecución",
+    listening: "Sonando…",
   },
   stack: {
     kicker: "C",
@@ -271,7 +273,7 @@ const en: Dict = {
       `Back-End Engineer (.NET / Python) and QA Automation (SDET) based in ${siteConfig.location}. I build the system and prove it holds.`,
   },
   skip: "Skip to content",
-  nav: { work: "Work", how: "How I work", about: "About", contact: "Contact", automation: "Automation", code: "Code", menu: "Menu", close: "Close", section: "Section", voices: "Read as", silent: "silent for this focus" },
+  nav: { work: "Work", how: "How I work", about: "About", contact: "Contact", automation: "Automation", code: "Code", menu: "Menu", close: "Close", section: "Section", voices: "Read as", silent: "silent for this focus", sound: "Sound", soundOn: "on", soundOff: "off" },
   langSwitch: { label: "Español", short: "ES", aria: "View the site in Spanish" },
   hero: {
     eyebrow: `${siteConfig.roleTagline} · ${siteConfig.location}`,
@@ -347,6 +349,8 @@ const en: Dict = {
     tuningFailed: "failing",
     tuningLegendPass: "passing",
     tuningLegendFail: "failing",
+    listen: "Listen to the latest run",
+    listening: "Playing…",
   },
   stack: {
     kicker: "C",

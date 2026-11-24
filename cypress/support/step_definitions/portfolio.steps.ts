@@ -283,3 +283,57 @@ Then("the first {int} notes have sounded", (n: number) => {
     else expect($note.attr("data-step-note")).to.eq("waiting");
   });
 });
+
+// ── 09 · Sonido opcional ──────────────────────────────────────────────────
+type AudioWin = Window & { __audio: number; AudioContext: typeof AudioContext };
+
+const countAudio = (win: Window) => {
+  const w = win as AudioWin;
+  w.__audio = 0;
+  const Real = w.AudioContext;
+  w.AudioContext = class extends Real {
+    constructor(...args: ConstructorParameters<typeof AudioContext>) {
+      super(...args);
+      w.__audio += 1;
+    }
+  };
+};
+
+Given("I open the portfolio in {string} listening for audio", (lang: string) => {
+  cy.clearLocalStorage();
+  cy.visit(`/${lang}/`, { onBeforeLoad: countAudio });
+  cy.get("h1").should("be.visible");
+});
+
+When("I touch the note {string}", (name: string) => {
+  home.note(name).filter(":visible").first().click();
+});
+
+When("I turn sound on", () => {
+  cy.get("[data-sound-toggle]").filter(":visible").first().click();
+});
+
+When("I reload the page", () => {
+  cy.reload();
+  cy.get("h1").should("be.visible");
+});
+
+When("I listen to the latest run", () => {
+  cy.get("[data-listen]").scrollIntoView().click();
+});
+
+Then("no audio has been started", () => {
+  cy.window().its("__audio").should("eq", 0);
+});
+
+Then("audio has been started", () => {
+  cy.window().its("__audio").should("be.gte", 1);
+});
+
+Then("sound is off", () => {
+  cy.get("[data-sound-toggle]").first().should("have.attr", "aria-pressed", "false");
+});
+
+Then("sound is on", () => {
+  cy.get("[data-sound-toggle]").first().should("have.attr", "aria-pressed", "true");
+});

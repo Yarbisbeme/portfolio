@@ -2,6 +2,7 @@
 
 import type { Dictionary } from "@/content/site";
 import { modes, useMode } from "./mode";
+import { MODE_CHORD, playChord, setSoundEnabled, soundEnabled, useSoundEnabled } from "@/lib/sound";
 
 /**
  * Las dos voces en miniatura (Build arriba, Verify abajo), con la misma regla del hero:
@@ -43,7 +44,10 @@ export function VoiceSwitch({ d, variant }: { d: Dictionary; variant: "compact" 
               type="button"
               data-header-mode={m}
               aria-pressed={on}
-              onClick={() => setMode(m)}
+              onClick={() => {
+                setMode(m);
+                if (soundEnabled()) playChord(MODE_CHORD[m]);
+              }}
               className={
                 compact
                   ? `min-h-11 min-w-11 cursor-pointer px-1.5 font-mono text-xs tracking-[0.04em] ${on ? "text-wine underline decoration-1 underline-offset-4" : "text-ink hover:text-wine"}`
@@ -56,5 +60,24 @@ export function VoiceSwitch({ d, variant }: { d: Dictionary; variant: "compact" 
         })}
       </div>
     </div>
+  );
+}
+
+/** Interruptor de sonido. Apagado por defecto; se recuerda en este navegador. */
+export function SoundToggle({ d, className = "" }: { d: Dictionary; className?: string }) {
+  const on = useSoundEnabled();
+  return (
+    <button
+      type="button"
+      data-sound-toggle
+      aria-pressed={on}
+      onClick={() => {
+        setSoundEnabled(!on);
+        if (!on) playChord([60, 64, 67], { vel: 0.5, dur: 1.2 });
+      }}
+      className={`inline-flex min-h-11 cursor-pointer items-center gap-1.5 px-1.5 font-mono text-xs tracking-[0.04em] hover:text-wine ${className}`}
+    >
+      {d.nav.sound}: <span className={on ? "text-wine underline decoration-1 underline-offset-4" : "text-muted"}>{on ? d.nav.soundOn : d.nav.soundOff}</span>
+    </button>
   );
 }
