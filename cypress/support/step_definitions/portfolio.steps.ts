@@ -517,7 +517,7 @@ When("I scroll to the tuning staff", () => {
 Then("every note of the tuning staff ends visible", () => {
   cy.get("[data-tuning] svg", { timeout: 6000 }).should(($svgs) => {
     const shown = [...$svgs].filter((s) => s.getBoundingClientRect().width > 0);
-    const notes = shown.flatMap((s) => [...s.querySelectorAll("[data-tuning-note]")]);
+    const notes = shown.flatMap((s) => Array.from(s.querySelectorAll("[data-tuning-note]")));
     expect(notes.length).to.be.greaterThan(0);
     expect(notes.every((n) => getComputedStyle(n).opacity === "1")).to.eq(true);
   });
