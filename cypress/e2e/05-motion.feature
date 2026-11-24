@@ -49,3 +49,16 @@ Feature: Motion is optional
     Then the career timeline is partly written
     When I scroll past the career timeline
     Then the career timeline is fully written
+
+  Scenario: The tuning staff plays its notes in sequence and rests
+    Given I open the portfolio in "es"
+    When I scroll to the tuning staff
+    Then every note of the tuning staff ends visible
+
+  Scenario: The coda draws its final barline and the da capo rewinds the score
+    Given I am on a desktop screen
+    When I scroll to the coda
+    Then the final barline is fully drawn
+    When I follow the da capo
+    Then I am back at the top of the score
+    And the playback cursor rewinds across the grand staff

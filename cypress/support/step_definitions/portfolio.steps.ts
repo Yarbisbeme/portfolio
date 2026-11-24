@@ -508,3 +508,32 @@ Then("the career timeline is partly written", () => {
 Then("the career timeline is fully written", () => {
   cy.get("[data-pbar]").should(($b) => expect([...$b].every((b) => scaleXOf(b) > 0.99)).to.eq(true));
 });
+
+// ── 05 · Movimiento fase 3 ────────────────────────────────────────────────
+When("I scroll to the tuning staff", () => {
+  cy.get("[data-tuning]").first().scrollIntoView({ offset: { top: -200, left: 0 } });
+});
+
+Then("every note of the tuning staff ends visible", () => {
+  cy.get("[data-tuning] svg", { timeout: 6000 }).should(($svgs) => {
+    const shown = [...$svgs].filter((s) => s.getBoundingClientRect().width > 0);
+    const notes = shown.flatMap((s) => [...s.querySelectorAll("[data-tuning-note]")]);
+    expect(notes.length).to.be.greaterThan(0);
+    expect(notes.every((n) => getComputedStyle(n).opacity === "1")).to.eq(true);
+  });
+});
+
+When("I scroll to the coda", () => {
+  cy.get("#contacto").scrollIntoView();
+});
+
+Then("the final barline is fully drawn", () => {
+  cy.get('[data-bar="final"]', { timeout: 6000 }).should(($b) => {
+    const t = getComputedStyle($b[0]).transform;
+    expect(t === "none" || /^matrix\(1, 0, 0, 1/.test(t), t).to.eq(true);
+  });
+});
+
+Then("the playback cursor rewinds across the grand staff", () => {
+  cy.get("[data-staff-cursor]", { timeout: 6000 }).should(($c) => expect(Number(getComputedStyle($c[0]).opacity)).to.be.greaterThan(0.5));
+});

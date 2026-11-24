@@ -231,8 +231,8 @@
     stroke: var(--color-wine);
     stroke-linecap: round;
     fill: none;
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
+    /* Sin trazar hasta que GSAP (DrawSVG) lo dibuja con el scroll. */
+    stroke-dasharray: 0 100000;
   }
 
   .pencil-stroke {
