@@ -1,15 +1,15 @@
 {
-  "runAt": "2026-11-24T14:52:44.436Z",
-  "durationMs": 94991,
-  "commit": "06611a2b272c23f7675aa53cd8cddf5ae66ef401",
-  "runUrl": "https://github.com/Yarbisbeme/portfolio/actions/runs/45418576717",
+  "runAt": "2026-11-24T16:03:24.316Z",
+  "durationMs": 98272,
+  "commit": "7649a63b06343c0a82449be390bb17a3371cfa7f",
+  "runUrl": "https://github.com/Yarbisbeme/portfolio/actions/runs/45432163553",
   "browser": "chrome",
   "totals": {
-    "scenarios": 43,
-    "passed": 43,
+    "scenarios": 44,
+    "passed": 44,
     "failed": 0,
     "other": 0,
-    "steps": 149
+    "steps": 155
   },
   "features": [
     {
@@ -20,7 +20,7 @@
         {
           "name": "Back-End focus silences the Verify staff",
           "status": "passed",
-          "durationMs": 588,
+          "durationMs": 554,
           "attempt": 0,
           "steps": [
             {
@@ -28,7 +28,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 327,
+              "durationMs": 341,
               "error": null,
               "shot": "/automation/shots/001.webp"
             },
@@ -37,7 +37,7 @@
               "text": "I read the portfolio as \"Back-End\"",
               "table": null,
               "status": "passed",
-              "durationMs": 122,
+              "durationMs": 117,
               "error": null,
               "shot": "/automation/shots/002.webp"
             },
@@ -46,7 +46,7 @@
               "text": "the \"build\" staff is sounding",
               "table": null,
               "status": "passed",
-              "durationMs": 40,
+              "durationMs": 31,
               "error": null,
               "shot": "/automation/shots/003.webp"
             },
@@ -55,7 +55,7 @@
               "text": "the \"verify\" staff is silent",
               "table": null,
               "status": "passed",
-              "durationMs": 35,
+              "durationMs": 25,
               "error": null,
               "shot": "/automation/shots/004.webp"
             },
@@ -64,7 +64,7 @@
               "text": "the address keeps the focus \"backend\"",
               "table": null,
               "status": "passed",
-              "durationMs": 42,
+              "durationMs": 27,
               "error": null,
               "shot": "/automation/shots/005.webp"
             },
@@ -73,7 +73,7 @@
               "text": "the CV link offers the \"backend\" version",
               "table": null,
               "status": "passed",
-              "durationMs": 22,
+              "durationMs": 13,
               "error": null,
               "shot": "/automation/shots/006.webp"
             }
@@ -82,7 +82,7 @@
         {
           "name": "QA focus silences the Build staff",
           "status": "passed",
-          "durationMs": 490,
+          "durationMs": 430,
           "attempt": 0,
           "steps": [
             {
@@ -90,7 +90,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 248,
+              "durationMs": 221,
               "error": null,
               "shot": "/automation/shots/007.webp"
             },
@@ -99,7 +99,7 @@
               "text": "I read the portfolio as \"QA\"",
               "table": null,
               "status": "passed",
-              "durationMs": 107,
+              "durationMs": 106,
               "error": null,
               "shot": "/automation/shots/008.webp"
             },
@@ -108,7 +108,7 @@
               "text": "the \"verify\" staff is sounding",
               "table": null,
               "status": "passed",
-              "durationMs": 28,
+              "durationMs": 21,
               "error": null,
               "shot": "/automation/shots/009.webp"
             },
@@ -117,7 +117,7 @@
               "text": "the \"build\" staff is silent",
               "table": null,
               "status": "passed",
-              "durationMs": 23,
+              "durationMs": 28,
               "error": null,
               "shot": "/automation/shots/010.webp"
             },
@@ -126,7 +126,7 @@
               "text": "the address keeps the focus \"qa\"",
               "table": null,
               "status": "passed",
-              "durationMs": 60,
+              "durationMs": 41,
               "error": null,
               "shot": "/automation/shots/011.webp"
             },
@@ -135,7 +135,7 @@
               "text": "the CV link offers the \"qa-automation\" version",
               "table": null,
               "status": "passed",
-              "durationMs": 24,
+              "durationMs": 13,
               "error": null,
               "shot": "/automation/shots/012.webp"
             }
@@ -144,7 +144,7 @@
         {
           "name": "General focus offers both CVs",
           "status": "passed",
-          "durationMs": 491,
+          "durationMs": 377,
           "attempt": 0,
           "steps": [
             {
@@ -152,7 +152,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 321,
+              "durationMs": 218,
               "error": null,
               "shot": "/automation/shots/013.webp"
             },
@@ -161,7 +161,7 @@
               "text": "I read the portfolio as \"General\"",
               "table": null,
               "status": "passed",
-              "durationMs": 105,
+              "durationMs": 100,
               "error": null,
               "shot": "/automation/shots/014.webp"
             },
@@ -170,7 +170,7 @@
               "text": "both staves are sounding",
               "table": null,
               "status": "passed",
-              "durationMs": 53,
+              "durationMs": 42,
               "error": null,
               "shot": "/automation/shots/015.webp"
             },
@@ -179,7 +179,7 @@
               "text": "the CV links offer 2 versions",
               "table": null,
               "status": "passed",
-              "durationMs": 12,
+              "durationMs": 17,
               "error": null,
               "shot": "/automation/shots/016.webp"
             }
@@ -188,7 +188,7 @@
         {
           "name": "A shared link opens with its focus applied",
           "status": "passed",
-          "durationMs": 540,
+          "durationMs": 403,
           "attempt": 0,
           "steps": [
             {
@@ -196,7 +196,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 296,
+              "durationMs": 222,
               "error": null,
               "shot": "/automation/shots/017.webp"
             },
@@ -205,7 +205,7 @@
               "text": "I open the portfolio in \"es\" with the focus \"qa\"",
               "table": null,
               "status": "passed",
-              "durationMs": 228,
+              "durationMs": 170,
               "error": null,
               "shot": "/automation/shots/018.webp"
             },
@@ -214,7 +214,7 @@
               "text": "the selected focus is \"qa\"",
               "table": null,
               "status": "passed",
-              "durationMs": 16,
+              "durationMs": 11,
               "error": null,
               "shot": "/automation/shots/019.webp"
             }
@@ -230,7 +230,7 @@
         {
           "name": "Focusing a project lights only its notes",
           "status": "passed",
-          "durationMs": 408,
+          "durationMs": 308,
           "attempt": 0,
           "steps": [
             {
@@ -238,7 +238,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 363,
+              "durationMs": 269,
               "error": null,
               "shot": "/automation/shots/020.webp"
             },
@@ -247,7 +247,7 @@
               "text": "I focus the project \"YBank\"",
               "table": null,
               "status": "passed",
-              "durationMs": 26,
+              "durationMs": 22,
               "error": null,
               "shot": "/automation/shots/021.webp"
             },
@@ -256,7 +256,7 @@
               "text": "only these notes are sounding: \"PostgreSQL, WebdriverIO, Appium\"",
               "table": null,
               "status": "passed",
-              "durationMs": 19,
+              "durationMs": 17,
               "error": null,
               "shot": "/automation/shots/022.webp"
             }
@@ -265,7 +265,7 @@
         {
           "name": "Focusing a project lights only its notes",
           "status": "passed",
-          "durationMs": 276,
+          "durationMs": 216,
           "attempt": 0,
           "steps": [
             {
@@ -273,7 +273,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 233,
+              "durationMs": 170,
               "error": null,
               "shot": "/automation/shots/023.webp"
             },
@@ -282,7 +282,7 @@
               "text": "I focus the project \"Eikôn\"",
               "table": null,
               "status": "passed",
-              "durationMs": 18,
+              "durationMs": 16,
               "error": null,
               "shot": "/automation/shots/024.webp"
             },
@@ -291,7 +291,7 @@
               "text": "only these notes are sounding: \"C#, .NET Core, FastAPI, SQL Server, xUnit, Playwright\"",
               "table": null,
               "status": "passed",
-              "durationMs": 25,
+              "durationMs": 30,
               "error": null,
               "shot": "/automation/shots/025.webp"
             }
@@ -300,7 +300,7 @@
         {
           "name": "Focusing a project lights only its notes",
           "status": "passed",
-          "durationMs": 296,
+          "durationMs": 262,
           "attempt": 0,
           "steps": [
             {
@@ -308,7 +308,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 238,
+              "durationMs": 217,
               "error": null,
               "shot": "/automation/shots/026.webp"
             },
@@ -317,7 +317,7 @@
               "text": "I focus the project \"TMM\"",
               "table": null,
               "status": "passed",
-              "durationMs": 25,
+              "durationMs": 17,
               "error": null,
               "shot": "/automation/shots/027.webp"
             },
@@ -326,7 +326,7 @@
               "text": "only these notes are sounding: \"WebdriverIO, Appium, Cucumber, SigNoz\"",
               "table": null,
               "status": "passed",
-              "durationMs": 33,
+              "durationMs": 28,
               "error": null,
               "shot": "/automation/shots/028.webp"
             }
@@ -335,7 +335,7 @@
         {
           "name": "Focusing a project lights only its notes",
           "status": "passed",
-          "durationMs": 274,
+          "durationMs": 240,
           "attempt": 0,
           "steps": [
             {
@@ -343,7 +343,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 242,
+              "durationMs": 207,
               "error": null,
               "shot": "/automation/shots/029.webp"
             },
@@ -352,7 +352,7 @@
               "text": "I focus the project \"Los Hidalgos\"",
               "table": null,
               "status": "passed",
-              "durationMs": 17,
+              "durationMs": 19,
               "error": null,
               "shot": "/automation/shots/030.webp"
             },
@@ -361,7 +361,7 @@
               "text": "only these notes are sounding: \"C#, ASP.NET, SQL Server\"",
               "table": null,
               "status": "passed",
-              "durationMs": 15,
+              "durationMs": 14,
               "error": null,
               "shot": "/automation/shots/031.webp"
             }
@@ -370,7 +370,7 @@
         {
           "name": "A note marks the projects that use it",
           "status": "passed",
-          "durationMs": 201,
+          "durationMs": 299,
           "attempt": 0,
           "steps": [
             {
@@ -378,7 +378,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 173,
+              "durationMs": 260,
               "error": null,
               "shot": "/automation/shots/032.webp"
             },
@@ -396,7 +396,7 @@
               "text": "these projects are marked: \"eikon, los-hidalgos\"",
               "table": null,
               "status": "passed",
-              "durationMs": 16,
+              "durationMs": 27,
               "error": null,
               "shot": "/automation/shots/034.webp"
             }
@@ -405,7 +405,7 @@
         {
           "name": "A note used by one project marks only that project",
           "status": "passed",
-          "durationMs": 247,
+          "durationMs": 274,
           "attempt": 0,
           "steps": [
             {
@@ -413,7 +413,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 224,
+              "durationMs": 246,
               "error": null,
               "shot": "/automation/shots/035.webp"
             },
@@ -422,7 +422,7 @@
               "text": "I point at the note \"Cucumber\"",
               "table": null,
               "status": "passed",
-              "durationMs": 12,
+              "durationMs": 13,
               "error": null,
               "shot": "/automation/shots/036.webp"
             },
@@ -431,7 +431,7 @@
               "text": "these projects are marked: \"tmm\"",
               "table": null,
               "status": "passed",
-              "durationMs": 11,
+              "durationMs": 15,
               "error": null,
               "shot": "/automation/shots/037.webp"
             }
@@ -440,7 +440,7 @@
         {
           "name": "The grand staff fits on narrow phones",
           "status": "passed",
-          "durationMs": 230,
+          "durationMs": 273,
           "attempt": 0,
           "steps": [
             {
@@ -448,7 +448,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 186,
+              "durationMs": 233,
               "error": null,
               "shot": "/automation/shots/038.webp"
             },
@@ -457,7 +457,7 @@
               "text": "I am on a 320 pixels wide screen",
               "table": null,
               "status": "passed",
-              "durationMs": 10,
+              "durationMs": 9,
               "error": null,
               "shot": "/automation/shots/039.webp"
             },
@@ -466,7 +466,7 @@
               "text": "the grand staff fits inside the page",
               "table": null,
               "status": "passed",
-              "durationMs": 34,
+              "durationMs": 31,
               "error": null,
               "shot": "/automation/shots/040.webp"
             }
@@ -483,7 +483,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 222,
+              "durationMs": 223,
               "error": null,
               "shot": "/automation/shots/041.webp"
             },
@@ -501,7 +501,7 @@
               "text": "the grand staff fits inside the page",
               "table": null,
               "status": "passed",
-              "durationMs": 30,
+              "durationMs": 29,
               "error": null,
               "shot": "/automation/shots/043.webp"
             }
@@ -510,7 +510,7 @@
         {
           "name": "The grand staff fits on narrow phones",
           "status": "passed",
-          "durationMs": 289,
+          "durationMs": 250,
           "attempt": 0,
           "steps": [
             {
@@ -518,7 +518,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 245,
+              "durationMs": 208,
               "error": null,
               "shot": "/automation/shots/044.webp"
             },
@@ -527,7 +527,7 @@
               "text": "I am on a 430 pixels wide screen",
               "table": null,
               "status": "passed",
-              "durationMs": 9,
+              "durationMs": 8,
               "error": null,
               "shot": "/automation/shots/045.webp"
             },
@@ -536,7 +536,7 @@
               "text": "the grand staff fits inside the page",
               "table": null,
               "status": "passed",
-              "durationMs": 35,
+              "durationMs": 34,
               "error": null,
               "shot": "/automation/shots/046.webp"
             }
@@ -552,7 +552,7 @@
         {
           "name": "Switching language keeps the reading focus",
           "status": "passed",
-          "durationMs": 583,
+          "durationMs": 594,
           "attempt": 0,
           "steps": [
             {
@@ -560,7 +560,7 @@
               "text": "I open the portfolio in \"es\" with the focus \"qa\"",
               "table": null,
               "status": "passed",
-              "durationMs": 251,
+              "durationMs": 232,
               "error": null,
               "shot": "/automation/shots/047.webp"
             },
@@ -569,7 +569,7 @@
               "text": "I switch the language",
               "table": null,
               "status": "passed",
-              "durationMs": 253,
+              "durationMs": 287,
               "error": null,
               "shot": "/automation/shots/048.webp"
             },
@@ -578,7 +578,7 @@
               "text": "I am on the \"en\" version with the focus \"qa\"",
               "table": null,
               "status": "passed",
-              "durationMs": 59,
+              "durationMs": 53,
               "error": null,
               "shot": "/automation/shots/049.webp"
             },
@@ -587,7 +587,7 @@
               "text": "the headline reads \"I build the system.\"",
               "table": null,
               "status": "passed",
-              "durationMs": 20,
+              "durationMs": 22,
               "error": null,
               "shot": "/automation/shots/050.webp"
             }
@@ -596,7 +596,7 @@
         {
           "name": "Spanish headline",
           "status": "passed",
-          "durationMs": 253,
+          "durationMs": 194,
           "attempt": 0,
           "steps": [
             {
@@ -604,7 +604,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 241,
+              "durationMs": 183,
               "error": null,
               "shot": "/automation/shots/051.webp"
             },
@@ -613,7 +613,7 @@
               "text": "the headline reads \"Construyo el sistema.\"",
               "table": null,
               "status": "passed",
-              "durationMs": 12,
+              "durationMs": 11,
               "error": null,
               "shot": "/automation/shots/052.webp"
             }
@@ -629,7 +629,7 @@
         {
           "name": "No serious or critical accessibility violations",
           "status": "passed",
-          "durationMs": 813,
+          "durationMs": 739,
           "attempt": 0,
           "steps": [
             {
@@ -637,7 +637,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 310,
+              "durationMs": 293,
               "error": null,
               "shot": "/automation/shots/053.webp"
             },
@@ -646,7 +646,7 @@
               "text": "the page has no serious accessibility violations",
               "table": null,
               "status": "passed",
-              "durationMs": 503,
+              "durationMs": 446,
               "error": null,
               "shot": "/automation/shots/054.webp"
             }
@@ -655,7 +655,7 @@
         {
           "name": "No serious or critical accessibility violations",
           "status": "passed",
-          "durationMs": 578,
+          "durationMs": 534,
           "attempt": 0,
           "steps": [
             {
@@ -663,7 +663,7 @@
               "text": "I open the portfolio in \"en\"",
               "table": null,
               "status": "passed",
-              "durationMs": 211,
+              "durationMs": 220,
               "error": null,
               "shot": "/automation/shots/055.webp"
             },
@@ -672,7 +672,7 @@
               "text": "the page has no serious accessibility violations",
               "table": null,
               "status": "passed",
-              "durationMs": 367,
+              "durationMs": 314,
               "error": null,
               "shot": "/automation/shots/056.webp"
             }
@@ -681,7 +681,7 @@
         {
           "name": "Keyboard users can skip straight to the content",
           "status": "passed",
-          "durationMs": 300,
+          "durationMs": 292,
           "attempt": 0,
           "steps": [
             {
@@ -689,7 +689,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 248,
+              "durationMs": 261,
               "error": null,
               "shot": "/automation/shots/057.webp"
             },
@@ -698,7 +698,7 @@
               "text": "I press Tab",
               "table": null,
               "status": "passed",
-              "durationMs": 21,
+              "durationMs": 18,
               "error": null,
               "shot": "/automation/shots/058.webp"
             },
@@ -707,7 +707,7 @@
               "text": "the skip link is focused and visible",
               "table": null,
               "status": "passed",
-              "durationMs": 31,
+              "durationMs": 13,
               "error": null,
               "shot": "/automation/shots/059.webp"
             }
@@ -716,7 +716,7 @@
         {
           "name": "Every image describes itself",
           "status": "passed",
-          "durationMs": 242,
+          "durationMs": 227,
           "attempt": 0,
           "steps": [
             {
@@ -724,7 +724,7 @@
               "text": "I open the portfolio in \"en\"",
               "table": null,
               "status": "passed",
-              "durationMs": 210,
+              "durationMs": 196,
               "error": null,
               "shot": "/automation/shots/060.webp"
             },
@@ -733,7 +733,7 @@
               "text": "every visible image has a text alternative",
               "table": null,
               "status": "passed",
-              "durationMs": 32,
+              "durationMs": 31,
               "error": null,
               "shot": "/automation/shots/061.webp"
             }
@@ -749,7 +749,7 @@
         {
           "name": "A project with a loop plays it in the preview",
           "status": "passed",
-          "durationMs": 385,
+          "durationMs": 314,
           "attempt": 0,
           "steps": [
             {
@@ -757,7 +757,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 336,
+              "durationMs": 256,
               "error": null,
               "shot": "/automation/shots/062.webp"
             },
@@ -766,7 +766,7 @@
               "text": "I focus the project \"TMM\"",
               "table": null,
               "status": "passed",
-              "durationMs": 29,
+              "durationMs": 24,
               "error": null,
               "shot": "/automation/shots/063.webp"
             },
@@ -775,7 +775,7 @@
               "text": "the preview plays a loop",
               "table": null,
               "status": "passed",
-              "durationMs": 20,
+              "durationMs": 34,
               "error": null,
               "shot": "/automation/shots/064.webp"
             }
@@ -784,7 +784,7 @@
         {
           "name": "Reduced motion keeps the still image",
           "status": "passed",
-          "durationMs": 1170,
+          "durationMs": 1103,
           "attempt": 0,
           "steps": [
             {
@@ -792,7 +792,7 @@
               "text": "the visitor prefers reduced motion",
               "table": null,
               "status": "passed",
-              "durationMs": 11,
+              "durationMs": 10,
               "error": null,
               "shot": "/automation/shots/065.webp"
             },
@@ -801,7 +801,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 302,
+              "durationMs": 257,
               "error": null,
               "shot": "/automation/shots/066.webp"
             },
@@ -810,7 +810,7 @@
               "text": "I focus the project \"TMM\"",
               "table": null,
               "status": "passed",
-              "durationMs": 21,
+              "durationMs": 16,
               "error": null,
               "shot": "/automation/shots/067.webp"
             },
@@ -819,7 +819,7 @@
               "text": "the preview shows only a still image",
               "table": null,
               "status": "passed",
-              "durationMs": 836,
+              "durationMs": 820,
               "error": null,
               "shot": "/automation/shots/068.webp"
             }
@@ -835,7 +835,7 @@
         {
           "name": "Sections are marked with rehearsal letters in order",
           "status": "passed",
-          "durationMs": 333,
+          "durationMs": 294,
           "attempt": 0,
           "steps": [
             {
@@ -843,7 +843,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 280,
+              "durationMs": 252,
               "error": null,
               "shot": "/automation/shots/069.webp"
             },
@@ -852,7 +852,7 @@
               "text": "the rehearsal marks read \"A,B,C,D\"",
               "table": null,
               "status": "passed",
-              "durationMs": 14,
+              "durationMs": 12,
               "error": null,
               "shot": "/automation/shots/070.webp"
             },
@@ -861,7 +861,7 @@
               "text": "every rehearsal mark is announced as a section",
               "table": null,
               "status": "passed",
-              "durationMs": 39,
+              "durationMs": 30,
               "error": null,
               "shot": "/automation/shots/071.webp"
             }
@@ -870,7 +870,7 @@
         {
           "name": "The piece ends with a final barline and a da capo",
           "status": "passed",
-          "durationMs": 405,
+          "durationMs": 366,
           "attempt": 0,
           "steps": [
             {
@@ -878,7 +878,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 236,
+              "durationMs": 205,
               "error": null,
               "shot": "/automation/shots/072.webp"
             },
@@ -896,7 +896,7 @@
               "text": "I follow the da capo",
               "table": null,
               "status": "passed",
-              "durationMs": 115,
+              "durationMs": 121,
               "error": null,
               "shot": "/automation/shots/074.webp"
             },
@@ -905,7 +905,7 @@
               "text": "I am back at the top of the score",
               "table": null,
               "status": "passed",
-              "durationMs": 43,
+              "durationMs": 29,
               "error": null,
               "shot": "/automation/shots/075.webp"
             }
@@ -914,7 +914,60 @@
         {
           "name": "The focus travels with me in the header",
           "status": "passed",
-          "durationMs": 412,
+          "durationMs": 384,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 193,
+              "error": null,
+              "shot": "/automation/shots/076.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I read the score as \"Back-End\" from the header",
+              "table": null,
+              "status": "passed",
+              "durationMs": 125,
+              "error": null,
+              "shot": "/automation/shots/077.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the \"verify\" staff is silent",
+              "table": null,
+              "status": "passed",
+              "durationMs": 23,
+              "error": null,
+              "shot": "/automation/shots/078.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "the selected focus is \"backend\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 17,
+              "error": null,
+              "shot": "/automation/shots/079.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "the address keeps the focus \"backend\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 26,
+              "error": null,
+              "shot": "/automation/shots/080.webp"
+            }
+          ]
+        },
+        {
+          "name": "Silent work stays readable and is announced",
+          "status": "passed",
+          "durationMs": 786,
           "attempt": 0,
           "steps": [
             {
@@ -924,59 +977,6 @@
               "status": "passed",
               "durationMs": 211,
               "error": null,
-              "shot": "/automation/shots/076.webp"
-            },
-            {
-              "keyword": "When",
-              "text": "I read the score as \"Back-End\" from the header",
-              "table": null,
-              "status": "passed",
-              "durationMs": 114,
-              "error": null,
-              "shot": "/automation/shots/077.webp"
-            },
-            {
-              "keyword": "Then",
-              "text": "the \"verify\" staff is silent",
-              "table": null,
-              "status": "passed",
-              "durationMs": 26,
-              "error": null,
-              "shot": "/automation/shots/078.webp"
-            },
-            {
-              "keyword": "And",
-              "text": "the selected focus is \"backend\"",
-              "table": null,
-              "status": "passed",
-              "durationMs": 19,
-              "error": null,
-              "shot": "/automation/shots/079.webp"
-            },
-            {
-              "keyword": "And",
-              "text": "the address keeps the focus \"backend\"",
-              "table": null,
-              "status": "passed",
-              "durationMs": 42,
-              "error": null,
-              "shot": "/automation/shots/080.webp"
-            }
-          ]
-        },
-        {
-          "name": "Silent work stays readable and is announced",
-          "status": "passed",
-          "durationMs": 865,
-          "attempt": 0,
-          "steps": [
-            {
-              "keyword": "Given",
-              "text": "I open the portfolio in \"es\"",
-              "table": null,
-              "status": "passed",
-              "durationMs": 260,
-              "error": null,
               "shot": "/automation/shots/081.webp"
             },
             {
@@ -984,7 +984,7 @@
               "text": "I read the portfolio as \"QA\"",
               "table": null,
               "status": "passed",
-              "durationMs": 115,
+              "durationMs": 104,
               "error": null,
               "shot": "/automation/shots/082.webp"
             },
@@ -993,7 +993,7 @@
               "text": "the work \"eikon\" is silent",
               "table": null,
               "status": "passed",
-              "durationMs": 18,
+              "durationMs": 9,
               "error": null,
               "shot": "/automation/shots/083.webp"
             },
@@ -1002,7 +1002,7 @@
               "text": "the work \"tmm\" is sounding",
               "table": null,
               "status": "passed",
-              "durationMs": 20,
+              "durationMs": 9,
               "error": null,
               "shot": "/automation/shots/084.webp"
             },
@@ -1011,7 +1011,7 @@
               "text": "silent work is announced to screen readers",
               "table": null,
               "status": "passed",
-              "durationMs": 13,
+              "durationMs": 22,
               "error": null,
               "shot": "/automation/shots/085.webp"
             },
@@ -1020,7 +1020,7 @@
               "text": "the page has no serious accessibility violations",
               "table": null,
               "status": "passed",
-              "durationMs": 439,
+              "durationMs": 431,
               "error": null,
               "shot": "/automation/shots/086.webp"
             }
@@ -1029,7 +1029,7 @@
         {
           "name": "Each project signs the voices it plays",
           "status": "passed",
-          "durationMs": 211,
+          "durationMs": 227,
           "attempt": 0,
           "steps": [
             {
@@ -1037,7 +1037,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 199,
+              "durationMs": 216,
               "error": null,
               "shot": "/automation/shots/087.webp"
             },
@@ -1046,7 +1046,7 @@
               "text": "the work \"ybank\" is signed as \"Ensamble · Build + Verify\"",
               "table": null,
               "status": "passed",
-              "durationMs": 12,
+              "durationMs": 11,
               "error": null,
               "shot": "/automation/shots/088.webp"
             }
@@ -1055,7 +1055,7 @@
         {
           "name": "Each project signs the voices it plays",
           "status": "passed",
-          "durationMs": 293,
+          "durationMs": 220,
           "attempt": 0,
           "steps": [
             {
@@ -1063,7 +1063,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 282,
+              "durationMs": 209,
               "error": null,
               "shot": "/automation/shots/089.webp"
             },
@@ -1081,7 +1081,7 @@
         {
           "name": "Each project signs the voices it plays",
           "status": "passed",
-          "durationMs": 261,
+          "durationMs": 286,
           "attempt": 0,
           "steps": [
             {
@@ -1089,7 +1089,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 231,
+              "durationMs": 276,
               "error": null,
               "shot": "/automation/shots/091.webp"
             },
@@ -1098,7 +1098,7 @@
               "text": "the work \"tmm\" is signed as \"Solo · Verify\"",
               "table": null,
               "status": "passed",
-              "durationMs": 30,
+              "durationMs": 10,
               "error": null,
               "shot": "/automation/shots/092.webp"
             }
@@ -1107,7 +1107,7 @@
         {
           "name": "Each project signs the voices it plays",
           "status": "passed",
-          "durationMs": 303,
+          "durationMs": 226,
           "attempt": 0,
           "steps": [
             {
@@ -1115,7 +1115,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 287,
+              "durationMs": 216,
               "error": null,
               "shot": "/automation/shots/093.webp"
             },
@@ -1124,7 +1124,7 @@
               "text": "the work \"los-hidalgos\" is signed as \"Ensamble · Build + Verify\"",
               "table": null,
               "status": "passed",
-              "durationMs": 16,
+              "durationMs": 10,
               "error": null,
               "shot": "/automation/shots/094.webp"
             }
@@ -1133,7 +1133,7 @@
         {
           "name": "The career reads as two voices in time",
           "status": "passed",
-          "durationMs": 378,
+          "durationMs": 421,
           "attempt": 0,
           "steps": [
             {
@@ -1141,7 +1141,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 225,
+              "durationMs": 261,
               "error": null,
               "shot": "/automation/shots/095.webp"
             },
@@ -1150,7 +1150,7 @@
               "text": "I read the portfolio as \"QA\"",
               "table": null,
               "status": "passed",
-              "durationMs": 107,
+              "durationMs": 111,
               "error": null,
               "shot": "/automation/shots/096.webp"
             },
@@ -1159,7 +1159,7 @@
               "text": "the career voice \"verify\" is sounding",
               "table": null,
               "status": "passed",
-              "durationMs": 11,
+              "durationMs": 18,
               "error": null,
               "shot": "/automation/shots/097.webp"
             },
@@ -1168,7 +1168,7 @@
               "text": "the career voice \"build\" is silent",
               "table": null,
               "status": "passed",
-              "durationMs": 14,
+              "durationMs": 13,
               "error": null,
               "shot": "/automation/shots/098.webp"
             },
@@ -1177,7 +1177,7 @@
               "text": "the career voice \"both\" is sounding",
               "table": null,
               "status": "passed",
-              "durationMs": 21,
+              "durationMs": 18,
               "error": null,
               "shot": "/automation/shots/099.webp"
             }
@@ -1186,7 +1186,7 @@
         {
           "name": "The stack repeats its four functions and silences the other voice",
           "status": "passed",
-          "durationMs": 359,
+          "durationMs": 309,
           "attempt": 0,
           "steps": [
             {
@@ -1194,7 +1194,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 206,
+              "durationMs": 165,
               "error": null,
               "shot": "/automation/shots/100.webp"
             },
@@ -1203,7 +1203,7 @@
               "text": "I read the portfolio as \"QA\"",
               "table": null,
               "status": "passed",
-              "durationMs": 104,
+              "durationMs": 103,
               "error": null,
               "shot": "/automation/shots/101.webp"
             },
@@ -1212,7 +1212,7 @@
               "text": "the stack function \"verify\" is sounding",
               "table": null,
               "status": "passed",
-              "durationMs": 18,
+              "durationMs": 20,
               "error": null,
               "shot": "/automation/shots/102.webp"
             },
@@ -1221,7 +1221,7 @@
               "text": "the stack function \"build\" is silent",
               "table": null,
               "status": "passed",
-              "durationMs": 20,
+              "durationMs": 12,
               "error": null,
               "shot": "/automation/shots/103.webp"
             },
@@ -1230,7 +1230,7 @@
               "text": "the stack function \"data\" is silent",
               "table": null,
               "status": "passed",
-              "durationMs": 11,
+              "durationMs": 9,
               "error": null,
               "shot": "/automation/shots/104.webp"
             }
@@ -1239,7 +1239,7 @@
         {
           "name": "The tuning staff plays one note per scenario of the last run",
           "status": "passed",
-          "durationMs": 323,
+          "durationMs": 296,
           "attempt": 0,
           "steps": [
             {
@@ -1247,7 +1247,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 227,
+              "durationMs": 209,
               "error": null,
               "shot": "/automation/shots/105.webp"
             },
@@ -1256,7 +1256,7 @@
               "text": "the tuning staff has one note per scenario in its count",
               "table": null,
               "status": "passed",
-              "durationMs": 34,
+              "durationMs": 32,
               "error": null,
               "shot": "/automation/shots/106.webp"
             },
@@ -1265,7 +1265,7 @@
               "text": "no note is out of tune unless it is marked with a cross",
               "table": null,
               "status": "passed",
-              "durationMs": 62,
+              "durationMs": 55,
               "error": null,
               "shot": "/automation/shots/107.webp"
             }
@@ -1281,7 +1281,7 @@
         {
           "name": "On desktop the section follows my scroll and leaves me where I stop",
           "status": "passed",
-          "durationMs": 1589,
+          "durationMs": 1548,
           "attempt": 0,
           "steps": [
             {
@@ -1289,7 +1289,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 268,
+              "durationMs": 261,
               "error": null,
               "shot": "/automation/shots/108.webp"
             },
@@ -1298,7 +1298,7 @@
               "text": "I am on a desktop screen",
               "table": null,
               "status": "passed",
-              "durationMs": 14,
+              "durationMs": 12,
               "error": null,
               "shot": "/automation/shots/109.webp"
             },
@@ -1307,7 +1307,7 @@
               "text": "I stop scrolling halfway through \"How I work\"",
               "table": null,
               "status": "passed",
-              "durationMs": 58,
+              "durationMs": 29,
               "error": null,
               "shot": "/automation/shots/110.webp"
             },
@@ -1316,7 +1316,7 @@
               "text": "the page stays where I left it",
               "table": null,
               "status": "passed",
-              "durationMs": 1227,
+              "durationMs": 1216,
               "error": null,
               "shot": "/automation/shots/111.webp"
             },
@@ -1325,7 +1325,7 @@
               "text": "the measure in focus is 2",
               "table": null,
               "status": "passed",
-              "durationMs": 22,
+              "durationMs": 30,
               "error": null,
               "shot": "/automation/shots/112.webp"
             }
@@ -1334,7 +1334,7 @@
         {
           "name": "I can skip the section",
           "status": "passed",
-          "durationMs": 338,
+          "durationMs": 347,
           "attempt": 0,
           "steps": [
             {
@@ -1342,7 +1342,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 194,
+              "durationMs": 212,
               "error": null,
               "shot": "/automation/shots/113.webp"
             },
@@ -1351,7 +1351,7 @@
               "text": "I am on a desktop screen",
               "table": null,
               "status": "passed",
-              "durationMs": 11,
+              "durationMs": 9,
               "error": null,
               "shot": "/automation/shots/114.webp"
             },
@@ -1360,7 +1360,7 @@
               "text": "I skip \"How I work\"",
               "table": null,
               "status": "passed",
-              "durationMs": 123,
+              "durationMs": 106,
               "error": null,
               "shot": "/automation/shots/115.webp"
             },
@@ -1369,7 +1369,7 @@
               "text": "the stack section is in view",
               "table": null,
               "status": "passed",
-              "durationMs": 10,
+              "durationMs": 20,
               "error": null,
               "shot": "/automation/shots/116.webp"
             }
@@ -1378,7 +1378,7 @@
         {
           "name": "On a phone each cliché is struck through as it comes into view",
           "status": "passed",
-          "durationMs": 647,
+          "durationMs": 687,
           "attempt": 0,
           "steps": [
             {
@@ -1386,7 +1386,7 @@
               "text": "I open the portfolio in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 221,
+              "durationMs": 209,
               "error": null,
               "shot": "/automation/shots/117.webp"
             },
@@ -1395,7 +1395,7 @@
               "text": "I am on a phone screen",
               "table": null,
               "status": "passed",
-              "durationMs": 45,
+              "durationMs": 51,
               "error": null,
               "shot": "/automation/shots/118.webp"
             },
@@ -1404,7 +1404,7 @@
               "text": "no cliché is struck yet",
               "table": null,
               "status": "passed",
-              "durationMs": 10,
+              "durationMs": 14,
               "error": null,
               "shot": "/automation/shots/119.webp"
             },
@@ -1413,7 +1413,7 @@
               "text": "I scroll to the last measure of \"How I work\"",
               "table": null,
               "status": "passed",
-              "durationMs": 25,
+              "durationMs": 13,
               "error": null,
               "shot": "/automation/shots/120.webp"
             },
@@ -1422,9 +1422,71 @@
               "text": "every cliché I passed is struck through",
               "table": null,
               "status": "passed",
-              "durationMs": 346,
+              "durationMs": 400,
               "error": null,
               "shot": "/automation/shots/121.webp"
+            }
+          ]
+        },
+        {
+          "name": "The choreography follows the scroll in both directions",
+          "status": "passed",
+          "durationMs": 7389,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 209,
+              "error": null,
+              "shot": "/automation/shots/122.webp"
+            },
+            {
+              "keyword": "Given",
+              "text": "I am on a desktop screen",
+              "table": null,
+              "status": "passed",
+              "durationMs": 10,
+              "error": null,
+              "shot": "/automation/shots/123.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I scroll down through \"How I work\" in small steps",
+              "table": null,
+              "status": "passed",
+              "durationMs": 3558,
+              "error": null,
+              "shot": "/automation/shots/124.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the progress of every measure only grew",
+              "table": null,
+              "status": "passed",
+              "durationMs": 32,
+              "error": null,
+              "shot": "/automation/shots/125.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I scroll back up through \"How I work\" in small steps",
+              "table": null,
+              "status": "passed",
+              "durationMs": 3557,
+              "error": null,
+              "shot": "/automation/shots/126.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the progress of every measure only shrank",
+              "table": null,
+              "status": "passed",
+              "durationMs": 23,
+              "error": null,
+              "shot": "/automation/shots/127.webp"
             }
           ]
         }
@@ -1438,7 +1500,7 @@
         {
           "name": "The playhead follows the step I choose",
           "status": "passed",
-          "durationMs": 343,
+          "durationMs": 334,
           "attempt": 0,
           "steps": [
             {
@@ -1446,121 +1508,43 @@
               "text": "I open the suite page in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 188,
+              "durationMs": 180,
               "error": null,
-              "shot": "/automation/shots/122.webp"
+              "shot": "/automation/shots/128.webp"
             },
             {
               "keyword": "Then",
               "text": "the playhead is on step 1",
               "table": null,
               "status": "passed",
-              "durationMs": 14,
+              "durationMs": 13,
               "error": null,
-              "shot": "/automation/shots/123.webp"
+              "shot": "/automation/shots/129.webp"
             },
             {
               "keyword": "When",
               "text": "I go to the next step",
               "table": null,
               "status": "passed",
-              "durationMs": 110,
+              "durationMs": 106,
               "error": null,
-              "shot": "/automation/shots/124.webp"
+              "shot": "/automation/shots/130.webp"
             },
             {
               "keyword": "Then",
               "text": "the playhead is on step 2",
               "table": null,
               "status": "passed",
-              "durationMs": 11,
+              "durationMs": 18,
               "error": null,
-              "shot": "/automation/shots/125.webp"
+              "shot": "/automation/shots/131.webp"
             },
             {
               "keyword": "And",
               "text": "the first 2 notes have sounded",
               "table": null,
               "status": "passed",
-              "durationMs": 20,
-              "error": null,
-              "shot": "/automation/shots/126.webp"
-            }
-          ]
-        },
-        {
-          "name": "The suite and code pages are accessible",
-          "status": "passed",
-          "durationMs": 564,
-          "attempt": 0,
-          "steps": [
-            {
-              "keyword": "Given",
-              "text": "I open the suite page in \"es\"",
-              "table": null,
-              "status": "passed",
-              "durationMs": 181,
-              "error": null,
-              "shot": "/automation/shots/127.webp"
-            },
-            {
-              "keyword": "Then",
-              "text": "the page has no serious accessibility violations",
-              "table": null,
-              "status": "passed",
-              "durationMs": 383,
-              "error": null,
-              "shot": "/automation/shots/128.webp"
-            }
-          ]
-        },
-        {
-          "name": "The suite and code pages are accessible",
-          "status": "passed",
-          "durationMs": 449,
-          "attempt": 0,
-          "steps": [
-            {
-              "keyword": "Given",
-              "text": "I open the suite page in \"en\"",
-              "table": null,
-              "status": "passed",
-              "durationMs": 188,
-              "error": null,
-              "shot": "/automation/shots/129.webp"
-            },
-            {
-              "keyword": "Then",
-              "text": "the page has no serious accessibility violations",
-              "table": null,
-              "status": "passed",
-              "durationMs": 261,
-              "error": null,
-              "shot": "/automation/shots/130.webp"
-            }
-          ]
-        },
-        {
-          "name": "The suite and code pages are accessible",
-          "status": "passed",
-          "durationMs": 443,
-          "attempt": 0,
-          "steps": [
-            {
-              "keyword": "Given",
-              "text": "I open the code page in \"es\"",
-              "table": null,
-              "status": "passed",
-              "durationMs": 193,
-              "error": null,
-              "shot": "/automation/shots/131.webp"
-            },
-            {
-              "keyword": "Then",
-              "text": "the page has no serious accessibility violations",
-              "table": null,
-              "status": "passed",
-              "durationMs": 250,
+              "durationMs": 17,
               "error": null,
               "shot": "/automation/shots/132.webp"
             }
@@ -1569,15 +1553,15 @@
         {
           "name": "The suite and code pages are accessible",
           "status": "passed",
-          "durationMs": 406,
+          "durationMs": 501,
           "attempt": 0,
           "steps": [
             {
               "keyword": "Given",
-              "text": "I open the code page in \"en\"",
+              "text": "I open the suite page in \"es\"",
               "table": null,
               "status": "passed",
-              "durationMs": 164,
+              "durationMs": 173,
               "error": null,
               "shot": "/automation/shots/133.webp"
             },
@@ -1586,9 +1570,87 @@
               "text": "the page has no serious accessibility violations",
               "table": null,
               "status": "passed",
-              "durationMs": 242,
+              "durationMs": 328,
               "error": null,
               "shot": "/automation/shots/134.webp"
+            }
+          ]
+        },
+        {
+          "name": "The suite and code pages are accessible",
+          "status": "passed",
+          "durationMs": 435,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the suite page in \"en\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 193,
+              "error": null,
+              "shot": "/automation/shots/135.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the page has no serious accessibility violations",
+              "table": null,
+              "status": "passed",
+              "durationMs": 242,
+              "error": null,
+              "shot": "/automation/shots/136.webp"
+            }
+          ]
+        },
+        {
+          "name": "The suite and code pages are accessible",
+          "status": "passed",
+          "durationMs": 346,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the code page in \"es\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 151,
+              "error": null,
+              "shot": "/automation/shots/137.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the page has no serious accessibility violations",
+              "table": null,
+              "status": "passed",
+              "durationMs": 195,
+              "error": null,
+              "shot": "/automation/shots/138.webp"
+            }
+          ]
+        },
+        {
+          "name": "The suite and code pages are accessible",
+          "status": "passed",
+          "durationMs": 304,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the code page in \"en\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 114,
+              "error": null,
+              "shot": "/automation/shots/139.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "the page has no serious accessibility violations",
+              "table": null,
+              "status": "passed",
+              "durationMs": 190,
+              "error": null,
+              "shot": "/automation/shots/140.webp"
             }
           ]
         }
@@ -1602,7 +1664,7 @@
         {
           "name": "The portfolio is silent by default",
           "status": "passed",
-          "durationMs": 491,
+          "durationMs": 463,
           "attempt": 0,
           "steps": [
             {
@@ -1610,93 +1672,31 @@
               "text": "I open the portfolio in \"es\" listening for audio",
               "table": null,
               "status": "passed",
-              "durationMs": 234,
+              "durationMs": 228,
               "error": null,
-              "shot": "/automation/shots/135.webp"
+              "shot": "/automation/shots/141.webp"
             },
             {
               "keyword": "When",
               "text": "I touch the note \"Playwright\"",
               "table": null,
               "status": "passed",
-              "durationMs": 121,
+              "durationMs": 114,
               "error": null,
-              "shot": "/automation/shots/136.webp"
+              "shot": "/automation/shots/142.webp"
             },
             {
               "keyword": "And",
               "text": "I read the portfolio as \"QA\"",
               "table": null,
               "status": "passed",
-              "durationMs": 103,
-              "error": null,
-              "shot": "/automation/shots/137.webp"
-            },
-            {
-              "keyword": "Then",
-              "text": "no audio has been started",
-              "table": null,
-              "status": "passed",
-              "durationMs": 13,
-              "error": null,
-              "shot": "/automation/shots/138.webp"
-            },
-            {
-              "keyword": "And",
-              "text": "sound is off",
-              "table": null,
-              "status": "passed",
-              "durationMs": 20,
-              "error": null,
-              "shot": "/automation/shots/139.webp"
-            }
-          ]
-        },
-        {
-          "name": "Turning sound on makes the score playable and is remembered",
-          "status": "passed",
-          "durationMs": 654,
-          "attempt": 0,
-          "steps": [
-            {
-              "keyword": "Given",
-              "text": "I open the portfolio in \"es\" listening for audio",
-              "table": null,
-              "status": "passed",
-              "durationMs": 191,
-              "error": null,
-              "shot": "/automation/shots/140.webp"
-            },
-            {
-              "keyword": "Given",
-              "text": "I am on a desktop screen",
-              "table": null,
-              "status": "passed",
-              "durationMs": 12,
-              "error": null,
-              "shot": "/automation/shots/141.webp"
-            },
-            {
-              "keyword": "When",
-              "text": "I turn sound on",
-              "table": null,
-              "status": "passed",
-              "durationMs": 157,
-              "error": null,
-              "shot": "/automation/shots/142.webp"
-            },
-            {
-              "keyword": "And",
-              "text": "I touch the note \"Playwright\"",
-              "table": null,
-              "status": "passed",
-              "durationMs": 91,
+              "durationMs": 98,
               "error": null,
               "shot": "/automation/shots/143.webp"
             },
             {
               "keyword": "Then",
-              "text": "audio has been started",
+              "text": "no audio has been started",
               "table": null,
               "status": "passed",
               "durationMs": 11,
@@ -1704,13 +1704,75 @@
               "shot": "/automation/shots/144.webp"
             },
             {
+              "keyword": "And",
+              "text": "sound is off",
+              "table": null,
+              "status": "passed",
+              "durationMs": 12,
+              "error": null,
+              "shot": "/automation/shots/145.webp"
+            }
+          ]
+        },
+        {
+          "name": "Turning sound on makes the score playable and is remembered",
+          "status": "passed",
+          "durationMs": 674,
+          "attempt": 0,
+          "steps": [
+            {
+              "keyword": "Given",
+              "text": "I open the portfolio in \"es\" listening for audio",
+              "table": null,
+              "status": "passed",
+              "durationMs": 164,
+              "error": null,
+              "shot": "/automation/shots/146.webp"
+            },
+            {
+              "keyword": "Given",
+              "text": "I am on a desktop screen",
+              "table": null,
+              "status": "passed",
+              "durationMs": 25,
+              "error": null,
+              "shot": "/automation/shots/147.webp"
+            },
+            {
+              "keyword": "When",
+              "text": "I turn sound on",
+              "table": null,
+              "status": "passed",
+              "durationMs": 135,
+              "error": null,
+              "shot": "/automation/shots/148.webp"
+            },
+            {
+              "keyword": "And",
+              "text": "I touch the note \"Playwright\"",
+              "table": null,
+              "status": "passed",
+              "durationMs": 98,
+              "error": null,
+              "shot": "/automation/shots/149.webp"
+            },
+            {
+              "keyword": "Then",
+              "text": "audio has been started",
+              "table": null,
+              "status": "passed",
+              "durationMs": 10,
+              "error": null,
+              "shot": "/automation/shots/150.webp"
+            },
+            {
               "keyword": "When",
               "text": "I reload the page",
               "table": null,
               "status": "passed",
-              "durationMs": 176,
+              "durationMs": 226,
               "error": null,
-              "shot": "/automation/shots/145.webp"
+              "shot": "/automation/shots/151.webp"
             },
             {
               "keyword": "Then",
@@ -1719,14 +1781,14 @@
               "status": "passed",
               "durationMs": 16,
               "error": null,
-              "shot": "/automation/shots/146.webp"
+              "shot": "/automation/shots/152.webp"
             }
           ]
         },
         {
           "name": "Listening to the suite is a request for sound in itself",
           "status": "passed",
-          "durationMs": 441,
+          "durationMs": 305,
           "attempt": 0,
           "steps": [
             {
@@ -1734,27 +1796,27 @@
               "text": "I open the portfolio in \"es\" listening for audio",
               "table": null,
               "status": "passed",
-              "durationMs": 298,
+              "durationMs": 172,
               "error": null,
-              "shot": "/automation/shots/147.webp"
+              "shot": "/automation/shots/153.webp"
             },
             {
               "keyword": "When",
               "text": "I listen to the latest run",
               "table": null,
               "status": "passed",
-              "durationMs": 115,
+              "durationMs": 121,
               "error": null,
-              "shot": "/automation/shots/148.webp"
+              "shot": "/automation/shots/154.webp"
             },
             {
               "keyword": "Then",
               "text": "audio has been started",
               "table": null,
               "status": "passed",
-              "durationMs": 28,
+              "durationMs": 12,
               "error": null,
-              "shot": "/automation/shots/149.webp"
+              "shot": "/automation/shots/155.webp"
             }
           ]
         }
