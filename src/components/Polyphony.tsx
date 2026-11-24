@@ -62,12 +62,12 @@ export function Polyphony({ d, now }: { d: Dictionary; now: string }) {
             const on = sounds(v);
             const left = pct(from);
             const width = `calc(${pct(to - from)} - 3px)`;
-            const bar = `absolute h-[5px] -translate-y-1/2 transition-colors duration-300 ${on ? "bg-wine" : "bg-rest"}`;
+            const bar = (voice: "build" | "verify") => `absolute h-[5px] -translate-y-1/2 transition-colors duration-300 ${on ? (voice === "verify" ? "bg-verify" : "bg-wine") : "bg-rest"}`;
             const label = `absolute whitespace-nowrap font-mono text-[0.6875rem] leading-none transition-colors duration-300 sm:text-xs ${on ? "text-ink" : "text-muted"}`;
             return (
               <div key={t.when + t.what} data-voice={v} data-sounding={on}>
-                {v !== "verify" ? <span className={`${bar} top-[30%]`} style={{ left, width }} /> : null}
-                {v !== "build" ? <span className={`${bar} top-[70%]`} style={{ left, width }} /> : null}
+                {v !== "verify" ? <span className={`${bar("build")} top-[30%]`} style={{ left, width }} /> : null}
+                {v !== "build" ? <span className={`${bar("verify")} top-[70%]`} style={{ left, width }} /> : null}
                 {v === "both" ? <span className={`absolute top-[30%] h-[40%] w-[1.5px] ${on ? "bg-wine" : "bg-rest"}`} style={{ left }} /> : null}
                 <span className={`${label} ${v === "verify" ? "top-[70%] mt-2.5" : "top-[30%] -mt-6"}`} style={{ left }}>
                   {t.short}

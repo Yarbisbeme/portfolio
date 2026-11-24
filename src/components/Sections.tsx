@@ -46,7 +46,7 @@ export function Work({ d }: { d: Dictionary }) {
   });
 
   return (
-    <section id="trabajo" aria-labelledby="work-title" className="bar-double py-10 sm:py-16 lg:py-24">
+    <section id="trabajo" aria-labelledby="work-title" className="bar-double surface-panel section-y">
       <div className={`${wrap} ${grid}`}>
         <SectionHead id="work-title" kicker={d.work.kicker} label={d.nav.section} title={d.work.title} intro={d.work.intro} hideIntroMobile />
         <ol className="rule-top">
@@ -58,7 +58,7 @@ export function Work({ d }: { d: Dictionary }) {
             return (
               <li key={p.slug} id={`trabajo-${p.slug}`} data-work={p.slug} data-silent={silent} className="scroll-mt-24 rule-bottom grid gap-4 py-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10 md:py-8">
                 <Media name={p.image} loop={p.loop} alt={it.alt} sizes="(min-width: 768px) 30vw, 100vw" className={`aspect-[16/9] transition-[filter] duration-500 md:aspect-[4/3] ${silent ? "grayscale-[0.85]" : ""}`} />
-                <div className={`flex flex-col gap-2 sm:gap-3 ${relevant ? "border-l-[3px] border-wine pl-3 sm:border-l-0 sm:pl-0" : ""}`}>
+                <div className={`flex flex-col gap-2 sm:gap-3 ${relevant ? `border-l-[3px] ${mode === "qa" ? "border-verify" : "border-wine"} pl-3 sm:border-l-0 sm:pl-0` : ""}`}>
                   <p className="flex flex-wrap items-baseline gap-x-3 font-mono text-sm text-muted">
                     <span>{p.num}.</span>
                     <span>{it.period}</span>
@@ -72,7 +72,7 @@ export function Work({ d }: { d: Dictionary }) {
                     </span>
                   </p>
                   <h3 className={`flex flex-wrap items-baseline gap-x-2 text-2xl font-normal leading-tight transition-colors duration-300 sm:text-3xl lg:text-4xl ${silent ? "text-muted" : ""}`}>
-                    <NoteHead on={!silent} className="self-center text-base sm:text-lg" />
+                    <NoteHead on={!silent} tone={p.modes.length === 1 && p.modes[0] === "qa" ? "verify" : "wine"} className="self-center text-base sm:text-lg" />
                     {p.name}{" "}
                     {silent ? <span className="sr-only">({d.nav.silent})</span> : null}
                     <em className="mt-0.5 block text-base text-muted sm:mt-0 sm:inline sm:text-xl lg:text-2xl">
@@ -80,7 +80,7 @@ export function Work({ d }: { d: Dictionary }) {
                       {it.role}
                     </em>
                   </h3>
-                  {relevant ? <p className="hidden font-mono text-xs uppercase tracking-[0.12em] text-wine sm:block">{d.work.relevant}</p> : null}
+                  {relevant ? <p className={`hidden font-mono text-xs uppercase tracking-[0.12em] sm:block ${mode === "qa" ? "text-verify" : "text-wine"}`}>{d.work.relevant}</p> : null}
                   <p className={`max-w-[60ch] text-[0.9375rem] leading-relaxed md:text-base ${isOpen ? "" : "line-clamp-2 md:line-clamp-none"}`}>
                     {it.summary}
                   </p>
@@ -146,7 +146,7 @@ export function Stack({ d }: { d: Dictionary }) {
   const rest = mode === "general" ? [] : ordered.filter((g) => !(g.modes as readonly string[]).includes(mode));
 
   return (
-    <section id="stack" aria-labelledby="stack-title" className="bar-double scroll-mt-4 py-10 sm:py-16 lg:py-24">
+    <section id="stack" aria-labelledby="stack-title" className="bar-double section-y scroll-mt-4">
       <div className={wrap}>
         <div className="flex flex-col gap-3 sm:gap-4">
           <Rehearsal mark={d.stack.kicker} label={d.nav.section} />
@@ -174,7 +174,7 @@ export function Stack({ d }: { d: Dictionary }) {
           {primary.map((g) => (
             <div key={g.id} className="rule-bottom py-4">
               <p className="flex items-baseline gap-2 text-xl italic">
-                <NoteHead on className="self-center text-base" />
+                <NoteHead on tone={g.id === "verify" ? "verify" : "wine"} className="self-center text-base" />
                 {d.stack.groups[g.id]}
               </p>
               <ul className="mt-3 flex flex-wrap gap-1.5 font-mono text-xs">
@@ -223,9 +223,9 @@ export function Stack({ d }: { d: Dictionary }) {
           {(mode === "general" ? ordered : stackGroups).map((g, i) => {
             const silent = mode !== "general" && !(g.modes as readonly string[]).includes(mode);
             return (
-              <div key={g.id} data-stack={g.id} data-silent={silent} className={`rule-bottom py-6 lg:border-b-0 lg:px-6 ${i > 0 ? "lg:border-l lg:border-ink" : ""}`}>
+              <div key={g.id} data-stack={g.id} data-silent={silent} className={`rule-bottom py-6 transition-colors duration-300 lg:border-b-0 lg:px-6 ${i > 0 ? "lg:border-l lg:border-ink" : ""} ${silent ? "" : g.id === "verify" ? "bg-verify-soft" : g.id === "build" || g.id === "data" ? "bg-wine-soft" : ""}`}>
                 <dt className={`flex items-baseline gap-2 text-2xl italic transition-colors duration-300 ${silent ? "text-muted" : ""}`}>
-                  <NoteHead on={!silent} className="self-center text-lg" />
+                  <NoteHead on={!silent} tone={g.id === "verify" ? "verify" : "wine"} className="self-center text-lg" />
                   {d.stack.groups[g.id]}
                   {silent ? <span className="sr-only">({d.nav.silent})</span> : null}
                 </dt>
@@ -250,7 +250,7 @@ export function Stack({ d }: { d: Dictionary }) {
 
 export function About({ d, now }: { d: Dictionary; now: string }) {
   return (
-    <section id="sobre-mi" aria-labelledby="about-title" className="bar-double py-10 sm:py-16 lg:py-24">
+    <section id="sobre-mi" aria-labelledby="about-title" className="bar-double section-y">
       <div className={`${wrap} ${grid}`}>
         <div className="flex flex-col gap-5 sm:gap-8">
           <SectionHead id="about-title" kicker={d.about.kicker} label={d.nav.section} title={d.about.title} />
@@ -328,7 +328,7 @@ export function Contact({ d }: { d: Dictionary }) {
           ]
   ).filter((c) => Boolean(c.href));
   return (
-    <footer id="contacto" aria-labelledby="contact-title" className="rule-top bg-ink py-12 text-paper sm:py-16 lg:py-24">
+    <footer id="contacto" aria-labelledby="contact-title" className="rule-top section-y bg-ink text-paper">
       <div className={`${wrap} ${grid}`}>
         <div className="flex flex-col gap-3 sm:gap-4">
           <p className="font-mono text-[0.8125rem] uppercase tracking-[0.12em] text-panel">{d.contact.kicker}</p>

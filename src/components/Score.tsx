@@ -25,11 +25,11 @@ export function Rehearsal({ mark, label }: { mark: string; label: string }) {
 }
 
 /** Cabeza de nota en sonido o silencio: la misma regla visual que el hero. */
-export function NoteHead({ on, className = "" }: { on: boolean; className?: string }) {
+export function NoteHead({ on, tone = "wine", className = "" }: { on: boolean; tone?: "wine" | "verify"; className?: string }) {
   return (
     <span
       aria-hidden="true"
-      className={`inline-block h-[0.62em] w-[0.85em] shrink-0 -rotate-[20deg] rounded-[50%] transition-colors duration-300 ${on ? "bg-wine" : "bg-rest"} ${className}`}
+      className={`inline-block h-[0.62em] w-[0.85em] shrink-0 -rotate-[20deg] rounded-[50%] transition-colors duration-300 ${on ? (tone === "verify" ? "bg-verify" : "bg-wine") : "bg-rest"} ${className}`}
     />
   );
 }
@@ -56,7 +56,7 @@ export function VoiceSign({
   const names = voices.map((v) => (v === "build" ? "Build" : "Verify")).join(" + ");
   const head = (v: Voice, y: number) =>
     voices.includes(v) ? (
-      <ellipse cx="17" cy={y} rx="3.2" ry="2.3" transform={`rotate(-20 17 ${y})`} className={`transition-colors duration-300 ${sounding(v) ? "fill-wine" : "fill-rest"}`} />
+      <ellipse cx="17" cy={y} rx="3.2" ry="2.3" transform={`rotate(-20 17 ${y})`} className={`transition-colors duration-300 ${sounding(v) ? (v === "verify" ? "fill-verify" : "fill-wine") : "fill-rest"}`} />
     ) : null;
   return (
     <span className="inline-flex items-center gap-2" data-voices={voices.join(" ")}>
