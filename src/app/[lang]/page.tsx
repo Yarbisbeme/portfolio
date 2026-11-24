@@ -21,7 +21,7 @@ export default async function Page({ params }: PageProps<"/[lang]">) {
         <Work d={d} />
         <HowIWork d={d} lang={lang as Locale} />
         <Stack d={d} />
-        <About d={d} />
+        <About d={d} now={new Date().toISOString().slice(0, 7)} />
       </main>
       <Contact d={d} />
     </ModeProvider>

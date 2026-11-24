@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { contact, projects, stackGroups, type Dictionary } from "@/content/site";
 import { Media } from "./Media";
-import { NoteHead, Rehearsal } from "./Score";
+import { NoteHead, Rehearsal, VoiceSign } from "./Score";
+import { Polyphony } from "./Polyphony";
 import { useMode } from "./mode";
 
 function SectionHead({
@@ -61,6 +62,14 @@ export function Work({ d }: { d: Dictionary }) {
                   <p className="flex flex-wrap items-baseline gap-x-3 font-mono text-sm text-muted">
                     <span>{p.num}.</span>
                     <span>{it.period}</span>
+                    <span className="basis-full text-xs sm:ml-auto sm:basis-auto">
+                      <VoiceSign
+                        voices={p.modes.map((m) => (m === "backend" ? "build" : "verify"))}
+                        sounding={(v) => mode === "general" || (v === "build" ? mode === "backend" : mode === "qa")}
+                        solo={d.work.solo}
+                        ensemble={d.work.ensemble}
+                      />
+                    </span>
                   </p>
                   <h3 className={`flex flex-wrap items-baseline gap-x-2 text-2xl font-normal leading-tight transition-colors duration-300 sm:text-3xl lg:text-4xl ${silent ? "text-muted" : ""}`}>
                     <NoteHead on={!silent} className="self-center text-base sm:text-lg" />
@@ -195,7 +204,7 @@ export function Stack({ d }: { d: Dictionary }) {
   );
 }
 
-export function About({ d }: { d: Dictionary }) {
+export function About({ d, now }: { d: Dictionary; now: string }) {
   return (
     <section id="sobre-mi" aria-labelledby="about-title" className="bar-double py-10 sm:py-16 lg:py-24">
       <div className={`${wrap} ${grid}`}>
@@ -209,6 +218,9 @@ export function About({ d }: { d: Dictionary }) {
               <p key={p}>{p}</p>
             ))}
           </div>
+
+
+          <Polyphony d={d} now={now} />
 
           <div className="flex flex-col md:hidden">
             <details className="group rule-top rule-bottom">
@@ -228,10 +240,10 @@ export function About({ d }: { d: Dictionary }) {
             </details>
           </div>
 
-          <div className="hidden gap-10 md:grid md:grid-cols-2">
-            <div>
+          <div className="gap-10 md:grid md:grid-cols-2">
+            <div className="sr-only md:not-sr-only">
               <h3 className="kicker mb-3">{d.about.timelineTitle}</h3>
-              <ol className="rule-top">
+              <ol className="rule-top" data-timeline>
                 {d.about.timeline.map((t) => (
                   <li key={t.when + t.what} className="rule-bottom py-3">
                     <p className="font-mono text-xs text-muted">{t.when}</p>
@@ -242,7 +254,7 @@ export function About({ d }: { d: Dictionary }) {
                 ))}
               </ol>
             </div>
-            <div>
+            <div className="hidden md:block">
               <h3 className="kicker mb-3">{d.about.eduTitle}</h3>
               <ul className="rule-top">
                 {d.about.edu.map((e) => (
