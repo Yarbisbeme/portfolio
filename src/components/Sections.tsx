@@ -117,6 +117,24 @@ export function Work({ d }: { d: Dictionary }) {
 
 export { HowIWork } from "./HowIWork";
 
+/** Signo de repetición (‖: … :‖) a los lados de las cuatro columnas. Decorativo. */
+function RepeatSign({ side }: { side: "start" | "end" }) {
+  const dots = (
+    <span className="flex flex-col gap-3">
+      <span className="h-[5px] w-[5px] rounded-full bg-ink" />
+      <span className="h-[5px] w-[5px] rounded-full bg-ink" />
+    </span>
+  );
+  return (
+    <span aria-hidden="true" data-repeat-sign={side} className={`absolute inset-y-0 hidden items-center gap-[3px] lg:flex ${side === "start" ? "left-0" : "right-0 flex-row-reverse"}`}>
+      <span className="h-full w-[4px] bg-ink" />
+      <span className="h-full w-px bg-ink" />
+      <span className="w-1" />
+      {dots}
+    </span>
+  );
+}
+
 export function Stack({ d }: { d: Dictionary }) {
   const { mode } = useMode();
   const ordered = [...stackGroups].sort((a, b) => {
@@ -137,10 +155,28 @@ export function Stack({ d }: { d: Dictionary }) {
           </h2>
         </div>
 
+        <p className="mt-5 flex flex-wrap items-baseline gap-x-2 gap-y-1 font-mono text-sm lg:hidden" data-repeat>
+          <span className="sr-only">{d.stack.repeat}: </span>
+          <span aria-hidden="true" className="font-serif text-lg tracking-tighter">‖:</span>
+          {stackGroups.map((g, i) => {
+            const silent = mode !== "general" && !(g.modes as readonly string[]).includes(mode);
+            return (
+              <span key={g.id} className={`transition-colors duration-300 ${silent ? "text-muted" : "text-ink"}`}>
+                {d.stack.groups[g.id]}
+                {i < stackGroups.length - 1 ? <span aria-hidden="true" className="pl-2 text-ink">|</span> : null}
+              </span>
+            );
+          })}
+          <span aria-hidden="true" className="font-serif text-lg tracking-tighter">:‖</span>
+        </p>
+
         <div className="rule-top mt-6 sm:hidden">
           {primary.map((g) => (
             <div key={g.id} className="rule-bottom py-4">
-              <p className="text-xl italic">{d.stack.groups[g.id]}</p>
+              <p className="flex items-baseline gap-2 text-xl italic">
+                <NoteHead on className="self-center text-base" />
+                {d.stack.groups[g.id]}
+              </p>
               <ul className="mt-3 flex flex-wrap gap-1.5 font-mono text-xs">
                 {g.items.map((it) => (
                   <li key={it} className="bg-panel px-2.5 py-1 text-ink">
@@ -161,10 +197,14 @@ export function Stack({ d }: { d: Dictionary }) {
               <div className="flex flex-col gap-4 pb-4">
                 {rest.map((g) => (
                   <div key={g.id}>
-                    <p className="text-lg italic">{d.stack.groups[g.id]}</p>
-                    <ul className="mt-2 flex flex-wrap gap-1.5 font-mono text-xs">
+                    <p className="flex items-baseline gap-2 text-lg italic text-muted">
+                      <NoteHead on={false} className="self-center text-base" />
+                      {d.stack.groups[g.id]}
+                      <span className="sr-only">({d.nav.silent})</span>
+                    </p>
+                    <ul className="mt-2 flex flex-wrap gap-1.5 font-mono text-xs text-muted">
                       {g.items.map((it) => (
-                        <li key={it} className="bg-panel px-2.5 py-1 text-ink">
+                        <li key={it} className="bg-panel px-2.5 py-1">
                           {it}
                         </li>
                       ))}
@@ -176,11 +216,14 @@ export function Stack({ d }: { d: Dictionary }) {
           ) : null}
         </div>
 
-        <dl className="rule-top mt-10 hidden gap-x-10 sm:grid sm:grid-cols-2 lg:grid-cols-4">
-          {ordered.map((g) => {
+        <div className="relative mt-10 hidden sm:block lg:border-y lg:border-ink lg:px-7">
+          <RepeatSign side="start" />
+          <RepeatSign side="end" />
+        <dl className="rule-top gap-x-10 sm:grid sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-0 lg:border-t-0">
+          {(mode === "general" ? ordered : stackGroups).map((g, i) => {
             const silent = mode !== "general" && !(g.modes as readonly string[]).includes(mode);
             return (
-              <div key={g.id} data-stack={g.id} data-silent={silent} className="rule-bottom py-6 lg:border-b-0">
+              <div key={g.id} data-stack={g.id} data-silent={silent} className={`rule-bottom py-6 lg:border-b-0 lg:px-6 ${i > 0 ? "lg:border-l lg:border-ink" : ""}`}>
                 <dt className={`flex items-baseline gap-2 text-2xl italic transition-colors duration-300 ${silent ? "text-muted" : ""}`}>
                   <NoteHead on={!silent} className="self-center text-lg" />
                   {d.stack.groups[g.id]}
@@ -199,6 +242,7 @@ export function Stack({ d }: { d: Dictionary }) {
             );
           })}
         </dl>
+        </div>
       </div>
     </section>
   );

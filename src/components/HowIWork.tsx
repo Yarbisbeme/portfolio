@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import type { Dictionary, Locale } from "@/content/site";
 import { Rehearsal } from "./Score";
+import { TuningStaff, type Tuning } from "./Tuning";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 const ROMAN = ["I", "II", "III", "IV", "V"];
@@ -11,7 +12,7 @@ type PencilLine = { d: string; dur: number; delay: number };
 
 const DEFAULT_LINE: PencilLine = { d: "M 10 530 C 330 500, 670 515, 990 485", dur: 1200, delay: 0 };
 
-function ProofBlock({ d, lang }: { d: Dictionary; lang: Locale }) {
+function ProofBlock({ d, lang, tuning }: { d: Dictionary; lang: Locale; tuning: Tuning | null }) {
   return (
     <div className="mx-auto w-full max-w-5xl border-y border-ink py-10 text-left">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:gap-12">
@@ -30,6 +31,7 @@ function ProofBlock({ d, lang }: { d: Dictionary; lang: Locale }) {
           </a>
         </p>
       </div>
+      {tuning ? <TuningStaff d={d} tuning={tuning} /> : null}
     </div>
   );
 }
@@ -39,7 +41,7 @@ function ProofBlock({ d, lang }: { d: Dictionary; lang: Locale }) {
  * Cada compás llega al centro con el cliché en cursiva como voz principal; tras un breve respiro,
  * un trazo gestual en vino lo tacha en 1.2s mientras cede protagonismo a la voz real en romana firme.
  */
-export function HowIWork({ d, lang }: { d: Dictionary; lang: Locale }) {
+export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Locale; tuning?: Tuning | null }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const drumRef = useRef<HTMLDivElement>(null);
   const clicheRefs = useRef<(HTMLParagraphElement | null)[]>([]);
@@ -375,7 +377,7 @@ export function HowIWork({ d, lang }: { d: Dictionary; lang: Locale }) {
             ))}
           </ol>
           <div className="mt-20 w-full lg:mt-28">
-            <ProofBlock d={d} lang={lang} />
+            <ProofBlock d={d} lang={lang} tuning={tuning} />
           </div>
         </div>
       </section>
@@ -516,7 +518,7 @@ export function HowIWork({ d, lang }: { d: Dictionary; lang: Locale }) {
       </div>
 
       <div className="mx-auto max-w-[90rem] px-5 pb-20 pt-8 sm:px-8 lg:px-16 lg:pb-28">
-        <ProofBlock d={d} lang={lang} />
+        <ProofBlock d={d} lang={lang} tuning={tuning} />
       </div>
     </section>
   );
