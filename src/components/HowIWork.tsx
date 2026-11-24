@@ -43,7 +43,7 @@ type Layout = "flow" | "pinned" | "static";
  * Cada compás muestra el cliché en cursiva; un trazo en vino lo tacha y cede el lugar a la versión real.
  *
  * Tres formas, según el dispositivo:
- * - pinned (escritorio con ratón o trackpad): la vista queda fija y el avance sale directamente de la
+ * - pinned (pantalla ancha no táctil): la vista queda fija y el avance sale directamente de la
  *   posición del scroll. Nunca se recoloca al usuario, no hay bloqueos ni temporizadores: el scroll es suyo.
  * - flow (móvil, tablet, táctil): los compases van uno debajo del otro y cada uno se tacha al entrar en pantalla.
  * - static (reducir movimiento): ya corregidos, sin animación.
@@ -73,15 +73,15 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const desk = window.matchMedia("(min-width: 1024px) and (pointer: fine)");
-    const sync = () => setLayout(reduce.matches ? "static" : desk.matches ? "pinned" : "flow");
+    // Escritorio = pantalla ancha que no es táctil. No se exige "pointer: fine": navegadores sin
+    // ratón (CI, algunos lectores) informan "none" y también deben ver la versión de escritorio.
+    const wide = window.matchMedia("(min-width: 1024px)");
+    const touch = window.matchMedia("(pointer: coarse)");
+    const sync = () => setLayout(reduce.matches ? "static" : wide.matches && !touch.matches ? "pinned" : "flow");
     sync();
-    reduce.addEventListener("change", sync);
-    desk.addEventListener("change", sync);
-    return () => {
-      reduce.removeEventListener("change", sync);
-      desk.removeEventListener("change", sync);
-    };
+    const mqs = [reduce, wide, touch];
+    mqs.forEach((m) => m.addEventListener("change", sync));
+    return () => mqs.forEach((m) => m.removeEventListener("change", sync));
   }, []);
 
   /** Traza el lápiz sobre las líneas reales del cliché (sirve para pinned y flow). */
