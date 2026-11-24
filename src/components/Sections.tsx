@@ -197,34 +197,28 @@ export function Stack({ d }: { d: Dictionary }) {
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      // Escritorio: un cursor de reproducción recorre las cuatro columnas entre los signos de
-      // repetición; cada columna "suena" al pasar. Al llegar al final vuelve al inicio una vez.
+      // Escritorio: una sola pasada tenue de un cursor por las cuatro columnas; cada una se
+      // enciende con suavidad al pasar. Es una referencia para leer, no un espectáculo.
       mm.add(`${MOTION_OK} and (min-width: 1024px)`, () => {
         const grid = stackRef.current?.querySelector<HTMLElement>("[data-stack-grid]");
         const head = grid?.querySelector<HTMLElement>("[data-stack-head]");
         if (!grid || !head) return;
         const cols = gsap.utils.toArray<HTMLElement>("[data-stack]", grid);
-        const step = 0.42;
+        const step = 0.28;
         const tl = gsap.timeline({ scrollTrigger: { trigger: grid, start: "top 72%", once: true } });
-        tl.set(head, { autoAlpha: 1, x: 0 }).to(head, { x: () => grid.clientWidth, duration: cols.length * step, ease: "none" }, 0);
+        tl.set(head, { autoAlpha: 0.55, x: 0 }).to(head, { x: () => grid.clientWidth, duration: cols.length * step, ease: "power1.inOut" }, 0);
         cols.forEach((c, i) => {
-          const at = i * step + 0.08;
-          tl.from(c.querySelectorAll("li"), { opacity: 0, y: 8, duration: 0.35, stagger: 0.03, ease: "power2.out" }, at);
-          tl.fromTo(c.querySelector("dt > span"), { scale: 1.9 }, { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.4)" }, at);
+          const at = i * step + 0.05;
+          tl.from(c.querySelectorAll("li"), { opacity: 0, duration: 0.45, stagger: 0.02, ease: "power1.out" }, at);
+          tl.fromTo(c.querySelector("dt > span"), { scale: 1.25 }, { scale: 1, duration: 0.5, ease: "power2.out" }, at);
         });
-        // La repetición: una segunda pasada, más ligera.
-        const again = cols.length * step + 0.15;
-        tl.set(head, { x: 0 }, again).to(head, { x: () => grid.clientWidth, duration: cols.length * 0.22, ease: "none" }, again);
-        cols.forEach((c, i) => {
-          tl.fromTo(c.querySelector("dt > span"), { scale: 1.45 }, { scale: 1, duration: 0.4, ease: "power2.out" }, again + i * 0.22 + 0.05);
-        });
-        tl.to(head, { autoAlpha: 0, duration: 0.3 });
+        tl.to(head, { autoAlpha: 0, duration: 0.35 }, ">-0.1");
       });
       // Tablet y móvil (sin columnas en fila): los grupos entran en secuencia.
       mm.add(`${MOTION_OK} and (max-width: 1023px)`, () => {
         gsap.utils.toArray<HTMLElement>("[data-stack], [data-stack-mobile]", stackRef.current).forEach((el) => {
           if (!el.offsetParent) return;
-          gsap.from(el, { opacity: 0, y: 16, duration: 0.5, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
+          gsap.from(el, { opacity: 0, duration: 0.5, ease: "power1.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
         });
       });
     },
@@ -303,7 +297,7 @@ export function Stack({ d }: { d: Dictionary }) {
         </div>
 
         <div data-stack-grid className="relative mt-10 hidden sm:block lg:border-y lg:border-ink lg:px-7">
-          <span aria-hidden="true" data-stack-head className="pointer-events-none invisible absolute -bottom-3 -top-3 left-0 z-10 w-[2px] bg-wine opacity-0" />
+          <span aria-hidden="true" data-stack-head className="pointer-events-none invisible absolute inset-y-0 left-0 z-10 w-px bg-wine opacity-0" />
           <RepeatSign side="start" />
           <RepeatSign side="end" />
         <dl className="rule-top gap-x-10 sm:grid sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-0 lg:border-t-0">

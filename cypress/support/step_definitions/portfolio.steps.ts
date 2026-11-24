@@ -466,7 +466,7 @@ When("I scroll to the stack", () => {
 });
 
 Then("the stack playback cursor passes", () => {
-  cy.get("[data-stack-head]", { timeout: 4000 }).should(($h) => expect(Number(getComputedStyle($h[0]).opacity)).to.be.greaterThan(0.5));
+  cy.get("[data-stack-head]", { timeout: 4000 }).should(($h) => expect(Number(getComputedStyle($h[0]).opacity)).to.be.greaterThan(0.3));
 });
 
 Then("every function of the stack ends visible", () => {
