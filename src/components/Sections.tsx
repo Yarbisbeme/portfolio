@@ -146,7 +146,7 @@ export function Stack({ d }: { d: Dictionary }) {
   const rest = mode === "general" ? [] : ordered.filter((g) => !(g.modes as readonly string[]).includes(mode));
 
   return (
-    <section aria-labelledby="stack-title" className="bar-double py-10 sm:py-16 lg:py-24">
+    <section id="stack" aria-labelledby="stack-title" className="bar-double scroll-mt-4 py-10 sm:py-16 lg:py-24">
       <div className={wrap}>
         <div className="flex flex-col gap-3 sm:gap-4">
           <Rehearsal mark={d.stack.kicker} label={d.nav.section} />

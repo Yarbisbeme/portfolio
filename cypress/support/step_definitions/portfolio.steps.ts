@@ -201,3 +201,62 @@ Then("no note is out of tune unless it is marked with a cross", () => {
     cy.wrap($n).find("path").should("exist");
   });
 });
+
+// ── 07 · Cómo trabajo sin secuestrar el scroll ─────────────────────────────
+Given("I am on a desktop screen", () => {
+  cy.viewport(1440, 900);
+  cy.get('#como-trabajo[data-how-layout="pinned"]').should("exist");
+});
+
+Given("I am on a phone screen", () => {
+  cy.viewport(375, 812);
+  cy.get('#como-trabajo[data-how-layout="flow"]').should("exist");
+});
+
+When("I stop scrolling halfway through {string}", () => {
+  cy.get("#como-trabajo > div").first().then(($track) => {
+    const el = $track[0];
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const max = el.offsetHeight - Cypress.config("viewportHeight");
+    // Un punto cualquiera del segundo compás, lejos de sus bordes.
+    const y = Math.round(top + max * 0.47);
+    cy.scrollTo(0, y, { duration: 0 });
+    cy.wrap(y).as("stoppedAt");
+  });
+});
+
+Then("the page stays where I left it", () => {
+  cy.wait(1200);
+  cy.get<number>("@stoppedAt").then((y) => {
+    cy.window().its("scrollY").should("be.closeTo", y, 2);
+  });
+});
+
+Then("the measure in focus is {int}", (n: number) => {
+  cy.get('#como-trabajo li[data-focus="true"]').should("have.length", 1);
+  cy.get("#como-trabajo li[data-focus]").eq(n - 1).should("have.attr", "data-focus", "true");
+});
+
+When("I skip {string}", () => {
+  cy.get("#como-trabajo").scrollIntoView();
+  cy.get("[data-skip-how]").click();
+});
+
+Then("the stack section is in view", () => {
+  cy.get("#stack").should(($s) => {
+    const top = $s[0].getBoundingClientRect().top;
+    expect(top).to.be.within(-5, Cypress.config("viewportHeight") / 2);
+  });
+});
+
+Then("no cliché is struck yet", () => {
+  cy.get('#como-trabajo [data-row][data-struck="true"]').should("have.length", 0);
+});
+
+When("I scroll to the last measure of {string}", () => {
+  cy.get("#como-trabajo [data-row]").last().scrollIntoView({ offset: { top: -200, left: 0 } });
+});
+
+Then("every cliché I passed is struck through", () => {
+  cy.get("#como-trabajo [data-row]").each(($r) => cy.wrap($r, { timeout: 4000 }).should("have.attr", "data-struck", "true"));
+});
