@@ -42,10 +42,25 @@ export function SuitePlayer({ d, features, live }: { d: Dictionary; features: Fe
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const scenario = features[fi]?.scenarios[si];
   const steps: Step[] = useMemo(() => scenario?.steps ?? [], [scenario]);
   const current = steps[step];
+  const totalScenarios = useMemo(() => features.reduce((n, f) => n + f.scenarios.length, 0), [features]);
+  const currentPos = useMemo(
+    () => features.slice(0, fi).reduce((n, f) => n + f.scenarios.length, 0) + si + 1,
+    [features, fi, si],
+  );
+
+  useEffect(() => {
+    if (!pickerOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPickerOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [pickerOpen]);
 
   useEffect(() => {
     if (!expanded) return;
@@ -82,7 +97,7 @@ export function SuitePlayer({ d, features, live }: { d: Dictionary; features: Fe
 
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
-      <nav aria-label={t.scenarios} className="flex flex-col gap-8">
+      <nav aria-label={t.scenarios} className="hidden flex-col gap-8 lg:flex">
         {features.map((f, fIdx) => (
           <div key={f.uri}>
             <h2 className="text-2xl italic leading-tight">{f.name}</h2>
@@ -114,7 +129,31 @@ export function SuitePlayer({ d, features, live }: { d: Dictionary; features: Fe
         ))}
       </nav>
 
-      <section aria-live="polite" className="flex min-w-0 flex-col gap-6 lg:sticky lg:top-6 lg:self-start">
+      <section aria-live="polite" className="flex min-w-0 flex-col gap-5 sm:gap-6 lg:sticky lg:top-6 lg:self-start">
+        <div className="lg:hidden">
+          <button
+            type="button"
+            onClick={() => setPickerOpen(true)}
+            aria-expanded={pickerOpen}
+            className="flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 border border-ink bg-paper px-4 py-3 text-left hover:border-wine"
+          >
+            <span className="min-w-0">
+              <span className="block font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-muted">
+                {t.pickScenario} · {currentPos}/{totalScenarios}
+              </span>
+              <span className="mt-0.5 flex items-baseline gap-2 text-base italic text-ink">
+                <span aria-hidden="true" className="font-mono text-xs not-italic text-wine">
+                  {scenario ? MARK[scenario.status] ?? "·" : "·"}
+                </span>
+                <span className="truncate">{scenario ? scenarioLabel(features[fi], si) : ""}</span>
+              </span>
+            </span>
+            <span aria-hidden="true" className="shrink-0 font-mono text-sm text-wine">
+              ▾
+            </span>
+          </button>
+        </div>
+
         {live ? (
           <figure className="m-0 flex flex-col gap-2">
             <div className="relative aspect-[16/10] overflow-hidden border-l-[6px] border-wine bg-panel">
@@ -284,6 +323,67 @@ export function SuitePlayer({ d, features, live }: { d: Dictionary; features: Fe
               onClick={(e) => e.stopPropagation()}
               className="max-h-full max-w-full object-contain shadow-2xl"
             />
+          </div>
+        </div>
+      ) : null}
+
+      {pickerOpen ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={t.pickScenario}
+          onClick={() => setPickerOpen(false)}
+          className="fixed inset-0 z-50 flex items-end bg-ink/60 lg:hidden"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="flex max-h-[82svh] w-full flex-col border-t-2 border-wine bg-paper text-ink"
+          >
+            <div className="rule-bottom flex items-center justify-between gap-4 px-5 py-3">
+              <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted">
+                {t.pickScenario} · {totalScenarios}
+              </span>
+              <button
+                type="button"
+                onClick={() => setPickerOpen(false)}
+                className="min-h-11 cursor-pointer px-2 font-mono text-xs uppercase tracking-[0.1em] text-ink hover:text-wine"
+              >
+                {t.close} <span aria-hidden="true">✕</span>
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto px-5 py-5">
+              <div className="flex flex-col gap-6">
+                {features.map((f, fIdx) => (
+                  <div key={f.uri}>
+                    <p className="text-xl italic leading-tight">{f.name}</p>
+                    <p className="mt-0.5 font-mono text-xs text-muted">{f.uri.replace("cypress/e2e/", "")}</p>
+                    <ul className="rule-top mt-2.5">
+                      {f.scenarios.map((s, sIdx) => {
+                        const on = fIdx === fi && sIdx === si;
+                        return (
+                          <li key={sIdx} className="rule-bottom">
+                            <button
+                              type="button"
+                              aria-current={on ? "true" : undefined}
+                              onClick={() => {
+                                choose(fIdx, sIdx);
+                                setPickerOpen(false);
+                              }}
+                              className={`grid min-h-11 w-full cursor-pointer grid-cols-[1.5rem_minmax(0,1fr)] items-baseline gap-1 py-2 text-left text-base ${on ? "text-wine" : "text-ink hover:text-wine"}`}
+                            >
+                              <span aria-hidden="true" className={`font-mono text-sm ${s.status === "failed" ? "text-wine" : "text-muted"}`}>
+                                {MARK[s.status] ?? "·"}
+                              </span>
+                              <span className={on ? "italic" : ""}>{scenarioLabel(f, sIdx)}</span>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       ) : null}

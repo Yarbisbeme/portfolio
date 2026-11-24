@@ -5,16 +5,17 @@ Back-End (.NET / Python) & QA Automation. Next.js (App Router) + TypeScript + Ta
 ## Correr en local
 
 ```bash
+cp .env.example .env.local   # completa tus datos y URLs públicas
 npm install
-npm run dev        # http://localhost:3000/es/
-npm run build      # genera ./out (sitio estático)
+npm run dev                  # http://localhost:3000/es/
+npm run build                # genera ./out (sitio estático)
 ```
 
 ## Publicar en Vercel
 
 1. Sube este proyecto a un repo de GitHub.
 2. En Vercel: **Add New → Project**, importa el repo. No hay que cambiar nada: Vercel detecta Next.js.
-3. Cuando tengas dominio, agrégalo en Vercel y define la variable `NEXT_PUBLIC_SITE_URL` (por ejemplo `https://tudominio.com`) para que las imágenes al compartir en redes usen la URL correcta.
+3. En **Settings → Environment Variables**, agrega las variables `NEXT_PUBLIC_*` definidas en `.env.example` (incluida `NEXT_PUBLIC_SITE_URL` con tu dominio real, por ejemplo `https://tudominio.com`). Si además corres E2E en GitHub Actions, puedes definirlas en *Settings → Secrets and variables → Actions → Variables*.
 
 ## Dónde se edita cada cosa
 

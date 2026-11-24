@@ -59,10 +59,20 @@ export function CodeViewer({ d }: { d: Dictionary }) {
   const [path, setPath] = useState(DEFAULT);
   const [html, setHtml] = useState<string | null>(null);
   const [state, setState] = useState<"loading" | "ok" | "error">("loading");
+  const [pickerOpen, setPickerOpen] = useState(false);
+
+  useEffect(() => {
+    if (!pickerOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPickerOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [pickerOpen]);
 
   useEffect(() => {
     fetch("/dev-src/index.json")
-      .then((r) => r.json())
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((list: Entry[]) => {
         setIndex(list);
         const fromHash = decodeURIComponent(window.location.hash.slice(1));
@@ -78,7 +88,7 @@ export function CodeViewer({ d }: { d: Dictionary }) {
   useEffect(() => {
     if (!entry) return;
     setState("loading");
-    fetch(`/dev-src/${entry.id}.html`)
+    fetch(`/dev-src/${entry.id}.txt`)
       .then((r) => (r.ok ? r.text() : Promise.reject()))
       .then((h) => {
         setHtml(h);
@@ -96,17 +106,21 @@ export function CodeViewer({ d }: { d: Dictionary }) {
   return (
     <div className="grid min-h-[70vh] border border-ink lg:grid-cols-[18rem_minmax(0,1fr)]">
       <div className="border-b border-ink lg:border-b-0 lg:border-r">
-        <p className="rule-bottom px-4 py-3 font-mono text-xs uppercase tracking-[0.12em] text-muted">{t.files}</p>
-        <label className="block p-3 lg:hidden">
-          <span className="sr-only">{t.files}</span>
-          <select value={path} onChange={(e) => pick(e.target.value)} className="min-h-11 w-full border border-ink bg-paper px-2 font-mono text-sm">
-            {index.map((e) => (
-              <option key={e.id} value={e.path}>
-                {e.path}
-              </option>
-            ))}
-          </select>
-        </label>
+        <p className="rule-bottom hidden px-4 py-3 font-mono text-xs uppercase tracking-[0.12em] text-muted lg:block">{t.files}</p>
+        <button
+          type="button"
+          onClick={() => setPickerOpen(true)}
+          aria-expanded={pickerOpen}
+          className="flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 px-4 py-2.5 text-left font-mono text-xs hover:bg-panel lg:hidden"
+        >
+          <span className="min-w-0">
+            <span className="block text-[0.6875rem] uppercase tracking-[0.1em] text-muted">{t.pickFile}</span>
+            <span className="mt-0.5 block truncate text-ink">{path}</span>
+          </span>
+          <span aria-hidden="true" className="shrink-0 text-sm text-wine">
+            ▾
+          </span>
+        </button>
         <nav aria-label={t.files} className="hidden max-h-[75vh] overflow-auto px-4 py-3 font-mono text-[0.8125rem] lg:block">
           <TreeView node={tree} current={path} onPick={pick} />
         </nav>
@@ -127,6 +141,42 @@ export function CodeViewer({ d }: { d: Dictionary }) {
           )}
         </div>
       </div>
+
+      {pickerOpen ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={t.pickFile}
+          onClick={() => setPickerOpen(false)}
+          className="fixed inset-0 z-50 flex items-end bg-ink/60 lg:hidden"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="flex max-h-[82svh] w-full flex-col border-t-2 border-wine bg-paper text-ink"
+          >
+            <div className="rule-bottom flex items-center justify-between gap-4 px-5 py-3">
+              <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted">{t.files}</span>
+              <button
+                type="button"
+                onClick={() => setPickerOpen(false)}
+                className="min-h-11 cursor-pointer px-2 font-mono text-xs uppercase tracking-[0.1em] text-ink hover:text-wine"
+              >
+                {d.automation.close} <span aria-hidden="true">✕</span>
+              </button>
+            </div>
+            <nav aria-label={t.files} className="flex-1 overflow-y-auto px-5 py-4 font-mono text-sm">
+              <TreeView
+                node={tree}
+                current={path}
+                onPick={(p) => {
+                  pick(p);
+                  setPickerOpen(false);
+                }}
+              />
+            </nav>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

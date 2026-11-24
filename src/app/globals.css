@@ -12,7 +12,8 @@
   --color-ink: #1c1a17;
   --color-muted: #5e5850;
   --color-wine: #9e2a22;
-  --color-rest: #b9afa2; /* solo decorativo: cabezas de nota en silencio */
+  --color-rest: #b9afa2;
+  /* solo decorativo: cabezas de nota en silencio */
 
   --font-serif: "Newsreader Variable", Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -29,25 +30,44 @@
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
   }
+
   body {
-    font-size: 1.125rem;
-    line-height: 1.55;
+    font-size: 1rem;
+    line-height: 1.5;
     font-optical-sizing: auto;
     text-rendering: optimizeLegibility;
   }
+  @media (min-width: 768px) {
+    body {
+      font-size: 1.125rem;
+      line-height: 1.55;
+    }
+  }
+
   ::selection {
     background: var(--color-wine);
     color: var(--color-paper);
   }
+
   :focus-visible {
     outline: 2px solid var(--color-wine);
     outline-offset: 3px;
   }
+
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
       transition-duration: 0.01ms !important;
       animation-duration: 0.01ms !important;
+    }
+
+    .cliche-strike {
+      background-size: 100% 2px;
     }
   }
 }
@@ -60,8 +80,92 @@
     text-transform: uppercase;
     color: var(--color-muted);
   }
-  .rule-top { border-top: 1px solid var(--color-ink); }
-  .rule-bottom { border-bottom: 1px solid var(--color-ink); }
+
+  .rule-top {
+    border-top: 1px solid var(--color-ink);
+  }
+
+  .rule-bottom {
+    border-bottom: 1px solid var(--color-ink);
+  }
+
+  .cliche-strike {
+    display: inline;
+    text-decoration: none;
+    background-image: linear-gradient(var(--color-wine), var(--color-wine));
+    background-repeat: no-repeat;
+    background-position: 0 56%;
+    background-size: 100% 2px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .voice-stage {
+    --voice-dim: 0.7;
+    --voice-shift: 0.45rem;
+    transform: translateY(var(--voice-shift));
+    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (min-width: 640px) {
+    .voice-stage {
+      --voice-dim: 0.62;
+      --voice-shift: 0.65rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .voice-stage {
+      --voice-dim: 0.56;
+      --voice-shift: 0.85rem;
+    }
+  }
+
+  .voice-stage[data-corrected="true"] {
+    transform: translateY(calc(var(--voice-shift) * -1));
+    transition: transform 940ms cubic-bezier(0.22, 1, 0.36, 1) 260ms;
+  }
+
+  .voice-cliche {
+    transform-origin: center bottom;
+    transform: scale(1);
+    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), color 420ms ease-out;
+  }
+
+  .voice-cliche[data-corrected="true"] {
+    transform: scale(var(--voice-dim));
+    transition: transform 940ms cubic-bezier(0.22, 1, 0.36, 1) 260ms, color 940ms ease-out 260ms;
+  }
+
+  .voice-truth {
+    transform-origin: center top;
+    transform: scale(var(--voice-dim));
+    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), color 420ms ease-out;
+  }
+
+  .voice-truth[data-corrected="true"] {
+    transform: scale(1);
+    transition: transform 940ms cubic-bezier(0.22, 1, 0.36, 1) 260ms, color 940ms ease-out 260ms;
+  }
+
+  .pencil-stroke {
+    stroke: var(--color-wine);
+    stroke-linecap: round;
+    fill: none;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition-property: stroke-dashoffset;
+    transition-duration: 320ms;
+    transition-timing-function: ease-out;
+    transition-delay: 0ms;
+  }
+
+  .pencil-stroke[data-struck="true"] {
+    stroke-dashoffset: 0;
+    transition-duration: var(--stroke-dur, 1200ms);
+    transition-timing-function: cubic-bezier(0.28, 0.08, 0.22, 1);
+    transition-delay: var(--stroke-delay, 0ms);
+  }
 }
 
 /* Visor de código (/dev): HTML de shiki con números de línea por contador */
@@ -73,9 +177,21 @@
   line-height: 1.7;
   min-width: max-content;
 }
-.code-pane pre.shiki:focus-visible { outline-offset: -2px; }
-.code-pane pre.shiki code { counter-reset: line; display: block; }
-.code-pane pre.shiki .line { display: inline-block; padding-right: 1.5rem; }
+
+.code-pane pre.shiki:focus-visible {
+  outline-offset: -2px;
+}
+
+.code-pane pre.shiki code {
+  counter-reset: line;
+  display: block;
+}
+
+.code-pane pre.shiki .line {
+  display: inline-block;
+  padding-right: 1.5rem;
+}
+
 .code-pane pre.shiki .line::before {
   counter-increment: line;
   content: counter(line);
