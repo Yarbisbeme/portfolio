@@ -36,332 +36,310 @@ function ProofBlock({ d, lang, tuning }: { d: Dictionary; lang: Locale; tuning: 
   );
 }
 
+type Layout = "flow" | "pinned" | "static";
+
 /**
- * Compás 02: "Partitura corregida a lápiz rojo".
- * Cada compás llega al centro con el cliché en cursiva como voz principal; tras un breve respiro,
- * un trazo gestual en vino lo tacha en 1.2s mientras cede protagonismo a la voz real en romana firme.
+ * Sección B: "Partitura corregida a lápiz rojo".
+ * Cada compás muestra el cliché en cursiva; un trazo en vino lo tacha y cede el lugar a la versión real.
+ *
+ * Tres formas, según el dispositivo:
+ * - pinned (escritorio con ratón o trackpad): la vista queda fija y el avance sale directamente de la
+ *   posición del scroll. Nunca se recoloca al usuario, no hay bloqueos ni temporizadores: el scroll es suyo.
+ * - flow (móvil, tablet, táctil): los compases van uno debajo del otro y cada uno se tacha al entrar en pantalla.
+ * - static (reducir movimiento): ya corregidos, sin animación.
  */
 export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Locale; tuning?: Tuning | null }) {
+  const rows = d.how.rows;
+  const rowCount = rows.length;
+
   const trackRef = useRef<HTMLDivElement>(null);
   const drumRef = useRef<HTMLDivElement>(null);
+  const rowRefs = useRef<(HTMLLIElement | null)[]>([]);
   const clicheRefs = useRef<(HTMLParagraphElement | null)[]>([]);
   const strikeRefs = useRef<(HTMLElement | null)[]>([]);
   const fixRefs = useRef<(HTMLParagraphElement | null)[]>([]);
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const activeStepRef = useRef(-1);
-  const lockUntilRef = useRef(0);
-  const programmaticUntilRef = useRef(0);
-  const idleTimerRef = useRef<number | null>(null);
   const correctTimerRef = useRef<number | null>(null);
   const lastLinesSigRef = useRef("");
 
-  const rows = d.how.rows;
-  const rowCount = rows.length;
-
-  const [reducedMotion, setReducedMotion] = useState(false);
+  // "flow" es el punto de partida seguro (sin 300svh) hasta saber qué dispositivo es.
+  const [layout, setLayout] = useState<Layout>("flow");
   const [activeStep, setActiveStep] = useState(-1);
   const [correctedUpTo, setCorrectedUpTo] = useState(-1);
+  const [struck, setStruck] = useState<boolean[]>(() => rows.map(() => false));
   const [stepY, setStepY] = useState(184);
   const [pencilLines, setPencilLines] = useState<PencilLine[][]>(() => rows.map(() => [DEFAULT_LINE]));
 
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReducedMotion(mq.matches);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desk = window.matchMedia("(min-width: 1024px) and (pointer: fine)");
+    const sync = () => setLayout(reduce.matches ? "static" : desk.matches ? "pinned" : "flow");
     sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
+    reduce.addEventListener("change", sync);
+    desk.addEventListener("change", sync);
+    return () => {
+      reduce.removeEventListener("change", sync);
+      desk.removeEventListener("change", sync);
+    };
   }, []);
 
-  const applyStep = useCallback((next: number) => {
-    if (next === activeStepRef.current) return;
-    activeStepRef.current = next;
-    setActiveStep(next);
+  /** Traza el lápiz sobre las líneas reales del cliché (sirve para pinned y flow). */
+  const measure = useCallback(() => {
+    let maxVisualH = 0;
+    const nextLines: PencilLine[][] = [];
 
-    if (correctTimerRef.current !== null) {
-      window.clearTimeout(correctTimerRef.current);
-      correctTimerRef.current = null;
-    }
+    for (let i = 0; i < rowCount; i += 1) {
+      const pEl = clicheRefs.current[i];
+      const sEl = strikeRefs.current[i];
+      const fEl = fixRefs.current[i];
 
-    if (next < 0) {
-      setCorrectedUpTo(-1);
-      return;
-    }
+      const clicheH = pEl?.offsetHeight ?? 0;
+      const fixH = fEl?.offsetHeight ?? 0;
+      const visualH = Math.max(clicheH + fixH * 0.62, clicheH * 0.62 + fixH) + 32;
+      if (visualH > maxVisualH) maxVisualH = visualH;
 
-    setCorrectedUpTo((prev) => (prev >= next ? next : Math.max(prev, next - 1)));
-    correctTimerRef.current = window.setTimeout(() => {
-      correctTimerRef.current = null;
-      setCorrectedUpTo((prev) => Math.max(prev, next));
-    }, 680);
-  }, []);
+      if (pEl && sEl) {
+        const pRect = pEl.getBoundingClientRect();
+        const rawRects = Array.from(sEl.getClientRects()).filter((r) => r.width > 2 && r.height > 2);
 
-  const getStepScrollY = useCallback(
-    (step: number) => {
-      const track = trackRef.current;
-      if (!track) return 0;
-      const maxScroll = Math.max(0, track.offsetHeight - window.innerHeight);
-      const trackTop = window.scrollY + track.getBoundingClientRect().top;
-      const ratio = rowCount > 1 ? step / (rowCount - 1) : 0;
-      return trackTop + ratio * maxScroll;
-    },
-    [rowCount],
-  );
-
-  const snapToStep = useCallback(
-    (step: number) => {
-      const target = clamp(step, 0, rowCount - 1);
-      if (idleTimerRef.current !== null) {
-        window.clearTimeout(idleTimerRef.current);
-        idleTimerRef.current = null;
-      }
-      applyStep(target);
-      const now = Date.now();
-      lockUntilRef.current = now + 740;
-      programmaticUntilRef.current = now + 740;
-      window.scrollTo({ top: getStepScrollY(target), behavior: "smooth" });
-    },
-    [applyStep, getStepScrollY, rowCount],
-  );
-
-  useEffect(() => {
-    if (reducedMotion) return;
-
-    let rafId = 0;
-    let cancelled = false;
-
-    const measure = () => {
-      const drum = drumRef.current;
-      if (!drum) return;
-
-      let maxVisualH = 0;
-      const nextLines: PencilLine[][] = [];
-
-      for (let i = 0; i < rowCount; i += 1) {
-        const pEl = clicheRefs.current[i];
-        const sEl = strikeRefs.current[i];
-        const fEl = fixRefs.current[i];
-
-        const clicheH = pEl?.offsetHeight ?? 0;
-        const fixH = fEl?.offsetHeight ?? 0;
-        const visualH = Math.max(clicheH + fixH * 0.62, clicheH * 0.62 + fixH) + 32;
-        if (visualH > maxVisualH) maxVisualH = visualH;
-
-        if (pEl && sEl) {
-          const pRect = pEl.getBoundingClientRect();
-          const rawRects = Array.from(sEl.getClientRects()).filter((r) => r.width > 2 && r.height > 2);
-
-          if (pRect.width > 0 && pRect.height > 0 && rawRects.length > 0) {
-            const merged: { left: number; right: number; top: number; bottom: number }[] = [];
-            for (const r of rawRects) {
-              const last = merged[merged.length - 1];
-              if (last && Math.abs(r.top - last.top) < r.height * 0.5) {
-                last.left = Math.min(last.left, r.left);
-                last.right = Math.max(last.right, r.right);
-                last.top = Math.min(last.top, r.top);
-                last.bottom = Math.max(last.bottom, r.bottom);
-              } else {
-                merged.push({ left: r.left, right: r.right, top: r.top, bottom: r.bottom });
-              }
+        if (pRect.width > 0 && pRect.height > 0 && rawRects.length > 0) {
+          const merged: { left: number; right: number; top: number; bottom: number }[] = [];
+          for (const r of rawRects) {
+            const last = merged[merged.length - 1];
+            if (last && Math.abs(r.top - last.top) < r.height * 0.5) {
+              last.left = Math.min(last.left, r.left);
+              last.right = Math.max(last.right, r.right);
+              last.top = Math.min(last.top, r.top);
+              last.bottom = Math.max(last.bottom, r.bottom);
+            } else {
+              merged.push({ left: r.left, right: r.right, top: r.top, bottom: r.bottom });
             }
-
-            const totalW = merged.reduce((acc, l) => acc + Math.max(1, l.right - l.left), 0);
-            const lineAmp = 1 / Math.max(1, merged.length);
-            let elapsed = 0;
-
-            nextLines.push(
-              merged.map((line, k) => {
-                const x1 = ((line.left - pRect.left) / pRect.width) * 1000;
-                const x2 = ((line.right - pRect.left) / pRect.width) * 1000;
-                const w = Math.max(1, x2 - x1);
-                const centerY = line.top + (line.bottom - line.top) * 0.53;
-                const y = ((centerY - pRect.top) / pRect.height) * 1000;
-
-                const tilt = (20 + ((i + k) % 2 === 0 ? 6 : -3)) * lineAmp;
-                const arch = (k % 2 === 0 ? -24 : 18) * lineAmp;
-                const yStart = y + tilt * 0.45;
-                const yEnd = y - tilt * 0.55;
-                const cx1 = x1 + w * 0.32;
-                const cy1 = y + arch;
-                const cx2 = x1 + w * 0.68;
-                const cy2 = y - arch * 0.65;
-                const d = `M ${(x1 - 10).toFixed(1)} ${yStart.toFixed(1)} C ${cx1.toFixed(1)} ${cy1.toFixed(1)}, ${cx2.toFixed(1)} ${cy2.toFixed(1)}, ${(x2 + 12).toFixed(1)} ${yEnd.toFixed(1)}`;
-
-                const wNorm = Math.max(1, line.right - line.left);
-                const rawDur = Math.max(140, Math.round((wNorm / totalW) * 1200));
-                const delay = k === 0 ? 0 : Math.max(0, elapsed - 40);
-                const isLast = k === merged.length - 1;
-                const dur = isLast ? Math.max(140, 1200 - delay) : rawDur;
-                elapsed = delay + dur;
-
-                return { d, dur, delay };
-              }),
-            );
-            continue;
           }
-        }
 
-        nextLines.push([DEFAULT_LINE]);
-      }
+          const totalW = merged.reduce((acc, l) => acc + Math.max(1, l.right - l.left), 0);
+          const lineAmp = 1 / Math.max(1, merged.length);
+          let elapsed = 0;
 
-      const nextStepY = Math.max(maxVisualH * 1.08, drum.clientHeight * 0.36);
-      setStepY((prev) => (Math.abs(prev - nextStepY) > 0.5 ? nextStepY : prev));
+          nextLines.push(
+            merged.map((line, k) => {
+              const x1 = ((line.left - pRect.left) / pRect.width) * 1000;
+              const x2 = ((line.right - pRect.left) / pRect.width) * 1000;
+              const w = Math.max(1, x2 - x1);
+              const centerY = line.top + (line.bottom - line.top) * 0.53;
+              const y = ((centerY - pRect.top) / pRect.height) * 1000;
 
-      const sig = JSON.stringify(nextLines);
-      if (sig !== lastLinesSigRef.current) {
-        lastLinesSigRef.current = sig;
-        setPencilLines(nextLines);
-      }
-    };
+              const tilt = (20 + ((i + k) % 2 === 0 ? 6 : -3)) * lineAmp;
+              const arch = (k % 2 === 0 ? -24 : 18) * lineAmp;
+              const d = `M ${(x1 - 10).toFixed(1)} ${(y + tilt * 0.45).toFixed(1)} C ${(x1 + w * 0.32).toFixed(1)} ${(y + arch).toFixed(1)}, ${(x1 + w * 0.68).toFixed(1)} ${(y - arch * 0.65).toFixed(1)}, ${(x2 + 12).toFixed(1)} ${(y - tilt * 0.55).toFixed(1)}`;
 
-    const syncFromScroll = (alignOnIdle: boolean) => {
-      const track = trackRef.current;
-      if (!track) return;
-
-      const rect = track.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const maxScroll = track.offsetHeight - vh;
-
-      if (idleTimerRef.current !== null) {
-        window.clearTimeout(idleTimerRef.current);
-        idleTimerRef.current = null;
-      }
-
-      if (rect.top > vh * 0.45) {
-        applyStep(-1);
-        return;
-      }
-      if (rect.top > 24) {
-        applyStep(0);
-        return;
-      }
-      if (rect.bottom < vh - 24) {
-        applyStep(rowCount - 1);
-        return;
-      }
-
-      const raw = maxScroll > 0 ? clamp(-rect.top / maxScroll, 0, 1) : 0;
-      const nearest = Math.round(raw * (rowCount - 1));
-      applyStep(nearest);
-
-      if (alignOnIdle) {
-        idleTimerRef.current = window.setTimeout(() => {
-          idleTimerRef.current = null;
-          const targetY = getStepScrollY(nearest);
-          if (Math.abs(window.scrollY - targetY) > 8) {
-            programmaticUntilRef.current = Date.now() + 450;
-            window.scrollTo({ top: targetY, behavior: "smooth" });
-          }
-        }, 150);
-      }
-    };
-
-    const onScroll = () => {
-      if (Date.now() < programmaticUntilRef.current) return;
-      syncFromScroll(true);
-    };
-
-    const onWheel = (e: WheelEvent) => {
-      if (e.ctrlKey || Math.abs(e.deltaY) < 4) return;
-      const track = trackRef.current;
-      if (!track) return;
-
-      const rect = track.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const isPinned = rect.top <= 24 && rect.bottom >= vh - 24;
-
-      if (Date.now() < lockUntilRef.current) {
-        if (isPinned) e.preventDefault();
-        return;
-      }
-
-      if (rect.top > 24 && rect.top <= 140 && e.deltaY > 0 && activeStepRef.current < 0) {
-        e.preventDefault();
-        snapToStep(0);
-        return;
-      }
-
-      if (rect.bottom < vh - 24 && rect.bottom >= vh - 140 && e.deltaY < 0) {
-        e.preventDefault();
-        snapToStep(rowCount - 1);
-        return;
-      }
-
-      if (isPinned) {
-        const dir = e.deltaY > 0 ? 1 : -1;
-        const current = clamp(activeStepRef.current, 0, rowCount - 1);
-        const next = current + dir;
-        if (next >= 0 && next <= rowCount - 1) {
-          e.preventDefault();
-          snapToStep(next);
+              const rawDur = Math.max(140, Math.round((Math.max(1, line.right - line.left) / totalW) * 1200));
+              const delay = k === 0 ? 0 : Math.max(0, elapsed - 40);
+              const dur = k === merged.length - 1 ? Math.max(140, 1200 - delay) : rawDur;
+              elapsed = delay + dur;
+              return { d, dur, delay };
+            }),
+          );
+          continue;
         }
       }
-    };
-
-    const onResize = () => {
-      if (rafId) window.cancelAnimationFrame(rafId);
-      rafId = window.requestAnimationFrame(() => {
-        rafId = 0;
-        if (!cancelled) measure();
-      });
-    };
-
-    rafId = window.requestAnimationFrame(() => {
-      rafId = 0;
-      if (cancelled) return;
-      measure();
-      syncFromScroll(false);
-    });
-
-    if (typeof document !== "undefined" && document.fonts?.ready) {
-      void document.fonts.ready.then(() => {
-        if (!cancelled) measure();
-      });
+      nextLines.push([DEFAULT_LINE]);
     }
 
     const drum = drumRef.current;
-    const ro = drum && typeof ResizeObserver !== "undefined" ? new ResizeObserver(onResize) : null;
-    if (ro && drum) ro.observe(drum);
+    if (drum) {
+      const nextStepY = Math.max(maxVisualH * 1.08, drum.clientHeight * 0.36);
+      setStepY((prev) => (Math.abs(prev - nextStepY) > 0.5 ? nextStepY : prev));
+    }
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("wheel", onWheel, { passive: false });
+    const sig = JSON.stringify(nextLines);
+    if (sig !== lastLinesSigRef.current) {
+      lastLinesSigRef.current = sig;
+      setPencilLines(nextLines);
+    }
+  }, [rowCount]);
+
+  // Medición (fuentes, tamaño) en pinned y flow.
+  useEffect(() => {
+    if (layout === "static") return;
+    let rafId = window.requestAnimationFrame(measure);
+    let cancelled = false;
+    void document.fonts?.ready.then(() => {
+      if (!cancelled) measure();
+    });
+    const onResize = () => {
+      window.cancelAnimationFrame(rafId);
+      rafId = window.requestAnimationFrame(measure);
+    };
     window.addEventListener("resize", onResize, { passive: true });
-
     return () => {
       cancelled = true;
-      if (rafId) window.cancelAnimationFrame(rafId);
-      if (idleTimerRef.current !== null) {
-        window.clearTimeout(idleTimerRef.current);
-        idleTimerRef.current = null;
-      }
-      if (correctTimerRef.current !== null) {
-        window.clearTimeout(correctTimerRef.current);
-        correctTimerRef.current = null;
-      }
-      ro?.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("wheel", onWheel);
+      window.cancelAnimationFrame(rafId);
       window.removeEventListener("resize", onResize);
     };
-  }, [applyStep, getStepScrollY, reducedMotion, rowCount, snapToStep]);
+  }, [layout, measure]);
+
+  // pinned: el paso activo sale de la posición del scroll. Solo lee; nunca escribe el scroll.
+  useEffect(() => {
+    if (layout !== "pinned") return;
+
+    const apply = (next: number) => {
+      if (next === activeStepRef.current) return;
+      activeStepRef.current = next;
+      setActiveStep(next);
+      if (correctTimerRef.current !== null) window.clearTimeout(correctTimerRef.current);
+      if (next < 0) {
+        setCorrectedUpTo(-1);
+        return;
+      }
+      setCorrectedUpTo((prev) => (prev >= next ? next : Math.max(prev, next - 1)));
+      // Un respiro para leer el cliché antes de que el lápiz lo tache.
+      correctTimerRef.current = window.setTimeout(() => {
+        correctTimerRef.current = null;
+        setCorrectedUpTo((prev) => Math.max(prev, next));
+      }, 420);
+    };
+
+    let raf = 0;
+    const sync = () => {
+      raf = 0;
+      const track = trackRef.current;
+      if (!track) return;
+      const rect = track.getBoundingClientRect();
+      const vh = window.innerHeight;
+      if (rect.top > vh * 0.45) return apply(-1);
+      const maxScroll = Math.max(1, track.offsetHeight - vh);
+      const progress = clamp(-rect.top / maxScroll, 0, 0.9999);
+      apply(Math.floor(progress * rowCount));
+    };
+    const onScroll = () => {
+      if (!raf) raf = window.requestAnimationFrame(sync);
+    };
+
+    sync();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) window.cancelAnimationFrame(raf);
+      if (correctTimerRef.current !== null) window.clearTimeout(correctTimerRef.current);
+    };
+  }, [layout, rowCount]);
+
+  // flow: cada compás se tacha una vez, al cruzar el 60 % de la pantalla.
+  useEffect(() => {
+    if (layout !== "flow" || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const i = Number((e.target as HTMLElement).dataset.row);
+          // Los compases que quedaron arriba (por un salto o un gesto rápido) también se dan por corregidos.
+          setStruck((prev) => (prev.slice(0, i + 1).every(Boolean) ? prev : prev.map((v, k) => v || k <= i)));
+        }
+      },
+      // Cuenta también lo que ya quedó por encima de la pantalla.
+      { rootMargin: "100000px 0px -40% 0px" },
+    );
+    rowRefs.current.forEach((el) => el && io.observe(el));
+    return () => io.disconnect();
+  }, [layout]);
+
+  /** Ir a un compás (botones y flechas). Es un desplazamiento que pide el usuario: sin bloqueo. */
+  const goTo = (step: number) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const target = clamp(step, 0, rowCount - 1);
+    const maxScroll = Math.max(0, track.offsetHeight - window.innerHeight);
+    const top = window.scrollY + track.getBoundingClientRect().top + ((target + 0.5) / rowCount) * maxScroll;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
 
   const handleGroupKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key !== "ArrowRight" && e.key !== "ArrowDown" && e.key !== "ArrowLeft" && e.key !== "ArrowUp") return;
+    if (!["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(e.key)) return;
     e.preventDefault();
     const dir = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : -1;
-    const current = activeStep < 0 ? 0 : activeStep;
-    const next = clamp(current + dir, 0, rowCount - 1);
-    snapToStep(next);
+    const next = clamp((activeStep < 0 ? 0 : activeStep) + dir, 0, rowCount - 1);
+    goTo(next);
     buttonRefs.current[next]?.focus();
   };
 
-  if (reducedMotion) {
+  const header = (pinned: boolean) => (
+    <header className="flex flex-col items-center">
+      <Rehearsal mark={d.how.kicker} label={d.nav.section} />
+      <h2 id="how-title" className={`text-4xl font-normal leading-none xs:text-[2.625rem] sm:text-5xl lg:text-6xl ${pinned ? "mt-2 sm:mt-3 lg:mt-4" : "mt-4"}`}>
+        {d.how.title}
+      </h2>
+      <p className={`mt-3 text-base text-muted sm:text-lg lg:mt-4 ${pinned ? "hidden sm:block" : ""}`}>{d.how.intro}</p>
+    </header>
+  );
+
+  const skip = (
+    <a href="#stack" data-skip-how className="inline-flex min-h-11 items-center font-mono text-xs text-muted underline decoration-1 underline-offset-4 hover:text-ink">
+      {d.how.skip} ↓
+    </a>
+  );
+
+  const proof = (
+    <div className="mx-auto max-w-[90rem] px-5 pb-20 pt-8 sm:px-8 lg:px-16 lg:pb-28">
+      <ProofBlock d={d} lang={lang} tuning={tuning} />
+    </div>
+  );
+
+  /** El cliché con su trazo y la versión real. `corrected` decide qué voz manda. */
+  const voices = (i: number, corrected: boolean, emphasis: boolean, size: string) => (
+    <div data-corrected={corrected ? "true" : "false"} className="voice-stage flex flex-col items-center gap-2 sm:gap-3">
+      <span aria-hidden="true" className="inline-flex items-center gap-2 font-mono text-xs text-muted">
+        <span className={`h-[0.58em] w-[0.82em] -rotate-[20deg] rounded-[50%] transition-all duration-500 ${corrected ? "scale-110 bg-wine" : emphasis ? "bg-ink" : "bg-rest"}`} />
+        <span>{ROMAN[i] ?? i + 1}</span>
+      </span>
+      <p
+        ref={(el) => {
+          clicheRefs.current[i] = el;
+        }}
+        data-corrected={corrected ? "true" : "false"}
+        className={`voice-cliche relative inline-block italic ${size} ${emphasis && !corrected ? "text-ink" : "text-muted"}`}
+      >
+        <s
+          ref={(el) => {
+            strikeRefs.current[i] = el;
+          }}
+          className="no-underline"
+        >
+          {rows[i].cliche}
+        </s>
+        <svg aria-hidden="true" viewBox="0 0 1000 1000" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full overflow-visible">
+          {(pencilLines[i] ?? []).map((line, idx) => (
+            <path
+              key={idx}
+              d={line.d}
+              pathLength={1}
+              strokeWidth={3}
+              vectorEffect="non-scaling-stroke"
+              data-struck={corrected ? "true" : "false"}
+              style={{ "--stroke-dur": `${line.dur}ms`, "--stroke-delay": `${line.delay}ms` } as CSSProperties}
+              className="pencil-stroke"
+            />
+          ))}
+        </svg>
+      </p>
+      <p
+        ref={(el) => {
+          fixRefs.current[i] = el;
+        }}
+        data-fix
+        data-corrected={corrected ? "true" : "false"}
+        className={`voice-truth not-italic ${size} ${emphasis && corrected ? "text-ink" : "text-muted"}`}
+      >
+        {rows[i].fix}
+      </p>
+    </div>
+  );
+
+  if (layout === "static") {
     return (
-      <section id="como-trabajo" aria-labelledby="how-title" className="bar-double py-20 lg:py-32">
+      <section id="como-trabajo" aria-labelledby="how-title" data-how-layout="static" className="bar-double py-20 lg:py-32">
         <div className="mx-auto flex max-w-[90rem] flex-col items-center px-5 text-center sm:px-8 lg:px-16">
-          <Rehearsal mark={d.how.kicker} label={d.nav.section} />
-          <h2 id="how-title" className="mt-4 text-5xl font-normal leading-none lg:text-6xl">
-            {d.how.title}
-          </h2>
-          <p className="mt-4 text-lg text-muted">{d.how.intro}</p>
+          {header(false)}
           <ol className="mt-14 flex w-full max-w-5xl flex-col gap-14 lg:mt-20 lg:gap-20">
             {rows.map((r, i) => (
               <li key={r.fix} className="flex flex-col items-center gap-3">
@@ -384,19 +362,42 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
     );
   }
 
+  const TEXT = "max-w-[16ch] text-[2.375rem] leading-[1.05] tracking-[-0.02em] xs:max-w-[17ch] xs:text-[2.75rem] sm:max-w-[26ch] sm:text-[2.75rem] lg:text-[3.25rem]";
+
+  if (layout === "flow") {
+    return (
+      <section id="como-trabajo" aria-labelledby="how-title" data-how-layout="flow" className="bar-double">
+        <div className="mx-auto flex max-w-[90rem] flex-col items-center px-5 pt-16 text-center sm:px-8 sm:pt-20">
+          {header(false)}
+          <ol className="mt-12 flex w-full max-w-5xl flex-col gap-16 sm:mt-16 sm:gap-20">
+            {rows.map((r, i) => (
+              <li
+                key={r.fix}
+                data-row={i}
+                data-struck={struck[i]}
+                ref={(el) => {
+                  rowRefs.current[i] = el;
+                }}
+                className="flex flex-col items-center"
+              >
+                {voices(i, struck[i], true, TEXT)}
+              </li>
+            ))}
+          </ol>
+        </div>
+        {proof}
+      </section>
+    );
+  }
+
   const focusVal = activeStep < 0 ? -0.5 : activeStep;
 
   return (
-    <section id="como-trabajo" aria-labelledby="how-title" className="bar-double">
-      <div ref={trackRef} className="h-[300svh]">
+    <section id="como-trabajo" aria-labelledby="how-title" data-how-layout="pinned" className="bar-double">
+      {/* Un tramo corto por compás: ágil, no un túnel. */}
+      <div ref={trackRef} style={{ height: `${100 + rowCount * 65}svh` }}>
         <div className="sticky top-0 mx-auto flex h-[100svh] max-w-[90rem] flex-col items-center justify-between px-5 py-6 text-center sm:px-8 sm:py-10 lg:px-16 lg:py-14">
-          <header className="flex flex-col items-center">
-            <Rehearsal mark={d.how.kicker} label={d.nav.section} />
-            <h2 id="how-title" className="mt-2 text-4xl font-normal leading-none xs:text-[2.625rem] sm:mt-3 sm:text-5xl lg:mt-4 lg:text-6xl">
-              {d.how.title}
-            </h2>
-            <p className="mt-3 hidden text-base text-muted sm:block sm:text-lg lg:mt-4">{d.how.intro}</p>
-          </header>
+          {header(true)}
 
           <div ref={drumRef} className="relative my-4 w-full max-w-5xl flex-1 overflow-x-clip overflow-y-hidden">
             <div aria-hidden="true" className="pointer-events-none absolute left-0 top-1/2 hidden -translate-y-1/2 items-center gap-2 md:flex">
@@ -414,112 +415,52 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
                 const scale = 0.72 + 0.28 / (1 + Math.pow(abs * 1.15, 2));
                 const isFocused = activeStep === i;
                 const isCorrected = correctedUpTo >= 0 && i <= correctedUpTo;
-
-                const noteClass = isCorrected
-                  ? "bg-wine scale-110"
-                  : isFocused
-                    ? "bg-ink"
-                    : "bg-rest";
-
                 return (
                   <li
                     key={r.fix}
                     data-focus={isFocused ? "true" : "false"}
-                    style={{
-                      transform: `translate3d(0, calc(-50% + ${y.toFixed(1)}px), 0) scale(${scale.toFixed(3)})`,
-                    }}
+                    style={{ transform: `translate3d(0, calc(-50% + ${y.toFixed(1)}px), 0) scale(${scale.toFixed(3)})` }}
                     className="group absolute inset-x-0 top-1/2 flex origin-center flex-col items-center transition-transform duration-[760ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform"
                   >
-                    <div data-corrected={isCorrected ? "true" : "false"} className="voice-stage flex flex-col items-center gap-2 sm:gap-3">
-                      <span aria-hidden="true" className="inline-flex items-center gap-2 font-mono text-xs text-muted">
-                        <span className={`h-[0.58em] w-[0.82em] -rotate-[20deg] rounded-[50%] transition-all duration-500 ${noteClass}`} />
-                        <span>{ROMAN[i] ?? i + 1}</span>
-                      </span>
-                      <p
-                        ref={(el) => {
-                          clicheRefs.current[i] = el;
-                        }}
-                        data-corrected={isCorrected ? "true" : "false"}
-                        className={`voice-cliche relative inline-block max-w-[16ch] italic text-[2.375rem] leading-[1.05] tracking-[-0.02em] xs:max-w-[17ch] xs:text-[2.75rem] sm:max-w-[26ch] sm:text-[2.75rem] lg:text-[3.25rem] ${
-                          isFocused && !isCorrected ? "text-ink" : "text-muted"
-                        }`}
-                      >
-                        <s
-                          ref={(el) => {
-                            strikeRefs.current[i] = el;
-                          }}
-                          className="no-underline"
-                        >
-                          {r.cliche}
-                        </s>
-                        <svg aria-hidden="true" viewBox="0 0 1000 1000" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full overflow-visible">
-                          {(pencilLines[i] ?? []).map((line, idx) => (
-                            <path
-                              key={idx}
-                              d={line.d}
-                              pathLength={1}
-                              strokeWidth={3}
-                              vectorEffect="non-scaling-stroke"
-                              data-struck={isCorrected ? "true" : "false"}
-                              style={{ "--stroke-dur": `${line.dur}ms`, "--stroke-delay": `${line.delay}ms` } as CSSProperties}
-                              className="pencil-stroke"
-                            />
-                          ))}
-                        </svg>
-                      </p>
-                      <p
-                        ref={(el) => {
-                          fixRefs.current[i] = el;
-                        }}
-                        data-fix
-                        data-corrected={isCorrected ? "true" : "false"}
-                        className={`voice-truth max-w-[16ch] not-italic text-[2.375rem] leading-[1.05] tracking-[-0.02em] xs:max-w-[17ch] xs:text-[2.75rem] sm:max-w-[26ch] sm:text-[2.75rem] lg:text-[3.25rem] ${
-                          isFocused && isCorrected ? "text-ink" : "text-muted"
-                        }`}
-                      >
-                        {r.fix}
-                      </p>
-                    </div>
+                    {voices(i, isCorrected, isFocused, TEXT)}
                   </li>
                 );
               })}
             </ol>
           </div>
 
-          <div role="group" aria-label={d.how.title} onKeyDown={handleGroupKeyDown} className="flex items-center gap-2 font-mono text-xs">
-            {rows.map((r, i) => {
-              const label = String(i + 1).padStart(2, "0");
-              const isActive = activeStep === i;
-              const isCorrected = correctedUpTo >= 0 && i <= correctedUpTo;
-              const dotClass = isCorrected ? "bg-wine" : isActive ? "bg-ink" : "bg-rest";
-
-              return (
-                <button
-                  key={r.fix}
-                  ref={(el) => {
-                    buttonRefs.current[i] = el;
-                  }}
-                  type="button"
-                  data-active={isActive}
-                  aria-label={`${label} — ${r.fix}`}
-                  aria-current={isActive ? "step" : undefined}
-                  onClick={() => snapToStep(i)}
-                  className={`inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1.5 px-2.5 transition-colors ${
-                    isActive ? "text-wine underline decoration-1 underline-offset-4" : "text-muted hover:text-ink"
-                  }`}
-                >
-                  <span aria-hidden="true" className={`h-[0.55em] w-[0.78em] -rotate-[20deg] rounded-[50%] transition-colors duration-300 ${dotClass}`} />
-                  <span>{label}</span>
-                </button>
-              );
-            })}
+          <div className="flex flex-wrap items-center justify-center gap-x-6">
+            <div role="group" aria-label={d.how.title} onKeyDown={handleGroupKeyDown} className="flex items-center gap-2 font-mono text-xs">
+              {rows.map((r, i) => {
+                const label = String(i + 1).padStart(2, "0");
+                const isActive = activeStep === i;
+                const isCorrected = correctedUpTo >= 0 && i <= correctedUpTo;
+                return (
+                  <button
+                    key={r.fix}
+                    ref={(el) => {
+                      buttonRefs.current[i] = el;
+                    }}
+                    type="button"
+                    data-active={isActive}
+                    aria-label={`${label} — ${r.fix}`}
+                    aria-current={isActive ? "step" : undefined}
+                    onClick={() => goTo(i)}
+                    className={`inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1.5 px-2.5 transition-colors ${
+                      isActive ? "text-wine underline decoration-1 underline-offset-4" : "text-muted hover:text-ink"
+                    }`}
+                  >
+                    <span aria-hidden="true" className={`h-[0.55em] w-[0.78em] -rotate-[20deg] rounded-[50%] transition-colors duration-300 ${isCorrected ? "bg-wine" : isActive ? "bg-ink" : "bg-rest"}`} />
+                    <span>{label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            {skip}
           </div>
         </div>
       </div>
-
-      <div className="mx-auto max-w-[90rem] px-5 pb-20 pt-8 sm:px-8 lg:px-16 lg:pb-28">
-        <ProofBlock d={d} lang={lang} tuning={tuning} />
-      </div>
+      {proof}
     </section>
   );
 }
