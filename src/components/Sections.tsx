@@ -223,7 +223,7 @@ export function Stack({ d }: { d: Dictionary }) {
           {(mode === "general" ? ordered : stackGroups).map((g, i) => {
             const silent = mode !== "general" && !(g.modes as readonly string[]).includes(mode);
             return (
-              <div key={g.id} data-stack={g.id} data-silent={silent} className={`rule-bottom py-6 transition-colors duration-300 lg:border-b-0 lg:px-6 ${i > 0 ? "lg:border-l lg:border-ink" : ""} ${silent ? "" : g.id === "verify" ? "bg-verify-soft" : g.id === "build" || g.id === "data" ? "bg-wine-soft" : ""}`}>
+              <div key={g.id} data-stack={g.id} data-silent={silent} className={`rule-bottom py-6 transition-colors duration-300 lg:border-b-0 lg:px-6 ${i > 0 ? "lg:border-l lg:border-ink" : ""} ${g.id === "verify" ? "bg-verify-soft" : g.id === "build" || g.id === "data" ? "bg-wine-soft" : ""}`}>
                 <dt className={`flex items-baseline gap-2 text-2xl italic transition-colors duration-300 ${silent ? "text-muted" : ""}`}>
                   <NoteHead on={!silent} tone={g.id === "verify" ? "verify" : "wine"} className="self-center text-lg" />
                   {d.stack.groups[g.id]}
@@ -328,7 +328,7 @@ export function Contact({ d }: { d: Dictionary }) {
           ]
   ).filter((c) => Boolean(c.href));
   return (
-    <footer id="contacto" aria-labelledby="contact-title" className="rule-top section-y bg-ink text-paper">
+    <footer id="contacto" aria-labelledby="contact-title" className="rule-top section-y bg-wine text-paper">
       <div className={`${wrap} ${grid}`}>
         <div className="flex flex-col gap-3 sm:gap-4">
           <p className="font-mono text-[0.8125rem] uppercase tracking-[0.12em] text-panel">{d.contact.kicker}</p>

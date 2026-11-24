@@ -360,3 +360,43 @@ Then("the grand staff fits inside the page", () => {
     });
   });
 });
+
+// ── 07 · Coreografía lineal: el scroll es la línea de tiempo ──────────────
+const progressOf = () =>
+  cy.get("#como-trabajo li[data-row]").then(($rows) => [...$rows].map((r) => Number(r.getAttribute("data-progress") ?? 0)));
+
+const walkHowIWork = (fractions: number[]) => {
+  const seen: number[][] = [];
+  cy.get("#como-trabajo > div").first().then(($track) => {
+    const el = $track[0];
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const max = el.offsetHeight - Cypress.config("viewportHeight");
+    fractions.forEach((f) => {
+      cy.scrollTo(0, Math.round(top + max * f), { duration: 0 });
+      cy.wait(350);
+      progressOf().then((p) => seen.push(p));
+    });
+  });
+  return cy.wrap(seen).as("seen");
+};
+
+When("I scroll down through {string} in small steps", () => {
+  walkHowIWork([0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95]);
+});
+
+When("I scroll back up through {string} in small steps", () => {
+  walkHowIWork([0.95, 0.85, 0.75, 0.65, 0.55, 0.45, 0.35, 0.25, 0.15, 0.05]);
+});
+
+Then("the progress of every measure only grew", () => {
+  cy.get<number[][]>("@seen").then((seen) => {
+    for (let k = 1; k < seen.length; k += 1) seen[k].forEach((v, i) => expect(v, `compás ${i + 1}`).to.be.at.least(seen[k - 1][i] - 0.001));
+    expect(seen[seen.length - 1].some((v, i) => v > seen[0][i])).to.eq(true);
+  });
+});
+
+Then("the progress of every measure only shrank", () => {
+  cy.get<number[][]>("@seen").then((seen) => {
+    for (let k = 1; k < seen.length; k += 1) seen[k].forEach((v, i) => expect(v, `compás ${i + 1}`).to.be.at.most(seen[k - 1][i] + 0.001));
+  });
+});
