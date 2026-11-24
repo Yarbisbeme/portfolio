@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { diatonic, playChord, playNote } from "@/lib/sound";
+import { MOTION_OK, gsap, useGSAP } from "@/lib/motion";
 import type { Dictionary } from "@/content/site";
 
 export type TuningNote = { name: string; status: string };
@@ -68,6 +69,29 @@ export function TuningStaff({ d, tuning }: { d: Dictionary; tuning: Tuning }) {
   const timers = useRef<number[]>([]);
   useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), []);
 
+  // Al llegar, las notas aparecen una tras otra, como si se tocara la ejecución (sin sonido:
+  // nada suena si el visitante no lo pide).
+  const figRef = useRef<HTMLElement>(null);
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        gsap.utils.toArray<SVGSVGElement>("svg", figRef.current).forEach((svg) => {
+          if (!svg.getBoundingClientRect().width) return;
+          gsap.from(svg.querySelectorAll("[data-tuning-note]"), {
+            opacity: 0,
+            y: -8,
+            duration: 0.35,
+            stagger: 0.025,
+            ease: "back.out(2)",
+            scrollTrigger: { trigger: svg, start: "top 88%", once: true },
+          });
+        });
+      });
+    },
+    { scope: figRef },
+  );
+
   /**
    * Escuchar la suite: cada escenario es una nota. Lo que pasó suena afinado;
    * un fallo suena con su semitono de al lado (desafina) y la frase no resuelve.
@@ -91,7 +115,7 @@ export function TuningStaff({ d, tuning }: { d: Dictionary; tuning: Tuning }) {
   const half = Math.ceil(notes.length / 2);
   const date = new Intl.DateTimeFormat(d.how.tuningLocale, { day: "numeric", month: "short", year: "numeric" }).format(new Date(tuning.runAt));
   return (
-    <figure className="mt-8 flex flex-col gap-3" data-tuning>
+    <figure ref={figRef} className="mt-8 flex flex-col gap-3" data-tuning>
       <figcaption className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 font-mono text-xs text-muted sm:text-sm">
         <span>{d.how.tuningTitle}</span>
         <span>

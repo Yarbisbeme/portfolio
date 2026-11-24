@@ -397,6 +397,20 @@ export function About({ d, now }: { d: Dictionary; now: string }) {
 }
 
 export function Contact({ d }: { d: Dictionary }) {
+  // La barra final se traza al llegar a la Coda.
+  const finalRef = useRef<HTMLSpanElement>(null);
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
+    mm.add(MOTION_OK, () => {
+      gsap.from(finalRef.current, {
+        scaleX: 0,
+        transformOrigin: "left center",
+        duration: 1.1,
+        ease: "power2.inOut",
+        scrollTrigger: { trigger: finalRef.current, start: "top 95%", once: true },
+      });
+    });
+  });
   const { mode } = useMode();
   const cvs = (
     mode === "backend"
@@ -451,9 +465,9 @@ export function Contact({ d }: { d: Dictionary }) {
         </div>
       </div>
       <div className={`${wrap} mt-12 sm:mt-16`}>
-        <span aria-hidden="true" data-bar="final" className="bar-final text-panel" />
+        <span ref={finalRef} aria-hidden="true" data-bar="final" className="bar-final text-panel" />
         <p className="mt-3 flex justify-end font-mono text-sm">
-          <a href="#top" data-dc className="inline-flex min-h-11 items-center gap-2 underline decoration-1 underline-offset-4 hover:text-panel">
+          <a href="#top" data-dc onClick={() => window.dispatchEvent(new Event("score:dc"))} className="inline-flex min-h-11 items-center gap-2 underline decoration-1 underline-offset-4 hover:text-panel">
             {d.contact.dc} <span aria-hidden="true">↑</span>
           </a>
         </p>

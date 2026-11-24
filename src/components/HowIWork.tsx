@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "re
 import type { Dictionary, Locale } from "@/content/site";
 import { Rehearsal } from "./Score";
 import { TuningStaff, type Tuning } from "./Tuning";
-import { ScrollTrigger } from "@/lib/motion";
+import { ScrollTrigger, gsap } from "@/lib/motion";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 const ROMAN = ["I", "II", "III", "IV", "V"];
@@ -188,7 +188,11 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
         if (!path || !line) return;
         const a = line.delay / 1200;
         const b = (line.delay + line.dur) / 1200;
-        path.style.strokeDashoffset = (1 - clamp((s - a) / Math.max(0.001, b - a), 0, 1)).toFixed(3);
+        // El lápiz traza cada línea con su propio arranque y frenado, como una mano.
+        const local = clamp((s - a) / Math.max(0.001, b - a), 0, 1);
+        const drawn = local < 0.5 ? 2 * local * local : 1 - Math.pow(-2 * local + 2, 2) / 2;
+        // Con punta redonda, un trazo de largo 0 dejaría un punto: se oculta hasta que empieza.
+        gsap.set(path, { drawSVG: `0% ${(drawn * 100).toFixed(2)}%`, visibility: drawn > 0.002 ? "visible" : "hidden" });
       });
 
       if (pinned) {
@@ -223,82 +227,74 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
     setStruck((prev) => (prev.every((v, k) => v === struckNow[k]) ? prev : struckNow));
   }, []);
 
-  // pinned: progreso global P ∈ [0, filas] desde el scroll, con un suavizado corto para la rueda.
-  useEffect(() => {
-    if (layout !== "pinned") return;
-    let target = 0;
-    let current = -1;
-    let raf = 0;
+  // Repinta con el progreso vigente (p. ej. cuando cambia el trazo medido del lápiz).
+  const repaint = useRef<() => void>(() => {});
 
-    const read = () => {
-      const track = trackRef.current;
-      if (!track) return 0;
-      const rect = track.getBoundingClientRect();
-      const max = Math.max(1, track.offsetHeight - window.innerHeight);
-      return clamp(-rect.top / max, 0, 1) * rowCount;
-    };
-    const frame = () => {
-      raf = 0;
-      current = current < 0 ? target : current + (target - current) * 0.22;
-      if (Math.abs(target - current) < 0.0008) current = target;
-      for (let i = 0; i < rowCount; i += 1) paint(i, current - i, true);
-      const focus = Math.min(rowCount - 1, Math.floor(current));
-      const track = trackRef.current;
-      const before = track ? track.getBoundingClientRect().top > window.innerHeight * 0.45 : false;
-      commit(before ? -1 : focus, rows.map((_, i) => current - i >= PHASE.strikeEnd));
-      if (current !== target) raf = window.requestAnimationFrame(frame);
-    };
-    const onScroll = () => {
-      target = read();
-      if (!raf) raf = window.requestAnimationFrame(frame);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+  // pinned: ScrollTrigger convierte el recorrido de la pista en un progreso P ∈ [0, filas],
+  // con un suavizado corto (scrub) para la rueda del ratón. El scroll nunca se reescribe.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (layout !== "pinned" || !track) return;
+    const ctx = gsap.context(() => {
+      const state = { p: 0 };
+      const render = () => {
+        for (let i = 0; i < rowCount; i += 1) paint(i, state.p - i, true);
+        const before = track.getBoundingClientRect().top > window.innerHeight * 0.45;
+        commit(before ? -1 : Math.min(rowCount - 1, Math.floor(state.p)), rows.map((_, i) => state.p - i >= PHASE.strikeEnd));
+      };
+      gsap.to(state, {
+        p: rowCount,
+        ease: "none",
+        onUpdate: render,
+        scrollTrigger: { trigger: track, start: "top top", end: "bottom bottom", scrub: 0.35, invalidateOnRefresh: true, onRefresh: render },
+      });
+      repaint.current = render;
+      render();
+    });
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) window.cancelAnimationFrame(raf);
+      repaint.current = () => {};
+      ctx.revert();
     };
   }, [layout, rowCount, rows, paint, commit]);
 
-  // flow: sin fijar; cada compás avanza según dónde está su centro en la pantalla.
+  // flow: sin fijar; cada compás tiene su ScrollTrigger: progreso 0 con su centro en el borde
+  // inferior de la pantalla y 1 con su centro al 30 % desde arriba.
   useEffect(() => {
     if (layout !== "flow") return;
-    let raf = 0;
-    const frame = () => {
-      raf = 0;
-      const vh = window.innerHeight;
-      const states: boolean[] = [];
-      let focus = -1;
+    const progress = rows.map(() => 0);
+    const ctx = gsap.context(() => {
+      const render = () => {
+        progress.forEach((u, i) => paint(i, u, false));
+        const focus = progress.findIndex((u) => u > 0 && u < 1);
+        commit(focus, progress.map((u) => u >= PHASE.strikeEnd));
+      };
       rowRefs.current.forEach((li, i) => {
-        if (!li) return states.push(false);
-        const r = li.getBoundingClientRect();
-        const center = r.top + r.height / 2;
-        // centro en el borde inferior → 0; centro al 30 % de la pantalla → 1
-        const u = (vh - center) / (vh * 0.7);
-        paint(i, u, false);
-        states.push(u >= PHASE.strikeEnd);
-        if (u >= 0 && u < 1) focus = i;
+        if (!li) return;
+        ScrollTrigger.create({
+          trigger: li,
+          start: "center bottom",
+          end: "center 30%",
+          onUpdate: (self) => {
+            progress[i] = self.progress;
+            render();
+          },
+          onRefresh: (self) => {
+            progress[i] = self.progress;
+            render();
+          },
+        });
       });
-      commit(focus, states);
-    };
-    const onScroll = () => {
-      if (!raf) raf = window.requestAnimationFrame(frame);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+      repaint.current = render;
+      render();
+    });
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) window.cancelAnimationFrame(raf);
+      repaint.current = () => {};
+      ctx.revert();
     };
-  }, [layout, paint, commit]);
+  }, [layout, rows, paint, commit]);
 
-  // Al cambiar el trazo medido, repinta con el progreso actual.
   useEffect(() => {
-    window.dispatchEvent(new Event("scroll"));
+    repaint.current();
   }, [pencilLines]);
 
   /** Botones y flechas: llevan a la pausa de lectura de cada compás. Desplazamiento pedido por el usuario. */
@@ -385,7 +381,6 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
                 (pathRefs.current[i] ??= [])[idx] = el;
               }}
               d={line.d}
-              pathLength={1}
               strokeWidth={3}
               vectorEffect="non-scaling-stroke"
               className="pencil-scrub"
