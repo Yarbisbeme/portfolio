@@ -24,7 +24,7 @@ Feature: The grand staff responds to the projects
     When I point at the note "Cucumber"
     Then these projects are marked: "tmm"
 
-  Scenario Outline: The grand staff fits on narrow phones
+  Scenario Outline: The grand staff fits at every width
     Given I am on a <width> pixels wide screen
     Then the grand staff fits inside the page
 
@@ -33,3 +33,7 @@ Feature: The grand staff responds to the projects
       | 320   |
       | 375   |
       | 430   |
+      | 768   |
+      | 1024  |
+      | 1280  |
+      | 1440  |

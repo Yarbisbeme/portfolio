@@ -359,6 +359,8 @@ Then("the grand staff fits inside the page", () => {
     const right = $fig[0].getBoundingClientRect().right;
     cy.get("[data-grand-staff] [data-note]").filter(":visible").each(($n) => {
       expect($n[0].getBoundingClientRect().right).to.be.at.most(right + 1);
+      // Cada etiqueta en una sola línea: ".NET Core" no se parte en dos.
+      expect($n[0].getBoundingClientRect().height, $n.attr("data-note")).to.be.lessThan(40);
     });
   });
 });

@@ -57,7 +57,7 @@ function Staff({
                 onClick={() => {
                   if (soundEnabled()) playNote(staffPitch(label.toLowerCase() === "verify" ? "verify" : "build", n.y));
                 }}
-                className={`flex h-[1.5em] cursor-default items-center gap-[0.4em] font-mono text-xs leading-none transition-colors duration-300 xs:text-[0.8125rem] sm:text-sm lg:text-base ${on ? "text-ink" : "text-muted"}`}
+                className={`flex h-[1.5em] cursor-default items-center gap-[0.4em] whitespace-nowrap font-mono text-xs leading-none transition-colors duration-300 xs:text-[0.8125rem] sm:text-sm xl:text-base ${on ? "text-ink" : "text-muted"}`}
               >
                 <span
                   aria-hidden="true"
@@ -66,8 +66,9 @@ function Staff({
                 <span className="bg-paper px-[0.2em]">
                   {n.short ? (
                     <>
-                      <span className="md:hidden">{n.short}</span>
-                      <span className="hidden md:inline">{n.t}</span>
+                      {/* Nombre corto donde el pentagrama es estrecho: móvil y portátil pequeño (lg). */}
+                      <span className="md:hidden lg:inline xl:hidden">{n.short}</span>
+                      <span className="hidden md:inline lg:hidden xl:inline">{n.t}</span>
                     </>
                   ) : (
                     n.t
@@ -217,7 +218,7 @@ export function Hero({ d }: { d: Dictionary }) {
               <span className="sm:hidden">{d.hero.eyebrowShort}</span>
               <span className="hidden sm:inline">{d.hero.eyebrow}</span>
             </p>
-            <h1 id="hero-title" className="text-[2.875rem] font-normal leading-[1.01] tracking-[-0.02em] xs:text-[3.375rem] sm:text-6xl lg:text-[4.75rem]">
+            <h1 id="hero-title" className="text-[2.875rem] font-normal leading-[1.01] tracking-[-0.02em] xs:text-[3.375rem] sm:text-6xl lg:text-[3.25rem] xl:text-[4.375rem] 2xl:text-[4.75rem]">
               {d.hero.line1}
               <br />
               <em className="text-wine">{d.hero.line2}</em>
@@ -227,7 +228,7 @@ export function Hero({ d }: { d: Dictionary }) {
           {/* En pantallas estrechas el nombre de cada voz se abrevia (B. / V.), como en los sistemas
               siguientes de una partitura: así las notas caben sin desbordar. */}
           <figure data-grand-staff className="m-0 flex gap-2 [--gap:13px] xs:gap-3 xs:[--gap:14px] sm:gap-4 lg:[--gap:15px]" aria-label={d.hero.staffLabel}>
-            <div className="flex w-7 shrink-0 flex-col justify-between py-1 xs:w-20 sm:w-24 lg:w-28">
+            <div className="flex w-7 shrink-0 flex-col justify-between py-1 xs:w-20 sm:w-24 xl:w-28">
               {[
                 { name: "Build", on: buildOn },
                 { name: "Verify", on: verifyOn },
