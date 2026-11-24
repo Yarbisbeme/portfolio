@@ -41,10 +41,27 @@ export function SuitePlayer({ d, features, live }: { d: Dictionary; features: Fe
   const [si, setSi] = useState(0);
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const scenario = features[fi]?.scenarios[si];
   const steps: Step[] = useMemo(() => scenario?.steps ?? [], [scenario]);
   const current = steps[step];
+
+  useEffect(() => {
+    if (!expanded) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setExpanded(false);
+      else if (e.key === "ArrowLeft") {
+        setStep((s) => Math.max(0, s - 1));
+        setPlaying(false);
+      } else if (e.key === "ArrowRight") {
+        setStep((s) => Math.min(steps.length - 1, s + 1));
+        setPlaying(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [expanded, steps.length]);
 
   useEffect(() => {
     if (!playing) return;
@@ -102,8 +119,16 @@ export function SuitePlayer({ d, features, live }: { d: Dictionary; features: Fe
           <figure className="m-0 flex flex-col gap-2">
             <div className="relative aspect-[16/10] overflow-hidden border-l-[6px] border-wine bg-panel">
               {current?.shot ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={current.shot} alt={`${t.step} ${step + 1}: ${current.keyword} ${current.text}`} className="h-full w-full object-cover object-top" />
+                <button
+                  type="button"
+                  onClick={() => setExpanded(true)}
+                  aria-label={t.expand}
+                  title={t.expand}
+                  className="block h-full w-full cursor-zoom-in"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={current.shot} alt={`${t.step} ${step + 1}: ${current.keyword} ${current.text}`} className="h-full w-full object-contain" />
+                </button>
               ) : (
                 <p className="absolute inset-0 grid place-items-center font-mono text-sm text-muted">{t.noShot}</p>
               )}
@@ -134,6 +159,16 @@ export function SuitePlayer({ d, features, live }: { d: Dictionary; features: Fe
                 <button type="button" disabled={step >= steps.length - 1} onClick={() => { setStep((s) => Math.min(steps.length - 1, s + 1)); setPlaying(false); }} className="min-h-11 min-w-11 cursor-pointer border border-ink px-3 font-mono text-sm hover:bg-ink hover:text-paper disabled:cursor-default disabled:opacity-40">
                   <span aria-hidden="true">→</span>
                   <span className="sr-only">{t.next}</span>
+                </button>
+                <button
+                  type="button"
+                  disabled={!current?.shot}
+                  onClick={() => setExpanded(true)}
+                  title={t.expand}
+                  className="min-h-11 min-w-11 cursor-pointer border border-ink px-3 font-mono text-sm hover:bg-ink hover:text-paper disabled:cursor-default disabled:opacity-40"
+                >
+                  <span aria-hidden="true">⛶</span>
+                  <span className="sr-only">{t.expand}</span>
                 </button>
               </span>
             </figcaption>
@@ -183,6 +218,75 @@ export function SuitePlayer({ d, features, live }: { d: Dictionary; features: Fe
           ) : null}
         </div>
       </section>
+
+      {expanded && current?.shot ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${scenario ? scenarioLabel(features[fi], si) : ""} — ${t.step} ${step + 1} ${t.of} ${steps.length}`}
+          onClick={() => setExpanded(false)}
+          className="fixed inset-0 z-50 flex flex-col bg-ink/95 p-4 text-paper sm:p-6"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="flex flex-wrap items-center justify-between gap-3 border-b border-paper/20 pb-3"
+          >
+            <div className="min-w-0 font-mono text-xs sm:text-sm">
+              <span className="text-paper/70">
+                {t.step} {step + 1} {t.of} {steps.length} ·{" "}
+              </span>
+              <span className="italic text-paper/70">{current.keyword} </span>
+              <span className="break-words">{current.text}</span>
+            </div>
+            <div className="flex shrink-0 items-center gap-1">
+              <button
+                type="button"
+                disabled={step === 0}
+                onClick={() => { setStep((s) => Math.max(0, s - 1)); setPlaying(false); }}
+                className="min-h-11 min-w-11 cursor-pointer border border-paper/40 px-3 font-mono text-sm hover:bg-paper hover:text-ink disabled:cursor-default disabled:opacity-40"
+              >
+                <span aria-hidden="true">←</span>
+                <span className="sr-only">{t.prev}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (step >= steps.length - 1) setStep(0);
+                  setPlaying((p) => !p);
+                }}
+                className="min-h-11 min-w-28 cursor-pointer bg-wine px-4 font-mono text-sm text-paper hover:bg-paper hover:text-ink"
+              >
+                {playing ? t.pause : t.play}
+              </button>
+              <button
+                type="button"
+                disabled={step >= steps.length - 1}
+                onClick={() => { setStep((s) => Math.min(steps.length - 1, s + 1)); setPlaying(false); }}
+                className="min-h-11 min-w-11 cursor-pointer border border-paper/40 px-3 font-mono text-sm hover:bg-paper hover:text-ink disabled:cursor-default disabled:opacity-40"
+              >
+                <span aria-hidden="true">→</span>
+                <span className="sr-only">{t.next}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setExpanded(false)}
+                className="ml-2 min-h-11 cursor-pointer border border-paper/40 px-4 font-mono text-sm hover:bg-paper hover:text-ink"
+              >
+                {t.close} <span aria-hidden="true">✕</span>
+              </button>
+            </div>
+          </div>
+          <div className="flex min-h-0 flex-1 items-center justify-center pt-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={current.shot}
+              alt={`${t.step} ${step + 1}: ${current.keyword} ${current.text}`}
+              onClick={(e) => e.stopPropagation()}
+              className="max-h-full max-w-full object-contain shadow-2xl"
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

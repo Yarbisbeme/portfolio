@@ -113,7 +113,7 @@ for (const [tcsId, tcs] of started) {
     const src = shotsByName.get(`${tcsId}__${step.id}`);
     if (src) {
       const name = `${String(++shotCount).padStart(3, "0")}.webp`;
-      await sharp(src).resize({ width: 960 }).webp({ quality: 70 }).toFile(join(SHOTS_OUT, name));
+      await sharp(src).resize({ width: 1280 }).webp({ quality: 82 }).toFile(join(SHOTS_OUT, name));
       shot = `/automation/shots/${name}`;
     }
     steps.push({
