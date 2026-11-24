@@ -6,6 +6,7 @@ import { ModeProvider } from "@/components/mode";
 import { About, Contact, HowIWork, Stack, Work } from "@/components/Sections";
 import type { Tuning } from "@/components/Tuning";
 import { loadResults } from "@/lib/automation";
+import { ScoreMotion } from "@/components/ScoreMotion";
 
 function loadTuning(): Tuning | null {
   const r = loadResults();
@@ -36,6 +37,7 @@ export default async function Page({ params }: PageProps<"/[lang]">) {
         <About d={d} now={new Date().toISOString().slice(0, 7)} />
       </main>
       <Contact d={d} />
+      <ScoreMotion />
     </ModeProvider>
   );
 }

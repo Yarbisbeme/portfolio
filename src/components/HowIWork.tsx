@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "re
 import type { Dictionary, Locale } from "@/content/site";
 import { Rehearsal } from "./Score";
 import { TuningStaff, type Tuning } from "./Tuning";
+import { ScrollTrigger } from "@/lib/motion";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 const ROMAN = ["I", "II", "III", "IV", "V"];
@@ -88,6 +89,12 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
     mqs.forEach((m) => m.addEventListener("change", sync));
     return () => mqs.forEach((m) => m.removeEventListener("change", sync));
   }, []);
+
+  // Al cambiar de forma (flujo ↔ fija) la página cambia de alto: las demás animaciones recalculan.
+  useEffect(() => {
+    const id = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => window.cancelAnimationFrame(id);
+  }, [layout]);
 
   /** Traza el lápiz sobre las líneas reales del cliché; cada línea recorre su tramo del tachado. */
   const measure = useCallback(() => {
