@@ -163,3 +163,17 @@ Then("the work {string} is sounding", (slug: string) => {
 Then("silent work is announced to screen readers", () => {
   cy.get('[data-work][data-silent="true"] h3 .sr-only').should("have.length.at.least", 1);
 });
+
+Then("the work {string} is signed as {string}", (slug: string, sign: string) => {
+  cy.get(`[data-work="${slug}"] [data-voices]`).invoke("text").then((t) => {
+    expect(t.replace(/\s+/g, " ").trim()).to.eq(sign);
+  });
+});
+
+Then("the career voice {string} is sounding", (voice: string) => {
+  cy.get(`[data-polyphony] [data-voice="${voice}"]`).each(($v) => cy.wrap($v).should("have.attr", "data-sounding", "true"));
+});
+
+Then("the career voice {string} is silent", (voice: string) => {
+  cy.get(`[data-polyphony] [data-voice="${voice}"]`).each(($v) => cy.wrap($v).should("have.attr", "data-sounding", "false"));
+});

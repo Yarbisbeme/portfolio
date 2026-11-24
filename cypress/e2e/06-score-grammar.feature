@@ -27,3 +27,19 @@ Feature: The whole page reads as one score
     And the work "tmm" is sounding
     And silent work is announced to screen readers
     And the page has no serious accessibility violations
+
+  Scenario Outline: Each project signs the voices it plays
+    Then the work "<project>" is signed as "<sign>"
+
+    Examples:
+      | project      | sign                         |
+      | ybank        | Ensamble · Build + Verify    |
+      | eikon        | Solo · Build                 |
+      | tmm          | Solo · Verify                |
+      | los-hidalgos | Ensamble · Build + Verify    |
+
+  Scenario: The career reads as two voices in time
+    When I read the portfolio as "QA"
+    Then the career voice "verify" is sounding
+    And the career voice "build" is silent
+    And the career voice "both" is sounding
