@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { contact, dictionaries, locales, siteConfig, type Locale } from "@/content/site";
 import { CodeViewer } from "@/components/CodeViewer";
 import { Header } from "@/components/Header";
+import { ModeProvider } from "@/components/mode";
 
 const isLocale = (v: string): v is Locale => (locales as readonly string[]).includes(v);
 
@@ -18,7 +19,7 @@ export default async function DevPage({ params }: PageProps<"/[lang]/dev">) {
   const d = dictionaries[lang];
   const t = d.dev;
   return (
-    <>
+    <ModeProvider>
       <Header d={d} lang={lang} />
       <main id="contenido" className="mx-auto max-w-[90rem] px-5 pb-14 pt-6 sm:px-8 sm:pb-20 sm:pt-10 lg:px-16 lg:pt-14">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
@@ -47,6 +48,6 @@ export default async function DevPage({ params }: PageProps<"/[lang]/dev">) {
           </a>
         </p>
       </main>
-    </>
+    </ModeProvider>
   );
 }

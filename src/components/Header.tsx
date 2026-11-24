@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { siteConfig, type Dictionary, type Locale } from "@/content/site";
+import { VoiceSwitch, VoicesGlyph } from "./VoiceSwitch";
 
 export function Header({ d, lang }: { d: Dictionary; lang: Locale }) {
   const [open, setOpen] = useState(false);
@@ -16,12 +17,12 @@ export function Header({ d, lang }: { d: Dictionary; lang: Locale }) {
   ] as const;
 
   return (
-    <header className="rule-bottom font-mono text-sm tracking-[0.03em]">
+    <header id="top" className="rule-bottom font-mono text-sm tracking-[0.03em]">
       <div className="mx-auto flex max-w-[90rem] items-center justify-between gap-4 px-5 py-1.5 sm:px-8 lg:px-16 lg:py-3">
         <a href={`/${lang}/`} className="py-3 font-medium no-underline">
           {siteConfig.authorName}
         </a>
-        <nav aria-label="Principal" className="hidden lg:block">
+        <nav aria-label="Principal" className="hidden xl:block">
           <ul className="flex gap-6 xl:gap-9">
             {links.map(([href, label]) => (
               <li key={href}>
@@ -33,6 +34,9 @@ export function Header({ d, lang }: { d: Dictionary; lang: Locale }) {
           </ul>
         </nav>
         <div className="flex items-center gap-1">
+          <div className="mr-2 hidden lg:block">
+            <VoiceSwitch d={d} variant="compact" />
+          </div>
           <a
             href={`/${other}/`}
             onClick={(e) => {
@@ -53,8 +57,9 @@ export function Header({ d, lang }: { d: Dictionary; lang: Locale }) {
             aria-expanded={open}
             aria-controls="menu-movil"
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center lg:hidden"
+            className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 pl-1 xl:hidden"
           >
+            <VoicesGlyph className="text-ink lg:hidden" />
             <span className="sr-only">{open ? d.nav.close : d.nav.menu}</span>
             <svg aria-hidden="true" width="22" height="14" viewBox="0 0 22 14" fill="none" stroke="currentColor" strokeWidth="1.5">
               {open ? <path d="M4 0l14 14M18 0L4 14" /> : <path d="M0 1h22M0 7h22M0 13h22" />}
@@ -63,7 +68,10 @@ export function Header({ d, lang }: { d: Dictionary; lang: Locale }) {
         </div>
       </div>
       {open ? (
-        <nav id="menu-movil" aria-label="Principal" className="rule-top lg:hidden">
+        <nav id="menu-movil" aria-label="Principal" className="rule-top xl:hidden">
+          <div className="mx-auto max-w-[90rem] px-5 pt-4 sm:px-8 lg:hidden">
+            <VoiceSwitch d={d} variant="full" />
+          </div>
           <ul className="mx-auto max-w-[90rem] px-5 sm:px-8">
             {links.map(([href, label]) => (
               <li key={href} className="rule-bottom last:border-b-0">

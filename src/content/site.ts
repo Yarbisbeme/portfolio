@@ -96,7 +96,7 @@ const es = {
       `Back-End Engineer (.NET / Python) y QA Automation (SDET) en ${siteConfig.location}. Construyo el sistema y demuestro que aguanta.`,
   },
   skip: "Saltar al contenido",
-  nav: { work: "Trabajo", how: "Cómo trabajo", about: "Sobre mí", contact: "Contacto", automation: "Automation", code: "Código", menu: "Menú", close: "Cerrar" },
+  nav: { work: "Trabajo", how: "Cómo trabajo", about: "Sobre mí", contact: "Contacto", automation: "Automation", code: "Código", menu: "Menú", close: "Cerrar", section: "Sección", voices: "Leer como", silent: "en silencio para este enfoque" },
   langSwitch: { label: "English", short: "EN", aria: "Ver el sitio en inglés" },
   hero: {
     eyebrow: `${siteConfig.roleTagline} · ${siteConfig.location}`,
@@ -111,7 +111,7 @@ const es = {
     preview: "Vista del proyecto",
   },
   work: {
-    kicker: "Compás 01",
+    kicker: "A",
     title: "Trabajo",
     intro: "Un proyecto propio y tres equipos. En los de empresa cuento mi rol, el stack y las prácticas; el producto es de ellos.",
     relevant: "Relevante para este enfoque",
@@ -150,7 +150,7 @@ const es = {
     } as Record<Project["slug"], { kind: string; role: string; period: string; note?: string; summary: string; alt: string }>,
   },
   how: {
-    kicker: "Compás 02",
+    kicker: "B",
     title: "Cómo trabajo",
     intro: "Lo que suelen decir los portfolios, corregido en rojo.",
     rows: [
@@ -164,13 +164,13 @@ const es = {
     proofCode: "Leer el código",
   },
   stack: {
-    kicker: "Compás 03",
+    kicker: "C",
     title: "Stack por función",
     other: "Ver el resto del stack",
     groups: { build: "Build", data: "Data & APIs", verify: "Verify", observe: "Automate & Observe" } as Record<string, string>,
   },
   about: {
-    kicker: "Compás 04",
+    kicker: "D",
     title: "Sobre mí",
     body: [
       "Soy dominicano, de Santo Domingo. Fuera del código toco el piano, y soy cristiano: las dos cosas me ordenan tanto como cualquier metodología.",
@@ -238,6 +238,7 @@ const es = {
   },
   contact: {
     kicker: "Coda",
+    dc: "D.C. · Volver al inicio",
     title: "Hablemos",
     body: siteConfig.copy.es.contactBody || "Si tu equipo necesita a alguien que construya el back-end y además lo pruebe, escríbeme.",
     emailShort: "Email",
@@ -258,7 +259,7 @@ const en: Dict = {
       `Back-End Engineer (.NET / Python) and QA Automation (SDET) based in ${siteConfig.location}. I build the system and prove it holds.`,
   },
   skip: "Skip to content",
-  nav: { work: "Work", how: "How I work", about: "About", contact: "Contact", automation: "Automation", code: "Code", menu: "Menu", close: "Close" },
+  nav: { work: "Work", how: "How I work", about: "About", contact: "Contact", automation: "Automation", code: "Code", menu: "Menu", close: "Close", section: "Section", voices: "Read as", silent: "silent for this focus" },
   langSwitch: { label: "Español", short: "ES", aria: "View the site in Spanish" },
   hero: {
     eyebrow: `${siteConfig.roleTagline} · ${siteConfig.location}`,
@@ -273,7 +274,7 @@ const en: Dict = {
     preview: "Project preview",
   },
   work: {
-    kicker: "Bar 01",
+    kicker: "A",
     title: "Work",
     intro: "One project of my own and three teams. For company work I describe my role, stack and practices; the product is theirs.",
     relevant: "Relevant to this focus",
@@ -312,7 +313,7 @@ const en: Dict = {
     },
   },
   how: {
-    kicker: "Bar 02",
+    kicker: "B",
     title: "How I work",
     intro: "What portfolios usually say, corrected in red.",
     rows: [
@@ -326,13 +327,13 @@ const en: Dict = {
     proofCode: "Read the code",
   },
   stack: {
-    kicker: "Bar 03",
+    kicker: "C",
     title: "Stack by function",
     other: "See rest of stack",
     groups: { build: "Build", data: "Data & APIs", verify: "Verify", observe: "Automate & Observe" },
   },
   about: {
-    kicker: "Bar 04",
+    kicker: "D",
     title: "About",
     body: [
       "I'm Dominican, from Santo Domingo. Outside of code I play the piano, and I'm a Christian: both keep me as grounded as any methodology.",
@@ -400,6 +401,7 @@ const en: Dict = {
   },
   contact: {
     kicker: "Coda",
+    dc: "D.C. · Back to top",
     title: "Let's talk",
     body: siteConfig.copy.en.contactBody || "If your team needs someone who builds the back end and also tests it, write to me.",
     emailShort: "Email",
