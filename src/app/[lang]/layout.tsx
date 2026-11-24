@@ -11,7 +11,7 @@ export function generateStaticParams() {
 
 const isLocale = (v: string): v is Locale => (locales as readonly string[]).includes(v);
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yarbisbeme.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yarbis.work";
 
 export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Promise<Metadata> {
   const { lang } = await params;
