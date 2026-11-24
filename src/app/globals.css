@@ -123,6 +123,22 @@
     background: #e6decf;
     --color-panel: #d9cebb;
   }
+  /* Vuelve a la paleta clara dentro de una superficie oscura (bloque propio). */
+  .surface-paper {
+    --color-paper: #f3eee4;
+    --color-ink: #1c1a17;
+    --color-muted: #5e5850;
+    --color-panel: #e6decf;
+    --color-rest: #b9afa2;
+    --color-wine: #9e2a22;
+    --color-verify: #086645;
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  /* Bloque claro destacado (la prueba): papel con fondo panel. */
+  .surface-block {
+    background: #e6decf;
+  }
   .surface-ink {
     --color-paper: #1b1a18;
     --color-ink: #eee8dc;

@@ -282,8 +282,11 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
   );
 
   const proof = (
-    <div className="mx-auto max-w-[90rem] px-5 pb-20 pt-8 sm:px-8 lg:px-16 lg:pb-28">
-      <ProofBlock d={d} lang={lang} tuning={tuning} />
+    // La prueba es un bloque propio, en claro: no forma parte del escenario oscuro.
+    <div data-proof className="surface-paper surface-block bar-double">
+      <div className="mx-auto max-w-[90rem] px-5 py-14 sm:px-8 sm:py-16 lg:px-16 lg:py-20">
+        <ProofBlock d={d} lang={lang} tuning={tuning} />
+      </div>
     </div>
   );
 
@@ -339,7 +342,7 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
 
   if (layout === "static") {
     return (
-      <section id="como-trabajo" aria-labelledby="how-title" data-how-layout="static" className="bar-double surface-ink section-y">
+      <section id="como-trabajo" aria-labelledby="how-title" data-how-layout="static" className="bar-double surface-ink pt-16 sm:pt-22 lg:pt-28">
         <div className="mx-auto flex max-w-[90rem] flex-col items-center px-5 text-center sm:px-8 lg:px-16">
           {header(false)}
           <ol className="mt-14 flex w-full max-w-5xl flex-col gap-14 lg:mt-20 lg:gap-20">
@@ -356,10 +359,8 @@ export function HowIWork({ d, lang, tuning = null }: { d: Dictionary; lang: Loca
               </li>
             ))}
           </ol>
-          <div className="mt-20 w-full lg:mt-28">
-            <ProofBlock d={d} lang={lang} tuning={tuning} />
-          </div>
         </div>
+        <div className="mt-20 lg:mt-28">{proof}</div>
       </section>
     );
   }
