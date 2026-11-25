@@ -16,6 +16,8 @@ export class HomePage {
     const query = focus && focus !== "general" ? `?enfoque=${focus}` : "";
     cy.visit(`/${lang}/${query}`);
     cy.get("h1").should("be.visible");
+    // La página está lista cuando el hero terminó su entrada (o no la tuvo: movimiento reducido).
+    cy.get("html.motion-ready", { timeout: 8000 }).should("not.have.attr", "data-intro", "running");
   }
 
   readAs(label: string) {
@@ -38,7 +40,9 @@ export class HomePage {
   }
 
   soundingNotes() {
-    return cy.get(`${GRAND} [data-note][data-sounding="true"]`).filter(":visible");
+    // Solo las notas que se muestran en este ancho (las de escritorio van con display: none en móvil).
+    // No se usa :visible: Cypress considera oculta una nota en opacidad 0 a mitad de una animación.
+    return cy.get(`${GRAND} [data-note][data-sounding="true"]`).filter((_, el) => (el as HTMLElement).offsetParent !== null);
   }
 
   focusProject(name: string) {

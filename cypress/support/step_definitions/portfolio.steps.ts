@@ -192,9 +192,16 @@ Then("the stack function {string} is silent", (id: string) => {
 
 Then("the tuning staff has one note per scenario in its count", () => {
   cy.viewport(1440, 900);
+  cy.get("[data-tuning]").first().scrollIntoView({ offset: { top: -200, left: 0 } });
   cy.get("[data-tuning-count]").first().invoke("text").then((t) => {
     const total = Number(t.match(/\/(\d+)/)?.[1]);
-    cy.get("[data-tuning] [data-tuning-note]").filter(":visible").should("have.length", total);
+    // Se cuentan las notas del sistema que se muestra en este ancho (por tamaño, no por opacidad:
+    // las notas aparecen en secuencia al llegar).
+    cy.get("[data-tuning] svg").should(($svgs) => {
+      const shown = [...$svgs].filter((s) => s.getBoundingClientRect().width > 0);
+      const notes = shown.flatMap((s) => Array.from(s.querySelectorAll("[data-tuning-note]")));
+      expect(notes.length).to.eq(total);
+    });
   });
 });
 
